@@ -20,10 +20,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Normal mode mappings
 map('n', '<leader>y', osc.copy_operator, {expr = true, desc = 'osc.copy normalmode' })
 map('n', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
-map('n', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow) })
+map('n', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow)' })
 
 -- Visual mode mappings
-map('v', '<leader>y', osc.copy_visual, desc = 'osc.copy visual mode')
+map('v', '<leader>y', osc.copy_visual, { desc = 'osc.copy visual mode' })
 map('v', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow)' })
 
 -- File explorer keymaps
