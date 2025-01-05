@@ -182,6 +182,8 @@ return require('lazy').setup({
   {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    -- these commands are to be given on the command line, after the :
+    -- (they can be bound to specific commands if needed)
     ft = { 'markdown' },
     build = function() vim.fn['mkdp#util#install']() end,
     config = function()
