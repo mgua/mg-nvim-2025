@@ -197,9 +197,9 @@ return require('lazy').setup({
   },
 
   {
+    "folke/which-key.nvim",
 	-- WhichKey is a useful plugin that displays a popup with possible key bindings 
 	-- of the command you started typing. https://github.com/folke/which-key.nvim
-    "folke/which-key.nvim",
 	event = "VeryLazy",
     --	init = function()
 	--  vim.o.timeout = true
@@ -223,6 +223,19 @@ return require('lazy').setup({
       },
     },
   },
+
+
+  {
+    "ibhagwan/fzf-lua",
+    -- lightning fast search for files
+    -- https://github.com/ibhagwan/fzf-lua
+    dependencies = { 
+      "nvim-tree/nvim-web-devicons",
+      "echasnovski/mini.icons"
+    },
+    opts = {}
+  },
+
 
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -249,4 +262,13 @@ return require('lazy').setup({
       vim.cmd[[colorscheme tokyonight]]
     end,
   },
+
+  { -- Theme inspired by Atom
+    'navarasu/onedark.nvim',
+    priority = 100,
+    config = function()
+      vim.cmd.colorscheme 'onedark'
+    end,
+  },
+
 })
