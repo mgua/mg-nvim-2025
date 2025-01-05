@@ -21,6 +21,9 @@ map('n', '<leader>e', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
 -- LazyGit keymap
 map('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true })
 
+-- Markdown Preview keymaps
+map('n', '<leader>mp', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
+
 -- Startify keymaps
 map('n', '<leader>ss', ':SSave<CR>', { noremap = true, silent = true })
 map('n', '<leader>sl', ':SLoad<CR>', { noremap = true, silent = true })

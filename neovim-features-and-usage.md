@@ -87,6 +87,25 @@ In the file explorer:
 - `R` - Refresh tree
 - `H` - Toggle hidden files
 
+### Markdown Preview
+- `<leader>mp` - Toggle markdown preview in browser
+- `:MarkdownPreview` - Start preview
+- `:MarkdownPreviewStop` - Stop preview
+
+Commands available in markdown files:
+- `:MarkdownPreviewToggle` - Toggle preview window
+- `:MarkdownPreview` - Start preview
+- `:MarkdownPreviewStop` - Stop preview
+
+Tips:
+- Preview opens in your default browser
+- Live updates as you type
+- Supports GitHub-flavored markdown
+- Automatically closes preview when leaving buffer
+- Supports code syntax highlighting
+- Math equations (KaTeX) support
+- Emoji support
+
 ### Git Integration
 - `<leader>gg` - Open LazyGit
 - `<leader>hs` - Stage hunk
