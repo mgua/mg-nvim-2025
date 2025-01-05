@@ -197,21 +197,48 @@ return require('lazy').setup({
   },
 
   {
-	-- WhichKey is a useful plugin for Neovim 0.5 that displays a popup with possible key bindings 
-	-- of the command you started typing.
+	-- WhichKey is a useful plugin that displays a popup with possible key bindings 
+	-- of the command you started typing. https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
 	event = "VeryLazy",
-	init = function()
-	  vim.o.timeout = true
-	  vim.o.timeoutlen = 300
-	end,
+    --	init = function()
+	--  vim.o.timeout = true
+	--  vim.o.timeoutlen = 300
+	--end,
 	opts = {
     	-- your configuration comes here
     	-- or leave it empty to use the default settings
     	-- refer to the configuration section below
-	}
+            triggers = {
+                { "<leader>", mode = { "n", "v" } },    -- normal and visual mode
+            }
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
 
+  { -- Set lualine as statusline
+    'nvim-lualine/lualine.nvim',
+    -- See `:help lualine.txt`
+    opts = {
+      options = {
+        icons_enabled = false,
+        theme = 'onedark',
+        component_separators = '|',
+        section_separators = '',
+      },
+    },
+  },
+
+  -- mini icons see https://github.com/echasnovski/mini.icons
+  { 'echasnovski/mini.icons', version = false },
 
   -- Theme
   {
