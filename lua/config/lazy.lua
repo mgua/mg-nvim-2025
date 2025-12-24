@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 -- lazy.lua (config/lazy)
+=======
+-- lazy.lua
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 -- Linux: ~/.config/nvim/lua/config/lazy.lua
 -- Windows: %LOCALAPPDATA%\nvim\lua\config\lazy.lua
 
@@ -8,7 +12,10 @@ return require('lazy').setup({
     --  { 'folke/lazy.nvim', version = false },
     --  { 'LazyVim/LazyVim', version = false },
 
+<<<<<<< HEAD
   { vim.notify('executing lazy.lua...', vim.log.levels.INFO) },
+=======
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
   
   -- File Explorer
   {
@@ -43,11 +50,22 @@ return require('lazy').setup({
     end
   },
 
+<<<<<<< HEAD
 
   { 'christoomey/vim-tmux-navigator', lazy = false, },  -- Tmux Integration
 
 
   {  -- Git Integration
+=======
+  -- Tmux Integration
+  {
+    'christoomey/vim-tmux-navigator',
+    lazy = false,
+  },
+
+  -- Git Integration
+  {
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
     'lewis6991/gitsigns.nvim',
     config = function()
       require('gitsigns').setup({
@@ -89,6 +107,7 @@ return require('lazy').setup({
     end
   },
 
+<<<<<<< HEAD
 
   { 'kdheepak/lazygit.nvim', dependencies = { 'nvim-lua/plenary.nvim', }, },
 
@@ -160,6 +179,55 @@ return require('lazy').setup({
     end
   },
 
+=======
+  {
+    'kdheepak/lazygit.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+  },
+
+  -- Core plugins
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        ensure_installed = { "python", "lua" },
+        highlight = { enable = true },
+      })
+    end
+  },
+
+  -- LSP Support
+  {
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'hrsh7th/nvim-cmp',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+    },
+  },
+
+  -- Clipboard support
+  {
+    'ojroques/nvim-osc52',
+    config = function()
+      require('osc52').setup {
+        max_length = 0,  -- Maximum length of selection (0 for no limit)
+        silent = false,  -- Disable message on successful copy
+        trim = false,    -- Trim surrounding whitespaces before copy
+      }
+    end
+  },
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 
   -- Start Screen
   {
@@ -200,6 +268,7 @@ return require('lazy').setup({
     end
   },
 
+<<<<<<< HEAD
   {
   -- Markdown Preview you need npm and yarn
   -- windows: winget install  OpenJS.NodeJS.LTS
@@ -214,6 +283,16 @@ return require('lazy').setup({
           vim.fn.system('cd app && npm install')
       end
     end,    
+=======
+  -- Markdown Preview
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    -- these commands are to be given on the command line, after the :
+    -- (they can be bound to specific commands if needed)
+    ft = { 'markdown' },
+    build = function() vim.fn['mkdp#util#install']() end,
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
     config = function()
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_auto_close = 1
@@ -283,7 +362,12 @@ return require('lazy').setup({
   -- mini icons see https://github.com/echasnovski/mini.icons
   { 'echasnovski/mini.icons', version = false },
 
+<<<<<<< HEAD
   {  -- Theme
+=======
+  -- Theme
+  {
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
@@ -301,4 +385,7 @@ return require('lazy').setup({
   },
 
 })
+<<<<<<< HEAD
 
+=======
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815

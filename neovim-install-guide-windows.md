@@ -33,9 +33,12 @@
    - Verify installation:
      1. Open a new terminal
      2. Run: `gcc --version`
+<<<<<<< HEAD
    
    If using microsoft visual studio, the folder containing cl.exe should be in the path 
    "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64"
+=======
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 
 4. Install LazyGit:
    ```powershell
@@ -46,6 +49,7 @@
    ```powershell
    winget install OpenJS.NodeJS.LTS
    ```
+<<<<<<< HEAD
    after this installation, node package manager npm should be in the path.
    install yarn with 
    ```powershell
@@ -92,6 +96,13 @@
    ```
    add the 7zip folder where 7z.exe is to the path, so that 7z can be run from command line
    
+=======
+
+6. Install Python and pip:
+   ```powershell
+   winget install Python.Python.3.11
+   ```
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 
 ## Nerd Font Installation
 
@@ -113,7 +124,10 @@
 └── lua\
     └── config\
         ├── lazy.lua
+<<<<<<< HEAD
         ├── colors.lua        
+=======
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
         ├── keymaps.lua
         └── languages.lua
 ```
@@ -131,7 +145,10 @@
    Copy-Item init.lua $env:LOCALAPPDATA\nvim\
    Copy-Item lazy.lua $env:LOCALAPPDATA\nvim\lua\config\
    Copy-Item keymaps.lua $env:LOCALAPPDATA\nvim\lua\config\
+<<<<<<< HEAD
    Copy-Item colors.lua $env:LOCALAPPDATA\nvim\lua\config\
+=======
+>>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
    Copy-Item languages.lua $env:LOCALAPPDATA\nvim\lua\config\
    ```
 
