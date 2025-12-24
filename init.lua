@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 -- init.lua for neovim
 -- Linux: ~/.config/nvim/init.lua
 -- Windows: %LOCALAPPDATA%\nvim\init.lua
@@ -8,14 +7,7 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- this is based in %LOCALAPPDATA%/nvim-data/ or ~/.local/share/nvim/
-=======
--- init.lua
--- Linux: ~/.config/nvim/init.lua
--- Windows: %LOCALAPPDATA%\nvim\init.lua
 
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -29,12 +21,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Basic settings
-<<<<<<< HEAD
+
 vim.g.mapleader = " "       -- Set leader key to space
 vim.g.maplocalleader = " "  -- Set leader key to space in every buf
-=======
-vim.g.mapleader = " "  -- Set leader key to space
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
+
 
 -- Tmux settings
 vim.opt.termguicolors = true
@@ -51,7 +41,7 @@ vim.opt.relativenumber = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
-<<<<<<< HEAD
+
 vim.opt.autoindent = true
 vim.opt.scrolloff = 4
 vim.opt.wrap = false -- equivalent to set nowrap
@@ -92,11 +82,3 @@ require("config.colors") -- colors consistent with vscode, loaded after plugins
 
 -- this is the end of init.lua
 --
-=======
-vim.opt.mouse = 'a'
-
--- Load other configuration files
-require("config.lazy")      -- Plugin management
-require("config.keymaps")   -- Key mappings
-require("config.languages") -- Language-specific settings
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815

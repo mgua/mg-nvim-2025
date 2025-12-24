@@ -3,11 +3,8 @@
 -- Windows: %LOCALAPPDATA%\nvim\lua\config\keymaps.lua
 
 local map = vim.keymap.set
-<<<<<<< HEAD
+
 -- local osc = require('osc52')  -- This require is fine as it's a plugin not required anymore on windows
-=======
-local osc = require('osc52')  -- This require is fine as it's a plugin
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 
 -- this allows highlight of the yanked text 
 -- see :help vi.highlight.on_yank() internal vim command
@@ -22,7 +19,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Normal mode mappings
-<<<<<<< HEAD
 -- map('n', '<leader>y', osc.copy_operator, {expr = true, desc = 'osc.copy normalmode' })
 map('n', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
 -- map('n', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow)' })
@@ -40,18 +36,6 @@ map('v', '<leader>c', '"+y', { desc = 'Copy selection to clipboard' })
 -- File explorer keymaps
 map('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = 'NvimTreeToggle' })
 map('n', '<leader>t', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = 'NvimTreeToggle' })
-=======
-map('n', '<leader>y', osc.copy_operator, {expr = true, desc = 'osc.copy normalmode' })
-map('n', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
-map('n', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow)' })
-
--- Visual mode mappings
-map('v', '<leader>y', osc.copy_visual, { desc = 'osc.copy visual mode' })
-map('v', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow)' })
-
--- File explorer keymaps
-map('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = 'NvimTreeToggle' })
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 map('n', '<leader>e', ':NvimTreeFocus<CR>', { noremap = true, silent = true, desc = 'NvimTreeFocus' })
 
 -- LazyGit keymap
@@ -70,15 +54,8 @@ map('n', '<leader>sc', ':SClose<CR>', { noremap = true, silent = true, desc = 'S
 map('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP goto Definition' })
 map('n', 'gr', vim.lsp.buf.references, { desc = 'LSP goto References' })
 map('n', 'K', vim.lsp.buf.hover, { desc = 'LSP hover Documentation' })
-<<<<<<< HEAD
 -- map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
 map('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP ReName' })
 
 return {} -- Return empty table for module exports
 
-=======
-map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
-map('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP ReName' })
-
-return {} -- Return empty table for module exports
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815

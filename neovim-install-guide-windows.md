@@ -33,12 +33,9 @@
    - Verify installation:
      1. Open a new terminal
      2. Run: `gcc --version`
-<<<<<<< HEAD
    
    If using microsoft visual studio, the folder containing cl.exe should be in the path 
    "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64"
-=======
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 
 4. Install LazyGit:
    ```powershell
@@ -49,7 +46,6 @@
    ```powershell
    winget install OpenJS.NodeJS.LTS
    ```
-<<<<<<< HEAD
    after this installation, node package manager npm should be in the path.
    install yarn with 
    ```powershell
@@ -96,13 +92,6 @@
    ```
    add the 7zip folder where 7z.exe is to the path, so that 7z can be run from command line
    
-=======
-
-6. Install Python and pip:
-   ```powershell
-   winget install Python.Python.3.11
-   ```
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
 
 ## Nerd Font Installation
 
@@ -124,31 +113,33 @@
 └── lua\
     └── config\
         ├── lazy.lua
-<<<<<<< HEAD
         ├── colors.lua        
-=======
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
         ├── keymaps.lua
         └── languages.lua
 ```
 
 ### Installation Steps
 
-1. Create directory structure:
+For windows, you can git clone the github repo, replacing the 
+c:\users\<user>\Appdata\Local\nvim with the contents from github
+(The folder has to be empty for the git clone to succeed)
+   ```powershell
+   cd $env:LOCALAPPDATA\nvim
+   git clone https://github.com/mgua/mg-nvim-2025.git .
+   ```
+
+1. Create directory structure: (not needed if you git cloned)
    ```powershell
    New-Item -Path $env:LOCALAPPDATA\nvim\lua\config -ItemType Directory -Force
    ```
 
-2. Copy configuration files:
+2. Copy configuration files: (not needed if you git cloned)
    ```powershell
    # Assuming files are in current directory
    Copy-Item init.lua $env:LOCALAPPDATA\nvim\
    Copy-Item lazy.lua $env:LOCALAPPDATA\nvim\lua\config\
    Copy-Item keymaps.lua $env:LOCALAPPDATA\nvim\lua\config\
-<<<<<<< HEAD
    Copy-Item colors.lua $env:LOCALAPPDATA\nvim\lua\config\
-=======
->>>>>>> ba2ad6c089e920c38f3f396b465b121595d74815
    Copy-Item languages.lua $env:LOCALAPPDATA\nvim\lua\config\
    ```
 
@@ -179,8 +170,17 @@
    - LSP servers via Mason
 
 3. Install LSP servers:
+   pyright is not to be used. 
+   basedpyright is the good one
+   basedpyright requires python and it may need some trials to have it work
+   I succeded in launching neovim from the venv_neovim in which i previously installed it
+   and then relaunching install from :Mason
    ```
-   :MasonInstall pyright lua-language-server json-lsp yaml-language-server
+   python -m pip install basedpyright
+   ```
+   
+   ```
+   :MasonInstall basedpyright lua-language-server json-lsp marksman intelephense yaml-language-server sqls sqlfluff
    ```
 
 4. Install Treesitter parsers:
