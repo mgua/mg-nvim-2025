@@ -178,14 +178,19 @@ c:\users\<user>\Appdata\Local\nvim with the contents from github
    ```
    python -m pip install basedpyright
    ```
-   
+   here are the command lines to install all the language server components.
+   sqls depends from go (needs a go compiler available)
+   A slightly less powerful lsp server is sql-language-server which is in node.js
    ```
-   :MasonInstall basedpyright lua-language-server json-lsp marksman intelephense yaml-language-server sqls sqlfluff
+   :MasonInstall basedpyright lua-language-server json-lsp marksman intelephense yaml-language-server
+   # :MasonInstall sqls sqlfluff sql-language-server
+   :MasonInstall sql-language-server sqlfluff 
+   :MasonInstall typescript-language-server html-lsp css-lsp prettier eslint_d
    ```
 
-4. Install Treesitter parsers:
+4. Install Treesitter parsers: (requires compiler, as it is requested for treesitter itself)
    ```
-   :TSInstall python lua json yaml markdown
+   :TSInstall python lua json yaml markdown sql 
    ```
 
 5. Verify installation:
