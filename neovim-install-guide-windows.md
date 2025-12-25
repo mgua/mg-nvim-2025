@@ -1,4 +1,4 @@
-# Neovim Modern Setup - Windows Installation
+# Neovim 2025 Setup - Windows Installation
 
 ## Prerequisites Installation
 
