@@ -62,6 +62,7 @@
    
 
 6. Install Python, py launcher and pip:
+   (for max compatibility we suggest python 3.12)
    ```powershell
    winget install Python.Python.3.12
    ```
@@ -94,6 +95,13 @@
    
 
 ## Nerd Font Installation
+
+these fonts allow use of many characters and symbols/icons that are very
+useful when working with text based software, like neovim. Use of a nerd
+font on windows is highly recommended to get the best from command line tools.
+Configuration of the specific font is typically done in the windows 
+terminal software which is where you run powershell and nvim and othe 
+text tools.
 
 1. Download Hack Nerd Font:
    - Visit: https://github.com/ryanoasis/nerd-fonts/releases/latest
@@ -142,6 +150,28 @@ c:\users\<user>\Appdata\Local\nvim with the contents from github
    Copy-Item colors.lua $env:LOCALAPPDATA\nvim\lua\config\
    Copy-Item languages.lua $env:LOCALAPPDATA\nvim\lua\config\
    ```
+
+## Neovim plugins
+
+Neovim supports many plugin managers: software that allow extended 
+functionalities. We will use lazy, which is one of the best supported
+plugin managers. When using Lazy, you configure the plugins you want 
+to install in a configuration file (lazy.lua in our case). 
+
+Some plugins provide functionality only when they interact with other plugins
+
+- mason: is used to activate LSP (language server protocol) 
+It typically relies on a preexisting nodejs installation and on a number 
+of node packages installed via npm (node package manager)
+
+- mason-lspconfig: this plugin allows to "bridge" Mason with nvim-lspconfig 
+providing a mason friendly interface for LSP components
+
+- nvim-lspconfig: this plugin allows to centralize configurations of several
+language servers
+
+- Treesitter: syntax server/colorizer/linter
+
 
 ## Windows Terminal Configuration
 
