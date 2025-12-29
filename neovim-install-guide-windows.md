@@ -94,6 +94,18 @@
    add the 7zip folder where 7z.exe is to the path, so that 7z can be run from command line
    
 
+
+## go toolchain installation
+
+this may be needed to support lsp plugins natively written in go, like sqls
+for these tools to work, neovim must be aware of a local go compiler availability
+
+open https://go.dev/dl/ and install go for windows.
+by default this goes in c:/program files/go
+the folder with go.exe should be added to the system path environment variable
+path is usually updated by go installation itself.
+
+
 ## Nerd Font Installation
 
 these fonts allow use of many characters and symbols/icons that are very
@@ -171,6 +183,16 @@ providing a mason friendly interface for LSP components
 language servers
 
 - Treesitter: syntax server/colorizer/linter
+Use TSInstall <TAB> to add components: 
+```
+TSInstall html css powershell
+```
+
+- Telescope: fuzzy finder, searches for text across files and folders
+https://github.com/nvim-telescope/telescope.nvim
+requires ripgrep, fd, devicons, fzf
+use :checkhealth to validate setup
+use :Telescope find_files to validate working
 
 
 ## Windows Terminal Configuration
@@ -220,7 +242,7 @@ language servers
 
 4. Install Treesitter parsers: (requires compiler, as it is requested for treesitter itself)
    ```
-   :TSInstall python lua json yaml markdown sql 
+   :TSInstall python lua json yaml markdown sql html css powershell 
    ```
 
 5. Verify installation:
@@ -268,3 +290,21 @@ After installation, verify these paths exist:
    ```
    :TSUpdate
    ```
+
+
+## key mappings
+
+<leader> is defined as SPACEBAR
+<leader>t toggle file navigator (Nvtreetoggle)
+
+in normal mode:
+nyy OR n<leader>y OR n<leader>c copies subsequent n lines to clipboard
+(also works from remote sessions over ssh within windows terminal)
+
+in insert mode:
+shift-INS or CTRL-V: paste from clipboard 
+
+<ESC>wq! close with save
+
+(TO BE COMPLETED)
+
