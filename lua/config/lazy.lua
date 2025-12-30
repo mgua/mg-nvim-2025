@@ -379,4 +379,7 @@ return require('lazy').setup({
     end,
   },
 
+  -- and now proceed to import all the custom/plugins/*.lua plugins (in lazy format)
+  { import = 'custom.plugins' }, 
+
 })

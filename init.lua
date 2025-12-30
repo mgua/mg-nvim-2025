@@ -75,7 +75,7 @@ vim.opt.listchars = {
 vim.opt.clipboard = 'unnamedplus'
 
 require("config.keymaps")   -- Key mappings
-require("config.lazy")      -- Plugin management
+require("config.lazy")      -- Plugin management (includes the custom/plugins subfolder in lazy format)
 -- require("config.languages") -- Language-specific settings (commented by mgua 29.9.2025)
 require("config.colors") -- colors consistent with vscode, loaded after plugins
 
