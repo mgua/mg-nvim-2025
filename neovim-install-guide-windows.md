@@ -62,6 +62,7 @@
    
 
 6. Install Python, py launcher and pip:
+   (for max compatibility we suggest python 3.12)
    ```powershell
    winget install Python.Python.3.12
    ```
@@ -93,7 +94,26 @@
    add the 7zip folder where 7z.exe is to the path, so that 7z can be run from command line
    
 
+
+## go toolchain installation
+
+this may be needed to support lsp plugins natively written in go, like sqls
+for these tools to work, neovim must be aware of a local go compiler availability
+
+open https://go.dev/dl/ and install go for windows.
+by default this goes in c:/program files/go
+the folder with go.exe should be added to the system path environment variable
+path is usually updated by go installation itself.
+
+
 ## Nerd Font Installation
+
+these fonts allow use of many characters and symbols/icons that are very
+useful when working with text based software, like neovim. Use of a nerd
+font on windows is highly recommended to get the best from command line tools.
+Configuration of the specific font is typically done in the windows 
+terminal software which is where you run powershell and nvim and othe 
+text tools.
 
 1. Download Hack Nerd Font:
    - Visit: https://github.com/ryanoasis/nerd-fonts/releases/latest
@@ -143,6 +163,38 @@ c:\users\<user>\Appdata\Local\nvim with the contents from github
    Copy-Item languages.lua $env:LOCALAPPDATA\nvim\lua\config\
    ```
 
+## Neovim plugins
+
+Neovim supports many plugin managers: software that allow extended 
+functionalities. We will use lazy, which is one of the best supported
+plugin managers. When using Lazy, you configure the plugins you want 
+to install in a configuration file (lazy.lua in our case). 
+
+Some plugins provide functionality only when they interact with other plugins
+
+- mason: is used to activate LSP (language server protocol) 
+It typically relies on a preexisting nodejs installation and on a number 
+of node packages installed via npm (node package manager)
+
+- mason-lspconfig: this plugin allows to "bridge" Mason with nvim-lspconfig 
+providing a mason friendly interface for LSP components
+
+- nvim-lspconfig: this plugin allows to centralize configurations of several
+language servers
+
+- Treesitter: syntax server/colorizer/linter
+Use TSInstall <TAB> to add components: 
+```
+TSInstall html css powershell
+```
+
+- Telescope: fuzzy finder, searches for text across files and folders
+https://github.com/nvim-telescope/telescope.nvim
+requires ripgrep, fd, devicons, fzf
+use :checkhealth to validate setup
+use :Telescope find_files to validate working
+
+
 ## Windows Terminal Configuration
 
 1. Open Settings (Ctrl+,)
@@ -190,7 +242,7 @@ c:\users\<user>\Appdata\Local\nvim with the contents from github
 
 4. Install Treesitter parsers: (requires compiler, as it is requested for treesitter itself)
    ```
-   :TSInstall python lua json yaml markdown sql 
+   :TSInstall python lua json yaml markdown sql html css powershell 
    ```
 
 5. Verify installation:
@@ -238,3 +290,21 @@ After installation, verify these paths exist:
    ```
    :TSUpdate
    ```
+
+
+## key mappings
+
+<leader> is defined as SPACEBAR
+<leader>t toggle file navigator (Nvtreetoggle)
+
+in normal mode:
+nyy OR n<leader>y OR n<leader>c copies subsequent n lines to clipboard
+(also works from remote sessions over ssh within windows terminal)
+
+in insert mode:
+shift-INS or CTRL-V: paste from clipboard 
+
+<ESC>wq! close with save
+
+(TO BE COMPLETED)
+

@@ -29,7 +29,7 @@ vim.opt.listchars = { eol = '↲', tab = '▸-', trail = '·', space = '·', nbs
 --vim.opt.listchars = {eol = '\\u23ce', tab = '\\u25b8\\u2500', trail = '\\u00b7', space = '\\u00b7', nbsp = '\\u23b5'}
 
 -- i want to make <leader>tt to toggle nvtree
-vim.keymap.set("n", "<leader>tt", ":NvimTreeToggle<Enter>")
+-- vim.keymap.set("n", "<leader>tt", ":NvimTreeToggle<Enter>")
 -- vim.keymap.set("n", "<leader>r", ":%s/<C-r><C-w>//g<Left><Left>")
 vim.keymap.set("n", "<C-Left>", "<C-w>gT")    -- go to previous tab
 vim.keymap.set("n", "<C-Right>", "<C-w>gt")   -- go to next tab

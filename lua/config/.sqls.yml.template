@@ -1,0 +1,21 @@
+# .sqls.yml Example
+# put such a file in your project root, with credentials. this will be used by sqls LSP server
+#
+
+connections:
+  - alias: postgres_dev
+    driver: postgresql
+    data_source_name: postgresql://user:password@host:port/dbname?sslmode=disable
+    # For your PostgreSQL connection
+
+  - alias: mariadb_dev
+    driver: mysql
+    data_source_name: user:password@tcp(host:port)/dbname
+    # For your MariaDB/MySQL connection
+
+  - alias: mssql_dev
+    driver: mssql
+    data_source_name: sqlserver://user:password@host:port?database=dbname
+    # For your MSSQL/SQL Server connection
+
+# 'driver' must be 'postgresql', 'mysql', 'mssql', etc.
