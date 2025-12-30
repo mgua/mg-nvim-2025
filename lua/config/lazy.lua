@@ -8,6 +8,19 @@ return require('lazy').setup({
     --  { 'folke/lazy.nvim', version = false },
     --  { 'LazyVim/LazyVim', version = false },
 
+
+  { -- adds a small square next to hex color codes
+    'brenoprata10/nvim-highlight-colors',
+    config = function()
+      require('nvim-highlight-colors').setup({
+        render = 'virtual',
+        virtual_symbol = '■',
+        virtual_symbol_position = 'inline',  -- 'eol' or 'inline'
+      })
+    end
+  },
+
+
   { vim.notify('executing lazy.lua...', vim.log.levels.INFO) },
   
   -- File Explorer

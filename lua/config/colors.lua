@@ -8,6 +8,8 @@ vim.cmd("colorscheme onedark") -- Color scheme in the case the colors file is no
 -- invoking :Inspect while cursor is on a keyword you should get the corresponding color
 -- The Inspect output also shows the specific language (the file extension) on which the
 -- capture rule is applied. Capture rule is how treesitter detect
+-- a small box filled with the defined color can be visualized, with a plugin like 
+-- brenoprata10/nvim-highlight-colors 
 
 vim.api.nvim_set_hl(0, '@type', { fg = '#4EC9B0' })
 vim.api.nvim_set_hl(0, '@type.builtin', { fg = '#4EC9B0' })
