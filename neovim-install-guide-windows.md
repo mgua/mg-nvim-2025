@@ -94,16 +94,23 @@
    add the 7zip folder where 7z.exe is to the path, so that 7z can be run from command line
    
 
-
 ## go toolchain installation
 
 this may be needed to support lsp plugins natively written in go, like sqls
 for these tools to work, neovim must be aware of a local go compiler availability
 
-open https://go.dev/dl/ and install go for windows.
-by default this goes in c:/program files/go
-the folder with go.exe should be added to the system path environment variable
-path is usually updated by go installation itself.
+Open https://go.dev/dl/ and install go for windows. 
+By default this goes in c:/program files/go
+
+You can just use winget to install go:
+```powershell
+   winget install Golang.go
+```
+the go installer automatically alters the path when installation is complete
+checkhealth will detect its availability, and MasonInstall sqls will work
+
+
+
 
 
 ## Nerd Font Installation
