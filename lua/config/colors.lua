@@ -1,3 +1,5 @@
+-- lua colors.lua
+
 vim.cmd("colorscheme onedark") -- Color scheme in the case the colors file is not working
 -- VS Code-like colors (applied after colorscheme loads)
 vim.api.nvim_set_hl(0, '@type', { fg = '#4EC9B0' })
