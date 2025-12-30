@@ -235,6 +235,7 @@ use :Telescope find_files to validate working
    I succeded in launching neovim from the venv_neovim in which i previously installed it
    and then relaunching install from :Mason
    ```
+   . $env:USERPROFILE\venv_neovim\Scripts\Activate.ps1
    python -m pip install basedpyright
    ```
    here are the command lines to install all the language server components.
@@ -243,7 +244,7 @@ use :Telescope find_files to validate working
    ```
    :MasonInstall basedpyright lua-language-server json-lsp marksman intelephense yaml-language-server
    # :MasonInstall sqls sqlfluff sql-language-server
-   :MasonInstall sql-language-server sqlfluff 
+   :MasonInstall sqls sqlfluff 
    :MasonInstall typescript-language-server html-lsp css-lsp prettier eslint_d
    ```
 
@@ -290,7 +291,7 @@ After installation, verify these paths exist:
 
 3. Update LSP servers:
    ```
-   :MasonUpdate
+   :MasonUpdate t
    ```
 
 4. Update Treesitter parsers:
@@ -303,7 +304,7 @@ After installation, verify these paths exist:
 
 <leader> is defined as SPACEBAR
 <leader>t toggle file navigator (Nvtreetoggle)
-
+:
 in normal mode:
 nyy OR n<leader>y OR n<leader>c copies subsequent n lines to clipboard
 (also works from remote sessions over ssh within windows terminal)
