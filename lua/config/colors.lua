@@ -2,6 +2,13 @@
 
 vim.cmd("colorscheme onedark") -- Color scheme in the case the colors file is not working
 -- VS Code-like colors (applied after colorscheme loads)
+-- these variables are to be used by treesitter
+-- to validate they are correctly setup, execute this at nvim prompt :hi @type.builtin
+-- you should see @type.builtin  xxx guifg=#4ec9b0 
+-- invoking :Inspect while cursor is on a keyword you should get the corresponding color
+-- The Inspect output also shows the specific language (the file extension) on which the
+-- capture rule is applied. Capture rule is how treesitter detect
+
 vim.api.nvim_set_hl(0, '@type', { fg = '#4EC9B0' })
 vim.api.nvim_set_hl(0, '@type.builtin', { fg = '#4EC9B0' })
 vim.api.nvim_set_hl(0, '@constructor', { fg = '#4EC9B0' })
@@ -22,6 +29,7 @@ vim.api.nvim_set_hl(0, '@include', { fg = '#C586C0' })
 vim.api.nvim_set_hl(0, '@string', { fg = '#CE9178' })
 vim.api.nvim_set_hl(0, '@number', { fg = '#B5CEA8' })
 vim.api.nvim_set_hl(0, '@comment', { fg = '#6A9955', italic = true })
+
 -- LSP semantic tokens (from Pyright)
 vim.api.nvim_set_hl(0, '@lsp.type.namespace', { fg = '#4EC9B0' })
 vim.api.nvim_set_hl(0, '@lsp.type.function', { fg = '#DCDCAA' })
@@ -29,6 +37,7 @@ vim.api.nvim_set_hl(0, '@lsp.type.method', { fg = '#DCDCAA' })
 vim.api.nvim_set_hl(0, '@lsp.type.class', { fg = '#4EC9B0' })
 vim.api.nvim_set_hl(0, '@lsp.type.variable', { fg = '#9CDCFE' })
 vim.api.nvim_set_hl(0, '@lsp.type.parameter', { fg = '#9CDCFE' })
+
 -- HTML/Jinja template colors (VS Code style)
 vim.api.nvim_set_hl(0, '@tag', { fg = '#569CD6' })           -- HTML tags
 vim.api.nvim_set_hl(0, '@tag.builtin', { fg = '#569CD6' })
