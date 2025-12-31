@@ -1,8 +1,9 @@
 -- init.lua for neovim
--- Linux: ~/.config/nvim/init.lua
--- Windows: %LOCALAPPDATA%\nvim\init.lua
--- mgua@tomware.it 2020-2025
--- last edit 24.12.2025
+-- Linux: ~/.config/nvim/init.lua -- Windows: %LOCALAPPDATA%\nvim\init.lua
+-- mgua@tomware.it 2020-2025 last edit 31.12.2025, tested with nvim 0.11
+-- this is the main init file for nvim. it is designed to be cross platform and 
+-- to work for installations in different operating systems
+
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -10,12 +11,7 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
+    "git","clone","--filter=blob:none","https://github.com/folke/lazy.nvim.git","--branch=stable", lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
@@ -61,7 +57,8 @@ else
 end
 
 
--- List mode and listchars
+-- List mode and listchars. for windows we assume that nerdfonts are 
+-- available and correctly setup. Best experience for windows is within Microsoft Windows Terminal
 vim.opt.list = true
 vim.opt.listchars = {
     eol = "⏎",      -- Unicode for 'end of line'
@@ -72,13 +69,19 @@ vim.opt.listchars = {
 }
 
 -- Automatically send anything yanked to the default register (") to the system clipboard register (+).
-vim.opt.clipboard = 'unnamedplus'
+-- this is draft and may require improvements/cross platform adjustments
+if vim.fn.has('win32') == 1 then
+	vim.opt.clipboard = 'unnamedplus'
+else
+	vim.opt.clipboard = 'unnamedplus'
+end
 
-require("config.keymaps")   -- Key mappings
-require("config.lazy")      -- Plugin management (includes the custom/plugins subfolder in lazy format)
--- require("config.languages") -- Language-specific settings (commented by mgua 29.9.2025)
-require("config.colors") -- colors consistent with vscode, loaded after plugins
+
+require("config.keymaps")  -- Key mappings (lua/config/keymaps.lua)
+require("config.lazy")     -- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
+-- require("config.language") -- Language-specific settings (commented by mgua 29.9.2025)
+require("config.colors") 	-- (lua/config/colors.lua) style colors consistent with vscode, loaded after plugins
 
 
--- this is the end of init.lua
+-- this is the end of neovim init.lua
 --

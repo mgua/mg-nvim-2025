@@ -18,19 +18,33 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end
 })
 
--- Normal mode mappings
--- map('n', '<leader>y', osc.copy_operator, {expr = true, desc = 'osc.copy normalmode' })
-map('n', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
--- map('n', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow)' })
-map('n', '<leader>C', '"+yy', { desc = 'Copy line to clipboard' })
-map('n', '<leader>c', '"+yy', { desc = 'Copy line to clipboard' })
-
+-- ----------------- COPY to clipboard ----------------------
+if vim.fn.has('win32') == 1 then
+  -- Normal mode mappings
+  map('n', '<leader>y', osc.copy_operator, {expr = true, desc = 'osc.copy normalmode' })
+  map('n', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
+  map('n', '<leader>C', '"+yy', { desc = 'Copy line to clipboard' })
+  map('n', '<leader>c', '"+yy', { desc = 'Copy line to clipboard' })
 
 -- Visual mode mappings
--- map('v', '<leader>y', osc.copy_visual, { desc = 'osc.copy visual mode' })
--- map('v', '<leader>p', '"+p', { noremap = true, desc = '"+p (dontknow)' })
-map('v', '<leader>C', '"+y', { desc = 'Copy selection to clipboard' })
-map('v', '<leader>c', '"+y', { desc = 'Copy selection to clipboard' })
+  map('v', '<leader>y', osc.copy_visual, { desc = 'osc.copy visual mode' })
+  map('v', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
+  map('v', '<leader>C', '"+y', { desc = 'Copy selection to clipboard' })
+  map('v', '<leader>c', '"+y', { desc = 'Copy selection to clipboard' })
+
+else	-- non windows
+-- see https://github.com/ojroques/nvim-osc52 (mgua sept 9 2023)
+-- allows copy from nvim buffers to osc52 compatible terminal emulator system clipboard
+  map('n', '<leader>y', require('osc52').copy_operator, {expr = true, desc = 'osc.copy normalmode' })
+  map('n', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
+  map('n', '<leader>C', '"+yy', { desc = 'Copy line to clipboard' })
+  map('n', '<leader>c', '"+yy', { desc = 'Copy line to clipboard' })
+  
+  map('v', '<leader>y', require('osc52').copy_visual, {expr = true, desc = 'osc.copy visual mode' })
+  map('v', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
+  map('v', '<leader>C', '"+y', { desc = 'Copy selection to clipboard' })
+  map('v', '<leader>c', '"+y', { desc = 'Copy selection to clipboard' })
+end
 
 
 -- File explorer keymaps
@@ -54,8 +68,16 @@ map('n', '<leader>sc', ':SClose<CR>', { noremap = true, silent = true, desc = 'S
 map('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP goto Definition' })
 map('n', 'gr', vim.lsp.buf.references, { desc = 'LSP goto References' })
 map('n', 'K', vim.lsp.buf.hover, { desc = 'LSP hover Documentation' })
+
 -- map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
 map('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP ReName' })
+
+-- Tabs & buffers
+map("n", "<C-Left>", "<C-w>gT")    -- go to previous tab
+map("n", "<C-Right>", "<C-w>gt")   -- go to next tab
+map("n", "<C-Up>", ":bprev<CR>")   -- change current tab to previous buffer
+map("n", "<C-Down>", ":bnext<CR>") -- change current tab to next buffer
+
 
 return {} -- Return empty table for module exports
 

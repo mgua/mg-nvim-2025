@@ -2,12 +2,17 @@
 
 vim.cmd("colorscheme onedark") -- Color scheme in the case the colors file is not working
 -- VS Code-like colors (applied after colorscheme loads)
--- these variables are to be used by treesitter
+-- 
+-- the style variables defined here are matching capture rules (like treesitter's)
+-- (to identify objects like @variable, @function ...)
 -- to validate they are correctly setup, execute this at nvim prompt :hi @type.builtin
 -- you should see @type.builtin  xxx guifg=#4ec9b0 
--- invoking :Inspect while cursor is on a keyword you should get the corresponding color
--- The Inspect output also shows the specific language (the file extension) on which the
--- capture rule is applied. Capture rule is how treesitter detect
+--
+-- Execute command ":Inspect" while cursor is on a keyword you should get the corresponding color
+-- This shows the specific language (the file extension) on which the capture rule is applied. 
+-- Capture rule is how treesitter detects text objects.
+-- Execute command ":lua vim.treesitter.start()" to be sure treesitter is running in current buffer
+--
 -- a small box filled with the defined color can be visualized, with a plugin like 
 -- brenoprata10/nvim-highlight-colors 
 

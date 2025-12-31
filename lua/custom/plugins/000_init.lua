@@ -1,5 +1,12 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
+-- You can add your own plugins here or in other files in this directory
+-- each of the files here have to be lua files, compliant to lazy plugin format.
+-- they should return a lua table 
+-- in each file you can configure zero one or more plugins
+-- the filenames can be defined in such a way that they are loaded in a 
+-- specific sequence, using a filename convention to order them like
+--   000_xxx.lua 
+--   010_yyy.lua 
+--   [...]
+--   999_zzz.lua 
 --
--- See the kickstart.nvim README for more information
 return {}
