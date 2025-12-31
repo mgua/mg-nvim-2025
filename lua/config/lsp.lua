@@ -1,4 +1,8 @@
--- lspconfig.lua
+-- lsp.lua
+-- this neovim lsp.lua file contains configurations for mason/LSP
+-- this is invoked by init.lua, after the plugins have been loaded
+
+vim.notify('lsp.lua additional setup...', vim.log.levels.INFO)
 
 local lspconfig = require('lspconfig')
 local mason_lspconfig = require('mason-lspconfig')

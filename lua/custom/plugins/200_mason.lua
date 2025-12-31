@@ -1,4 +1,6 @@
 -- this is the mason & related tools lazy config
+-- this is where mason and related plugins are loaded, via lazy plugin manager lazy.lua
+-- for other post setup configs see lua/configs/lsp.lua (invoked by init.lua)
 
 return {
 
@@ -28,7 +30,7 @@ return {
   },
 
 
-  {
+  { -- mason-org/mason-lspconfig.mvim
     "mason-org/mason-lspconfig.nvim",
     opts = {},
     dependencies = {

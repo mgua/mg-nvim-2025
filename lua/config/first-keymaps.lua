@@ -2,6 +2,9 @@
 -- Linux: ~/.config/nvim/lua/config/keymaps.lua
 -- Windows: %LOCALAPPDATA%\nvim\lua\config\keymaps.lua
 
+-- this is invoked by init.lua, after the plugins have been loaded
+
+
 local map = vim.keymap.set
 
 -- local osc = require('osc52')  -- This require is fine as it's a plugin not required anymore on windows

@@ -31,7 +31,13 @@ if vim.env.TMUX then
   vim.opt.ttimeoutlen = 0
 end
 
--- General settings
+-- General settings 
+-- these are equivalent to vim.cmd syntax (vim style) as:
+-- vim.cmd [[
+-- 	set cc=90	" column where to put vertical bar
+-- 	set shiftwidth=4
+-- ]]
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.expandtab = true
@@ -56,9 +62,8 @@ else
   vim.g.python3_host_prog = vim.env.HOME .. '/venv_neovim/bin/python'
 end
 
-
--- List mode and listchars. for windows we assume that nerdfonts are 
--- available and correctly setup. Best experience for windows is within Microsoft Windows Terminal
+-- List mode and listchars. for windows we assume that nerdfonts are available
+-- and correctly setup. Best experience for windows is within Microsoft Windows Terminal
 vim.opt.list = true
 vim.opt.listchars = {
     eol = "⏎",      -- Unicode for 'end of line'
@@ -67,6 +72,7 @@ vim.opt.listchars = {
     nbsp = "⎵",     -- Unicode for 'non-breaking space'
     space = "·"     -- Unicode for 'space'
 }
+-- vim.opt.listchars = {eol = '\\u23ce', tab = '\\u25b8\\u2500', trail = '\\u00b7', space = '\\u00b7', nbsp = '\\u23b5'}
 
 -- Automatically send anything yanked to the default register (") to the system clipboard register (+).
 -- this is draft and may require improvements/cross platform adjustments
@@ -76,11 +82,13 @@ else
 	vim.opt.clipboard = 'unnamedplus'
 end
 
-
-require("config.keymaps")  -- Key mappings (lua/config/keymaps.lua)
-require("config.lazy")     -- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
--- require("config.language") -- Language-specific settings (commented by mgua 29.9.2025)
+require("config.venv-selector") 	-- (lua/config/venv-selector.lua) selects correct python venv
+require("config.first-keymaps")  	-- Key mappings (lua/config/first-keymapskeymaps.lua)
+require("config.lazy")     	-- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
 require("config.colors") 	-- (lua/config/colors.lua) style colors consistent with vscode, loaded after plugins
+require("config.lsp") 	-- (lua/config/lsp.lua) mason/lsp configs [post load]
+require("config.ts") 	-- (lua/config/ts.lua) treesitter_configs [post load]
+require("config.last-keymaps") 	-- (lua/config/last-keymaps.lua) final keymappings [post load]
 
 
 -- this is the end of neovim init.lua
