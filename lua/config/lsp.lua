@@ -4,7 +4,7 @@
 
 vim.notify('lsp.lua additional setup...', vim.log.levels.INFO)
 
-local lspconfig = require('lspconfig')
+local lspconfig = require('nvim-lspconfig')
 local mason_lspconfig = require('mason-lspconfig')
 
 -- --- Setup Mason & lspconfig ---
