@@ -4,49 +4,46 @@
 
 vim.notify('lsp.lua additional setup...', vim.log.levels.INFO)
 
-local lspconfig = require('nvim-lspconfig')
-local mason_lspconfig = require('mason-lspconfig')
 
--- --- Setup Mason & lspconfig ---
--- This handler automatically sets up any language server installed by Mason.
--- We use it here primarily for 'sqls'.
-mason_lspconfig.setup_handlers {
-    function(server_name)
-        -- Set keymaps for common LSP actions
-        local on_attach = function(client, bufnr)
-            -- See :help vim.lsp.buf for a list of functions
-            local bufopts = { noremap=true, silent=true, buffer=bufnr }
-            
-            -- Examples of common LSP keymaps
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-            vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-            vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-            vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
-            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
-        end
-
-        -- Call setup for the server. 
-        -- If the server is 'sqls', any project-specific settings 
-        -- will usually be read from a local .sqls.yml file.
-        lspconfig[server_name].setup {
-            on_attach = on_attach,
-            -- Add more global server options here if needed, 
-            -- but for 'sqls' it's often best to use the .sqls.yml file.
-        }
-    end,
-}
-
--- --- Ensure `sqls` is managed by Mason ---
--- This makes sure that 'sqls' is in Mason's list of managed LSPs 
--- and will be installed if you run :Mason
+-- --- Setup Mason & mason-lspconfig ---
 require('mason').setup()
-require('mason-lspconfig').setup {
+require('mason-lspconfig').setup({
     ensure_installed = { 'sqls' },
-}
+    automatic_enable = true,  -- automatically sets up installed LSP servers
+})
+
+-- --- LSP Keymaps via LspAttach autocmd ---
+-- This is the modern way to set up LSP keymaps (works with mason-lspconfig v2.x)
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+        local bufopts = { noremap = true, silent = true, buffer = ev.buf }
+
+        -- Common LSP keymaps
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
+        vim.keymap.set('n', '<leader>f', function()
+            vim.lsp.buf.format({ async = true })
+        end, bufopts)
+    end,
+})
+
+
+
+--- Optional: Server-specific configurations ---
+-- If you need custom settings for specific servers, configure them here:
+local lspconfig = require('lspconfig')
+lspconfig.sqls.setup({
+     -- custom sqls settings (or use .sqls.yml in project root)
+})
+
 
 -- You can manually add a basic setup here, but `mason-lspconfig.setup_handlers` 
 -- above is the modern way to handle this. 

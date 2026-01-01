@@ -1,4 +1,6 @@
 -- this is from https://github.com/nvim-treesitter/nvim-treesitter
+-- treesitter plugin loader, for lazy plugin manager
+--
 
 return {
     -- treesitter https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file
@@ -57,6 +59,8 @@ return {
     --        -- },
     --    })
  --   end,
-},
+}
+
+
 
 

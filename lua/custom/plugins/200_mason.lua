@@ -2,6 +2,7 @@
 -- this is where mason and related plugins are loaded, via lazy plugin manager lazy.lua
 -- for other post setup configs see lua/configs/lsp.lua (invoked by init.lua)
 
+
 return {
 
   { -- core component to allow nvim to use LSP servers
@@ -39,6 +40,6 @@ return {
     },
   },
 
-},
+}
 
 

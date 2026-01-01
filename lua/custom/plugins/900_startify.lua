@@ -1,4 +1,7 @@
 -- the classical startify 
+-- this is in lazy plugin manager format
+
+
 return {
     'mhinz/vim-startify',
     config = function()
@@ -36,4 +39,5 @@ return {
       vim.g.startify_fortune_use_unicode = 1  -- Use Unicode box drawing characters
       vim.g.startify_enable_special = 0      -- Don't show <empty buffer> and <quit>
     end
-  },
+  }
+  
