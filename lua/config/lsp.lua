@@ -4,6 +4,14 @@
 
 vim.notify('lsp.lua additional setup...', vim.log.levels.INFO)
 
+-- Suppress lspconfig deprecation warnings until mason-lspconfig updates
+-- mgua added this (suggested by claude opus on jan 01 2026)
+local notify = vim.notify
+vim.notify = function(msg, ...)
+  if msg:match("lspconfig") and msg:match("deprecated") then return end
+  notify(msg, ...)
+end
+
 
 -- --- Setup Mason & mason-lspconfig ---
 require('mason').setup()
