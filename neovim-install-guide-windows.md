@@ -252,6 +252,12 @@ use :Telescope find_files to validate working
    ```
    :TSInstall python lua json yaml markdown sql html css powershell 
    ```
+   To validate treesitter, pressing :TS should show many available commands, selectable by <TAB>
+   You can manually start treesitter with the following command:
+   ```
+   :lua vim.treesitter.start()
+   ```
+   Once treesitter is started, pressing :TS<TAB> should allow you to see a richer option list
 
 5. Verify installation:
    ```
@@ -291,7 +297,7 @@ After installation, verify these paths exist:
 
 3. Update LSP servers:
    ```
-   :MasonUpdate t
+   :MasonUpdate
    ```
 
 4. Update Treesitter parsers:
@@ -301,6 +307,40 @@ After installation, verify these paths exist:
 
 
 ## key mappings
+
+nvim starts in normal mode
+HJKL control cursor movement in normal mode and visual mode
+i from normal mode goes to insert mode
+v from normal mode goes to visual mode
+<ALT> +mouse click goes to visual block mode (column select)
+u from normal mode performs UNDO
+<CTRL>-R from normal mode performs REDO
+<ESC> goes back to normal mode
+: from normal mode goes into command mode
+:w writes current edit buffer
+:q exit
+:wq! save and exit immediately
+:/pattern searches for patter. n for next, N for previous. Occurrence count in bottom right
+:87 goes to line 87
+G87 from normal mode goes to line 87
+:1 go to first line
+<CTRL>-O goes back to the previous position in jump list
+:$ go to last line
+:h helptopic opens neovim help.
+When having relative numbers, you can see line distance from current line.
+from normal mode 5yy copies the next 5 lines
+from normal mode 5dd deletes the next 5 lines
+from normal mode dd deletes current line
+from normal mode mk sets marker k (bookmark) at current position. markers can be a..z
+from normal mode 'k goes to marker k (you may see markers list) 
+
+
+
+While in help, undelined links can be opened with mouse double left click or with <CTRL>-]
+to go back use <CTRL>-T or <CTRL>-O
+
+when in multiwindow, use CTRL-ww to cycle across window, from normal mode
+
 
 <leader> is defined as SPACEBAR
 <leader>t toggle file navigator (Nvtreetoggle)
