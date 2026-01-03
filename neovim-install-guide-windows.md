@@ -308,18 +308,26 @@ After installation, verify these paths exist:
 
 ## key mappings
 
-nvim starts in normal mode
+nvim starts in **normal mode**
+
 HJKL control cursor movement in normal mode and visual mode
-i from normal mode goes to insert mode
-v from normal mode goes to visual mode
-<ALT> +mouse click goes to visual block mode (column select)
+i from normal mode goes to **insert mode** 
+v from normal mode goes to **visual mode** (this is the selection mode)
+<ALT> +mouse click goes to **visual block mode** (column select mode)
+
 u from normal mode performs UNDO
 <CTRL>-R from normal mode performs REDO
-<ESC> goes back to normal mode
-: from normal mode goes into command mode
+
+<ESC> goes back to **normal mode**
+: from normal mode goes into **command mode**
+
 :w writes current edit buffer
 :q exit
 :wq! save and exit immediately
+
+in normal mode, yy yanks (copies) the current line to the default clipboard
+in normal mode, p pops (pastes) the default clipboard contents
+
 :/pattern searches for patter. n for next, N for previous. Occurrence count in bottom right
 :87 goes to line 87
 G87 from normal mode goes to line 87
@@ -333,6 +341,18 @@ from normal mode 5dd deletes the next 5 lines
 from normal mode dd deletes current line
 from normal mode mk sets marker k (bookmark) at current position. markers can be a..z
 from normal mode 'k goes to marker k (you may see markers list) 
+
+
+cursor movement in normal mode:
+^ beginning of line
+$ end of line
+G to to last line
+gg go to first line
+
+<CTRL>-hjkl (movement keys)
+
+A command combination to copy all the file content:
+<ESC>ggvGy	)goto normal mode, goto 1st line, enter visual mode (select), go to last line, and yank
 
 
 

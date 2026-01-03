@@ -1,6 +1,6 @@
--- keymaps.lua
--- Linux: ~/.config/nvim/lua/config/keymaps.lua
--- Windows: %LOCALAPPDATA%\nvim\lua\config\keymaps.lua
+-- first-keymaps.lua
+-- Linux: ~/.config/nvim/lua/config/first-keymaps.lua
+-- Windows: %LOCALAPPDATA%\nvim\lua\config\first-keymaps.lua
 
 -- this is invoked by init.lua, after the plugins have been loaded
 
@@ -17,6 +17,7 @@ map("n", "<C-Down>", ":bnext<CR>") -- change current tab to next buffer
 
 -- this allows highlight of the yanked text in orange, for 250 ms
 -- see :help vi.highlight.on_yank() internal vim command
+-- this is invoked by init.lua, after the plugins have been loaded
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
         vim.highlight.on_yank({

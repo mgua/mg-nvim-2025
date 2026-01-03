@@ -60,3 +60,5 @@ vim.api.nvim_set_hl(0, '@markup.heading', { fg = '#569CD6', bold = true })
 vim.api.nvim_set_hl(0, '@markup.link', { fg = '#CE9178' })
 
 
+return {} -- Return empty table for module exports
+
