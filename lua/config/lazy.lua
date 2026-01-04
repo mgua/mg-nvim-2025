@@ -16,6 +16,7 @@ return require('lazy').setup({
         render = 'virtual',
         virtual_symbol = '■',
         virtual_symbol_position = 'inline',  -- 'eol' or 'inline'
+        exclude_filetypes = { 'xxd' },       -- disable for hex editing (added by mgua jan 04 2026)
       })
     end
   },
