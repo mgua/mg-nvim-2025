@@ -85,7 +85,8 @@
    ```
    then open command prompt in admin mode, and install tools using chocolatey
    ```powershell
-   choco install less grep gzip unzip make cmake curl wget fd fzf ripgrep bat mc far exiftool ffmpeg
+   choco install less grep gzip unzip make cmake curl wget fd 
+   choco install fzf ripgrep bat mc far exiftool ffmpeg xxd
    ```
    7zip
    ```powershell
@@ -234,6 +235,8 @@ use :Telescope find_files to validate working
    basedpyright requires python and it may need some trials to have it work
    I succeded in launching neovim from the venv_neovim in which i previously installed it
    and then relaunching install from :Mason
+   Apparently this is needed only the first time. Later basedpyright is reinstalled inside 
+   its own dedicated environment
    ```
    . $env:USERPROFILE\venv_neovim\Scripts\Activate.ps1
    python -m pip install basedpyright
@@ -334,6 +337,8 @@ from normal mode dd deletes current line
 from normal mode mk sets marker k (bookmark) at current position. markers can be a..z
 from normal mode 'k goes to marker k (you may see markers list) 
 
+
+some dedicated keymaps are plugin specific, as an example <leader>h has some suboptions for hex plugin
 
 
 While in help, undelined links can be opened with mouse double left click or with <CTRL>-]
