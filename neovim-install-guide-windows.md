@@ -380,3 +380,33 @@ shift-INS or CTRL-V: paste from clipboard
 
 (TO BE COMPLETED)
 
+
+## GIT integration
+
+It is recommended to have a .gitcofig file in the user home folder, with the important git settings.
+
+These settings can be written via git config commands, or you can directly edit the file contents.
+Here is my **~/.gitconfig** with some edits
+
+```
+[user]
+	email = username@domain.tld
+	name = john smith
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[core]
+	sshCommand = ssh -i c:/Users/<JSMITH>/.ssh/id_rsa_JSMITH
+	editor = nvim
+[merge]
+	tool = nvimdiff
+[mergetool "nvimdiff"]
+	layout = (LOCAL,BASE,REMOTE)/MERGED
+[credential "https://huggingface.co"]
+	provider = generic
+[init]
+	defaultBranch = main
+```
+

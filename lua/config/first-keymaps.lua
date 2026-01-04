@@ -9,10 +9,11 @@ local map = vim.keymap.set
 
 
 -- Tabs & buffers
-map("n", "<C-Left>", "<C-w>gT")    -- go to previous tab
-map("n", "<C-Right>", "<C-w>gt")   -- go to next tab
-map("n", "<C-Up>", ":bprev<CR>")   -- change current tab to previous buffer
-map("n", "<C-Down>", ":bnext<CR>") -- change current tab to next buffer
+-- we avoid using CTRL being this often trapped by term emulators or multiplexers (tmux)
+map("n", "[t", "gT", { desc = "Previous tab" })
+map("n", "]t", "gt", { desc = "Next tab" })
+map("n", "[b", "<cmd>bprev<CR>", { desc = "Previous buffer" })
+map("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
 
 
 -- this allows highlight of the yanked text in orange, for 250 ms
