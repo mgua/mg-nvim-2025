@@ -381,6 +381,15 @@ shift-INS or CTRL-V: paste from clipboard
 
 <ESC>wq! close with save
 
+
+### window operations
+
+CTRL-w T (move current window in a dedicated TAB page)
+CTRL-W gt / CTRL-W gT (go to previous/next tab page)
+CTRL-W s split current window horizontally
+CTRL-W v split current window vertically
+CTRL-W q closes current window
+
 (TO BE COMPLETED)
 
 

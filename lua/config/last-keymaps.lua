@@ -9,6 +9,9 @@
 --
 -- important: some keymappings are defined inside the plugin configs,
 -- like in the 350_hex.lua plugin where
+--
+-- to see key mappings active in insert/normal/visual mode: :imap :nmap or :map  :vmap
+
 
 local map = vim.keymap.set
 
