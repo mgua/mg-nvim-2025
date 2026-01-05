@@ -2,19 +2,19 @@
 
 vim.cmd("colorscheme onedark") -- Color scheme in the case the colors file is not working
 -- VS Code-like colors (applied after colorscheme loads)
--- 
+--
 -- the style variables defined here are matching capture rules (like treesitter's)
 -- (to identify objects like @variable, @function ...)
 -- to validate they are correctly setup, execute this at nvim prompt :hi @type.builtin
--- you should see @type.builtin  xxx guifg=#4ec9b0 
+-- you should see @type.builtin  xxx guifg=#4ec9b0
 --
 -- Execute command ":Inspect" while cursor is on a keyword you should get the corresponding color
--- This shows the specific language (the file extension) on which the capture rule is applied. 
+-- This shows the specific language (the file extension) on which the capture rule is applied.
 -- Capture rule is how treesitter detects text objects.
 -- Execute command ":lua vim.treesitter.start()" to be sure treesitter is running in current buffer
 --
--- a small box filled with the defined color can be visualized, with a plugin like 
--- brenoprata10/nvim-highlight-colors 
+-- a small box filled with the defined color can be visualized, with a plugin like
+-- brenoprata10/nvim-highlight-colors
 
 vim.api.nvim_set_hl(0, '@type', { fg = '#4EC9B0' })
 vim.api.nvim_set_hl(0, '@type.builtin', { fg = '#4EC9B0' })
@@ -58,6 +58,11 @@ vim.api.nvim_set_hl(0, '@operator', { fg = '#D4D4D4' })
 vim.api.nvim_set_hl(0, '@constant', { fg = '#4FC1FF' })
 vim.api.nvim_set_hl(0, '@markup.heading', { fg = '#569CD6', bold = true })
 vim.api.nvim_set_hl(0, '@markup.link', { fg = '#CE9178' })
+
+
+-- Matching parent delimiter highlight color
+-- (this overrides colorscheme definition that may be not that visible)
+vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#ff8800', fg = '#000000', bold = true })
 
 
 return {} -- Return empty table for module exports

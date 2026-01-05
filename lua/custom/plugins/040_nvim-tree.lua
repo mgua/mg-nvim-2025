@@ -1,6 +1,20 @@
 -- this is from https://github.com/nvim-tree/nvim-tree.lua
 -- requires neovim 0.9+
 -- requires nerdfont
+--
+-- use the key "H" in normalmode to toggle visibility of hidden files
+-- use the key "I" in normalmode to toggle visibility of ignored files
+-- use the g?   in normalmode to show key mappings
+--
+-- File/icon meaning
+--      ✗  unstaged
+--      ✓  staged
+--        unmerged
+--      ➜  renamed
+--      ★  untracked
+--        deleted
+--      ◌  ignored
+
 
 return {
   "nvim-tree/nvim-tree.lua",
@@ -26,11 +40,16 @@ return {
             },
           },
         },
-		filters = { 
+		filters = {
             dotfiles = false,       -- if false dotfiles are shown
             git_ignored = false,    -- if false .gitignore files are shown
-            custom = { ".git", "__pycache__" }, -- always hide these
-            exclude = { ".env" },   -- never filter: always show these
+            custom = {              -- always hide these (regexp)
+                "^\\.git$",         -- .git subfolder
+                "__pycache__",
+                "package-lock.json",
+                "lazy-lock.json",
+            },
+            exclude = { "^\\.env$" },   -- never filter: always show these (regexp)
         },
         git = {
             enable = true,          -- enable git integration
