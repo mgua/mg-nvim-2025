@@ -29,8 +29,8 @@ return {
 		filters = { 
             dotfiles = false,       -- if false dotfiles are shown
             git_ignored = false,    -- if false .gitignore files are shown
-            custom = { ".git", "__pycache__" } -- always hide these
-            exclude = { ".env" }    -- never filter: always show these
+            custom = { ".git", "__pycache__" }, -- always hide these
+            exclude = { ".env" },   -- never filter: always show these
         },
         git = {
             enable = true,          -- enable git integration

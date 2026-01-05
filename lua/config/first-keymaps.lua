@@ -15,6 +15,14 @@ map("n", "]t", "gt", { desc = "Next tab" })
 map("n", "[b", "<cmd>bprev<CR>", { desc = "Previous buffer" })
 map("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
 
+-- windows movement
+map('n', '<C-h>', '<C-w>h')  -- move left
+map('n', '<C-j>', '<C-w>j')  -- move down
+map('n', '<C-k>', '<C-w>k')  -- move up
+map('n', '<C-l>', '<C-w>l')  -- move right
+
+map('i', '<C-w>', '<Nop>')  -- disable ctrl-w in insert mode
+
 
 -- this allows highlight of the yanked text in orange, for 250 ms
 -- see :help vi.highlight.on_yank() internal vim command
