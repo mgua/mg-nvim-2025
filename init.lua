@@ -4,6 +4,9 @@
 -- this is the main init file for nvim. it is designed to be cross platform and 
 -- to work for installations in different operating systems
 
+-- IMPORTANT. a current standard for editor configuration is .editorconfig 
+-- a hidden .editorconfig file holds important settings for encoding, 
+-- line ending, tab lenght, whitespace management, tab processing 
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -84,11 +87,11 @@ end
 
 require("config.venv-selector") 	-- (lua/config/venv-selector.lua) selects correct python venv
 require("config.first-keymaps")  	-- Key mappings (lua/config/first-keymapskeymaps.lua)
-require("config.lazy")     	-- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
-require("config.colors") 	-- (lua/config/colors.lua) style colors consistent with vscode, loaded after plugins
-require("config.lsp") 	-- (lua/config/lsp.lua) mason/lsp configs [post load]
-require("config.ts") 	-- (lua/config/ts.lua) treesitter_configs [post load]
-require("config.last-keymaps") 	-- (lua/config/last-keymaps.lua) final keymappings [post load]
+require("config.lazy")          	-- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
+require("config.colors") 	        -- (lua/config/colors.lua) style colors consistent with vscode, loaded after plugins
+require("config.lsp") 	            -- (lua/config/lsp.lua) mason/lsp configs [post load]
+require("config.ts") 	            -- (lua/config/ts.lua) treesitter_configs [post load]
+require("config.last-keymaps")  	-- (lua/config/last-keymaps.lua) final keymappings [post load]
 
 
 -- this is the end of neovim init.lua

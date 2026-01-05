@@ -26,11 +26,19 @@ return {
             },
           },
         },
-		filters = { dotfiles = true, },
-        -- git = {
-        --   enable = true,
-        --  ignore = false,
-        -- },
+		filters = { 
+            dotfiles = false,       -- if false dotfiles are shown
+            git_ignored = false,    -- if false .gitignore files are shown
+            custom = { ".git", "__pycache__" } -- always hide these
+            exclude = { ".env" }    -- never filter: always show these
+        },
+        git = {
+            enable = true,          -- enable git integration
+            ignore = false,         -- do not respect .gitignore (do not hide gitignored files)
+            show_on_dirs = true,    -- show git status on directories
+            show_on_open_dirs = true,   -- directory keeps its git icon when expanded
+            timeout = 400,          -- git operation timeout in ms
+        },
 		})
   end,
 }
