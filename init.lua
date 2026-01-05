@@ -85,6 +85,7 @@ else
 	vim.opt.clipboard = 'unnamedplus'
 end
 
+require("config.easy-actions") 	  -- (lua/config/easy-actions.lua) user friendly selections and mouse
 require("config.venv-selector") 	-- (lua/config/venv-selector.lua) selects correct python venv
 require("config.first-keymaps")  	-- Key mappings (lua/config/first-keymaps.lua)
 require("config.lazy")          	-- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]

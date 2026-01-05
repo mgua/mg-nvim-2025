@@ -17,7 +17,7 @@
    - Run the installer (keep default path `C:\msys64`)
    - Open "MSYS2 MSYS" from Start Menu and run these commands in sequence:
      ```bash
-     # Update package database and base packages
+     # Update package ypackages
      pacman -Syu
      # Close the terminal when asked and reopen "MSYS2 MSYS", then run:
      pacman -Su
@@ -315,8 +315,11 @@ nvim starts in **normal mode**
 
 HJKL control cursor movement in normal mode and visual mode
 i from normal mode goes to **insert mode** 
-v from normal mode goes to **visual mode** (this is the selection mode)
-<ALT> +mouse click goes to **visual block mode** (column select mode)
+v from normal mode goes to **visual mode** (this is the char selection mode)
+V from normal mode goes to **v-line visual mode** (this is the line selection mode)
+
+<ALT>+mouse click goes to **visual block mode** (column select mode) 
+(traditionally this was associated to CTRL-V, conflicting with clipboard paste)
 
 u from normal mode performs UNDO
 <CTRL>-R from normal mode performs REDO
