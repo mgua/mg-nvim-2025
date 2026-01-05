@@ -7,8 +7,8 @@
 -- .bo. are the buffer scope
 -- see https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
 --
--- important: some keymappings are defined inside the plugin configs, 
--- like in the 350_hex.lua plugin where 
+-- important: some keymappings are defined inside the plugin configs,
+-- like in the 350_hex.lua plugin where
 
 local map = vim.keymap.set
 
@@ -35,7 +35,7 @@ else	-- non windows
   map('n', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
   map('n', '<leader>C', '"+yy', { desc = 'Copy line to clipboard' })
   map('n', '<leader>c', '"+yy', { desc = 'Copy line to clipboard' })
-  
+
   map('v', '<leader>y', require('osc52').copy_visual, {expr = true, desc = 'osc.copy visual mode' })
   map('v', '<leader>yy', '<leader>y_', {remap = true, desc = 'yank to _' })
   map('v', '<leader>C', '"+y', { desc = 'Copy selection to clipboard' })
@@ -78,18 +78,23 @@ map('n', '<leader>ml', '<cmd>diffget LOCAL<cr>', { desc = 'Get from LOCAL (left)
 map('n', '<leader>mb', '<cmd>diffget BASE<cr>', { desc = 'Get from BASE (middle)' })
 map('n', '<leader>mr', '<cmd>diffget REMOTE<cr>', { desc = 'Get from REMOTE (right)' })
 map('n', '<leader>md', '<cmd>diffupdate REMOTE<cr>', { desc = 'Update diff markers highlights' })
-map('n', ']c', ']c', { desc = 'Next conflict' })        -- default but desc is cool 
+map('n', ']c', ']c', { desc = 'Next conflict' })        -- default but desc is cool
 map('n', '[c', '[c', { desc = 'Previous conflict' })    -- default but desc is cool
 
 
--- some keymappings are defined in 350_hex.lua hexedit/hexview plugin
+-- some keymaps are defined in 350_hex.lua hexedit/hexview plugin
 --   <leader>h
 --   <leader>h
 --   <leader>h
 
--- some keymappings are working by default, like 
---      <CTRL><HOME> go to beginning 
---      and 
+
+-- some keymaps are defined in custom/plugins/050_gitsigns.lua: <leader>h[srSupb]
+--   Stage|reset hunk, stage hunk|buffer, preview hunk, blame line
+
+
+-- some keymaps are working by default, like
+--      <CTRL><HOME> go to beginning
+--      and
 --      <CTRL><END> go to end of file
 
 return {}

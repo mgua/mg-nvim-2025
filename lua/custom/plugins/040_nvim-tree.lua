@@ -27,7 +27,7 @@ return {
 	vim.notify('loading nvim-tree...', vim.log.levels.INFO)
 	require("nvim-tree").setup({
 		sort = { sorter = "case_sensitive", },
-		view = { width = 30, },
+		view = { width = 30, cursorline = true },
 		renderer = {
           group_empty = true,
           highlight_git = true,

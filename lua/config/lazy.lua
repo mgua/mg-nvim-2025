@@ -27,16 +27,19 @@ return require('lazy').setup({
 
   { 'echasnovski/mini.icons', version = false },  -- mini icons see https://github.com/echasnovski/mini.icons
 
-  
+
   -- File Explorer: see nvim-tree in custom/plugins
   -- tresitter: see in custom/plugins
   -- mason: see in custom/plugins
-  -- startify: see in custom/plugins
-  
+  -- startify: see in custom/plugi\:wns
+
+
+
+
 
   {
     "folke/which-key.nvim",
-    -- WhichKey is a useful plugin that displays a popup with possible key bindings 
+    -- WhichKey is a useful plugin that displays a popup with possible key bindings
     -- of the command you started typing. https://github.com/folke/which-key.nvim
     event = "VeryLazy",
     --	init = function()
@@ -45,8 +48,14 @@ return require('lazy').setup({
     --end,
     opts = {
         -- your configuration comes here
-        triggers = {{ "<leader>", mode = { "n", "v" } },}    -- normal and visual mode
+        triggers = {
+          { "<leader>", mode = { "n", "v" } },    -- normal and visual mode
         },
+        spec = {
+          { "<leader>h", group = "Git hunks (gitsigns)" },
+          { "<leader>m", group = "MergeDiff/Markdown" },
+        },
+    },
     keys = {
       {
         "<leader>?",
@@ -63,7 +72,7 @@ return require('lazy').setup({
     "ibhagwan/fzf-lua",
     -- lightning fast search for files
     -- https://github.com/ibhagwan/fzf-lua
-    dependencies = { 
+    dependencies = {
       "nvim-tree/nvim-web-devicons",
       "echasnovski/mini.icons"
     },
@@ -103,6 +112,8 @@ return require('lazy').setup({
   },
 
   -- and now proceed to import all the custom/plugins/*.lua plugins (in lazy format)
-  { import = 'custom.plugins' }, 
+  { import = 'custom.plugins' },
 
 })
+
+

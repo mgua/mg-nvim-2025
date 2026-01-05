@@ -26,25 +26,27 @@ return {
             opts.buffer = bufnr
             vim.keymap.set(mode, l, r, opts)
           end
-          -- Navigation
-          map('n', ']c', function()
+          -- Navigation (in git mergetool, you choose changes from possible local or remote origin)
+          map('n', ']c', function()   -- next change (hunk)
             if vim.wo.diff then return ']c' end
             vim.schedule(function() gs.next_hunk() end)
             return '<Ignore>'
           end, {expr=true})
-          map('n', '[c', function()
+          map('n', '[c', function()   -- previous change (hunk)
             if vim.wo.diff then return '[c' end
             vim.schedule(function() gs.prev_hunk() end)
             return '<Ignore>'
           end, {expr=true})
           -- Actions
-          map('n', '<leader>hs', gs.stage_hunk)
-          map('n', '<leader>hr', gs.reset_hunk)
-          map('n', '<leader>hS', gs.stage_buffer)
-          map('n', '<leader>hu', gs.undo_stage_hunk)
-          map('n', '<leader>hp', gs.preview_hunk)
-          map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+          map('n', '<leader>hs', gs.stage_hunk, {desc='Git: Stage hunk'})
+          map('n', '<leader>hr', gs.reset_hunk, {desc='Git: Reset hunk'})
+          map('n', '<leader>hS', gs.stage_buffer, {desc='Git: Stage buffer'})
+          map('n', '<leader>hu', gs.undo_stage_hunk, {desc='Git: Undo stage hunk'})
+          map('n', '<leader>hp', gs.preview_hunk, {desc='Git: Preview hunk'})
+          map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc='Git: Blame line (full)'})
         end
       })
     end
   }
+
+

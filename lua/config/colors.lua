@@ -65,5 +65,13 @@ vim.api.nvim_set_hl(0, '@markup.link', { fg = '#CE9178' })
 vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#ff8800', fg = '#000000', bold = true })
 
 
+-- nvtree colors
+-- Opened folder
+vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', { fg = '#9CDCFE', bg = '#3a3a5a', bold = true, })  -- current line
+vim.api.nvim_set_hl(0, 'NvimTreeOpenedFile', { fg = '#00ff88', bold = true })                     -- Opened file highlight
+vim.api.nvim_set_hl(0, 'NvimTreeFolderName', { fg = '#7aa2f7' })                                  -- Folder name
+vim.api.nvim_set_hl(0, 'NvimTreeOpenedFolderName', { fg = '#7aa2f7' })                            -- Opened folder
+
+
 return {} -- Return empty table for module exports
 

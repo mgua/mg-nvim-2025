@@ -3,7 +3,10 @@
 # in dealing with files in this (and nested) folders
 # not all the editors honor these settings, but most do
 #
-
+# use :retab to convert tabs to spaces
+# use :set noexpandtab and then :retab! to replaces spaces with tabs
+#
+# root = true tells editor not to search for further editorconfig files in parent folders
 root = true
 
 [*]
@@ -14,6 +17,13 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
+[*.py]
+indent_style = space
+trim_trailing_whitespace = true
+
+[*.lua]
+indent_size = 2
+
 [*.md]
 trim_trailing_whitespace = false
 
@@ -21,9 +31,12 @@ trim_trailing_whitespace = false
 indent_size = 2
 
 [Makefile]
+# tabs are required in makefiles
 indent_style = tab
 
 [*.ps1]
+# end_of_line is lf or crlf.
+# ps1 is for windows so lets keep crlf
 end_of_line = crlf
 indent_size = 4
 
