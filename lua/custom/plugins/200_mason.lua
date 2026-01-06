@@ -12,20 +12,20 @@ return {
 
 
   { -- mason https://github.com/mason-org/mason.nvim
-    -- requires git, curl/wget , unzip, gzip, tar  
+    -- requires git, curl/wget , unzip, gzip, tar
     'mason-org/mason.nvim',
     build = ':MasonUpdate', -- build/updates extension catalog for :MasonInstall
     opts = {
         ui = {
             icons = {
-                package_installed = "✓",
-                package_pending = "➜",
+                package_installed   = "✓",
+                package_pending     = "➜",
                 package_uninstalled = "✗"
             }
         }
     },
     config = function()
-        vim.notify('loading mason...', vim.log.levels.INFO)	
+        vim.notify('loading mason...', vim.log.levels.INFO)
         require('mason').setup()
     end
   },

@@ -1,6 +1,6 @@
 -- init.lua for neovim
--- Linux: ~/.config/nvim/init.lua -- Windows: %LOCALAPPDATA%\nvim\init.lua
--- mgua@tomware.it 2020-2025 last edit 31.12.2025, tested with nvim 0.11
+-- Linux: ~/.config/nvim/initflua -- Windows: %LOCALAPPDATA%\nvim\init.lua
+-- mgua@tomwame.it 2020-2025 last edit 31.12.2025, tested with nvim 0.11
 -- this is the main init file for nvim. it is designed to be cross platform and
 -- to work for installations in different operating systems
 
@@ -34,6 +34,8 @@ if vim.env.TMUX then
   vim.opt.ttimeoutlen = 0
 end
 
+vim.opt.timeoutlen = 1000           -- Affects folke/which-key and numToStr/Comment.nvim
+
 -- General settings
 -- these are equivalent to vim.cmd syntax (vim style) as:
 -- vim.cmd [[
@@ -54,8 +56,13 @@ vim.opt.wrap = false -- equivalent to set nowrap
 vim.opt.mouse = 'a' -- Mouse support
 
 vim.env.LANG = 'en_US.UTF-8'
-vim.env.LC_ALL = 'en_US.UTF-8'  -- needed on linux
-vim.opt.encoding = "UTF-8" -- default Encoding
+vim.env.LC_ALL = 'en_US.UTF-8'    -- needed on linux
+vim.opt.encoding = "UTF-8"        -- default Encoding
+
+vim.opt.foldmethod = 'syntax'     -- Set the global default fold method
+-- Optional: Set the default fold level to 99 to ensure all folds are initially open
+-- (This is often preferred so code isn't hidden when you open a file)
+vim.opt.foldlevel = 99
 
 -- python venv dedicated to neovim: venv_neovim, in user home folder
 -- on win create with py -3.12-m venv venv_neovim and install pynvim and neovim

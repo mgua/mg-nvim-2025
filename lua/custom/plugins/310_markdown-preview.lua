@@ -6,15 +6,15 @@ return {
   -- Markdown Preview you need npm and yarn
   -- prereqs for windows: winget install  OpenJS.NodeJS.LTS
   --                      npm install -g yarn
-  -- 
+  --
   -- this code has been improved by mgua@tomware.it and claude, because
   -- To make it work on Windows, I had to open a powershell window, then go to
   -- C:\Users\<USER>\AppData\Local\nvim-data\lazy\markdown-preview.nvim\app
-  -- then run 
+  -- then run
   --    yarn install
   -- After this, from neovim, open a markdown (.md) file and give command
   -- :Markdown-Preview had it working (CAUTION: a .md file NEEDS to be loaded)
-    
+  --
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
     ft = { 'markdown' },
@@ -95,7 +95,7 @@ return {
       vim.g.mkdp_page_title = '「${name}」'
     end,
   },
-  
+
 }
 
 

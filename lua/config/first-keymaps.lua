@@ -22,6 +22,11 @@ map("n", "+t", "gt", { desc = "Next tab" })         -- for italian keyboard ]
 map("n", "èb", "<cmd>bprev<CR>", { desc = "Previous buffer" })  -- for italian key [
 map("n", "+b", "<cmd>bnext<CR>", { desc = "Next buffer" })      -- for italian key ]
 
+-- folds. there is a whole set of keys for controlling folding of text portions, like functions, markdown paragraph etc
+-- typically fold operations are performed in normal or in visual mode
+-- z key is the prefix for fold actions
+-- fold metadata are stored
+
 
 -- windows movement
 map('n', '<C-h>', '<C-w>h')  -- move left

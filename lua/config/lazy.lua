@@ -1,6 +1,35 @@
 -- lazy.lua (config/lazy)
 -- Linux: ~/.config/nvim/lua/config/lazy.lua
 -- Windows: %LOCALAPPDATA%\nvim\lua\config\lazy.lua
+--
+-- the lazy.setup function expects a comma separated list for each plugin it has to install.
+-- minimally this list contains a single element, which is the plugin name, expressed as string
+-- possible other values are
+--    lazy = true|false
+--    priority = integervalue (100, 1000, ...)
+--    event = 'string'
+--    dependencies = list
+--    config = function()   -- inside config function we may have a require('plugin-name').setup({...})
+--    opts = { ... }
+--    keys = { ... }
+--    version =
+--
+--
+-- other potentially interesting plugins: (see https://www.youtube.com/watch?v=f-G6kc1dzm0 )
+-- folke/flash: https://github.com/folke/flash.nvim		fast movement (recommended)
+-- j-hui/fidget
+-- vimpostor/vim-tipipeline
+-- norcalli/nvim-colorizer
+-- christoomey/vim-tmux-navigator
+-- nvim-treesitter/textobjects
+-- abecodes/tabout
+-- numToStr/Comment
+-- Wansmer/treesj
+-- windwp/nvim-autopairs
+-- nvim-mini/mini.surround
+--
+
+
 
 return require('lazy').setup({
   -- UI Enhancements
@@ -27,45 +56,6 @@ return require('lazy').setup({
 
   { 'echasnovski/mini.icons', version = false },  -- mini icons see https://github.com/echasnovski/mini.icons
 
-
-  -- File Explorer: see nvim-tree in custom/plugins
-  -- tresitter: see in custom/plugins
-  -- mason: see in custom/plugins
-  -- startify: see in custom/plugi\:wns
-
-
-
-
-
-  {
-    "folke/which-key.nvim",
-    -- WhichKey is a useful plugin that displays a popup with possible key bindings
-    -- of the command you started typing. https://github.com/folke/which-key.nvim
-    event = "VeryLazy",
-    --	init = function()
-    --  vim.o.timeout = true
-    --  vim.o.timeoutlen = 300
-    --end,
-    opts = {
-        -- your configuration comes here
-        triggers = {
-          { "<leader>", mode = { "n", "v" } },    -- normal and visual mode
-        },
-        spec = {
-          { "<leader>h", group = "Git hunks (gitsigns)" },
-          { "<leader>m", group = "MergeDiff/Markdown" },
-        },
-    },
-    keys = {
-      {
-        "<leader>?",
-        function()
-          require("which-key").show({ global = false })
-        end,
-        desc = "Buffer Local Keymaps (which-key)",
-      },
-    },
-  },
 
 
   {

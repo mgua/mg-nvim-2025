@@ -15,28 +15,25 @@ return {
     -- npm install -g tree-sitter-cli
     -- linux prerequirements: apt install build-essentials
     -- git tar curl node.js
+    --
+    -- see :help nvim-treesitter.txt
+    -- CAUTION: on github, the treesitter repo has the "old" master branch which is not (jan 2026) legacy. new
+    -- code is in the main branch, but it is a full rewrite, and documentation is not updated. TJ Devries video
+    -- is specific for the now legacy version
+    -- here we try to make the new version working, but configurations apparently have to be adapted
+    --
+    --
     'nvim-treesitter/nvim-treesitter',
     lazy = false,    -- treesitter plugin does not support lazy-loading
-    build = ':TSUpdate',
-
-    priority = 100, -- load before other plugins
-    -- event = {'BufReadPost', 'BufNewFile' },
-    -- dependencies = {
-    --    'nvim-treesitter/nvim-treesitter-textobjects',             -- Optional but very useful
-    --    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    -- },--
-    --
+    build = ':TSUpdate',  -- build is what should happen after installation
     --
     --  QUESTO STRONXZO NON FUNZIONA
     --
-    config = function()
+    config = function() -- the config function is a good place where to put code that should be run every launch
         vim.notify('loading treesitter...', vim.log.levels.INFO)
-        myparsers = { "lua","python","vim","vimdoc","powershell","bash","markdown","json","yaml"}
+        myparsers = { "html","css","c","lua","python","vim","vimdoc","powershell","bash","markdown","markdown_inline","json","yaml"}
         require('nvim-treesitter').install(myparsers)
-        vim.api.nvim_create_autocmd('FileType', {
-          pattern = myparsers,
-          callback = function() vim.treesitter.start() end,
-        })
+        -- see treesitter related code in config/ts.lua
     end,
 }
 
