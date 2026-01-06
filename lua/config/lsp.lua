@@ -25,37 +25,74 @@ require('mason-lspconfig').setup({
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
-        local bufopts = { noremap = true, silent = true, buffer = ev.buf }
+        local opts = { noremap = true, silent = true, buffer = ev.buf }
 
-        -- Common LSP keymaps
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
-        vim.keymap.set('n', '<leader>f', function()
-            vim.lsp.buf.format({ async = true })
-        end, bufopts)
+        opts.desc = "Go to Declaration"
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+
+        opts.desc = "Go to Definition"
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+
+        opts.desc = "Hover Documentation"
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+
+        opts.desc = "Go to Implementation"
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+
+        opts.desc = "Rename Symbol"
+        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+
+        opts.desc = "Code Action"
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+
+        opts.desc = "Find References"
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+        opts.desc = "Previous Diagnostic"
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+
+        opts.desc = "Next Diagnostic"
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+
+        opts.desc = "Format Code"
+        vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
+
     end,
 })
 
 
 
---- Optional: Server-specific configurations ---
--- If you need custom settings for specific servers, configure them here:
+--- Optional: Server-specific configurations, with .sqls.yml in project root ---
+--[[
+# .sqls.yml template
+# put such a file in your project root, with credentials. this will be used by sqls LSP server
+#
+
+connections:
+  - alias: postgres_dev
+    driver: postgresql
+    data_source_name: postgresql://user:password@host:port/dbname?sslmode=disable
+    # For your PostgreSQL connection
+
+  - alias: mariadb_dev
+    driver: mysql
+    data_source_name: user:password@tcp(host:port)/dbname
+    # For your MariaDB/MySQL connection
+
+  - alias: mssql_dev
+    driver: mssql
+    data_source_name: sqlserver://user:password@host:port?database=dbname
+    # For your MSSQL/SQL Server connection
+
+# 'driver' must be 'postgresql', 'mysql', 'mssql', etc.
+--]]
+
 local lspconfig = require('lspconfig')
-lspconfig.sqls.setup({
-     -- custom sqls settings (or use .sqls.yml in project root)
-})
+-- lspconfig.sqls.setup({
+--      -- custom sqls settings (or use .sqls.yml in project root see .sqls.yml.template)
+-- })
 
 
--- You can manually add a basic setup here, but `mason-lspconfig.setup_handlers` 
--- above is the modern way to handle this. 
--- The setup above is sufficient! 
 
 print("LSP configuration loaded.")
 

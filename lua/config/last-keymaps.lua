@@ -15,6 +15,8 @@
 
 local map = vim.keymap.set
 
+vim.notify('  last-keymaps...', vim.log.levels.INFO)
+
 local osc = require('osc52')  -- This require is fine as it's a plugin not required anymore on windows
 
 -- ----------------- COPY to clipboard ----------------------

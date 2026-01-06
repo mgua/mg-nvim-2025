@@ -39,8 +39,8 @@ vim.opt.timeoutlen = 1000           -- Affects folke/which-key and numToStr/Comm
 -- General settings
 -- these are equivalent to vim.cmd syntax (vim style) as:
 -- vim.cmd [[
--- 	set cc=90	" column where to put vertical bar
--- 	set shiftwidth=4
+--  set cc=90 " column where to put vertical bar
+--  set shiftwidth=4
 -- ]]
 
 vim.opt.number = true
@@ -77,7 +77,7 @@ end
 vim.opt.list = true
 vim.opt.listchars = {
     eol = "⏎",      -- Unicode for 'end of line'
-    tab = "▸─",     -- Unicode for 'tab' (arrow and dash)
+    tab = "»─",     -- Unicode for 'tab' (arrow and dash) alternative: » (Right-Pointing Double Angle Quotation Mark U+00BB)
     trail = "·",    -- Unicode for 'trailing space'
     nbsp = "⎵",     -- Unicode for 'non-breaking space'
     space = "·"     -- Unicode for 'space'
@@ -87,19 +87,19 @@ vim.opt.listchars = {
 -- Automatically send anything yanked to the default register (") to the system clipboard register (+).
 -- this is draft and may require improvements/cross platform adjustments
 if vim.fn.has('win32') == 1 then
-	vim.opt.clipboard = 'unnamedplus'
+  vim.opt.clipboard = 'unnamedplus'
 else
-	vim.opt.clipboard = 'unnamedplus'
+  vim.opt.clipboard = 'unnamedplus'
 end
 
-require("config.easy-actions") 	  -- (lua/config/easy-actions.lua) user friendly selections and mouse
-require("config.venv-selector") 	-- (lua/config/venv-selector.lua) selects correct python venv
-require("config.first-keymaps")  	-- Key mappings (lua/config/first-keymaps.lua)
-require("config.lazy")          	-- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
-require("config.colors") 	        -- (lua/config/colors.lua) style colors consistent with vscode, loaded after plugins
-require("config.lsp") 	            -- (lua/config/lsp.lua) mason/lsp configs [post load]
-require("config.ts") 	            -- (lua/config/ts.lua) treesitter_configs [post load]
-require("config.last-keymaps")  	-- (lua/config/last-keymaps.lua) final keymaps [post load]
+require("config.easy-actions")    -- (lua/config/easy-actions.lua) user friendly selections and mouse
+require("config.venv-selector")   -- (lua/config/venv-selector.lua) selects correct python venv
+require("config.first-keymaps")   -- Key mappings (lua/config/first-keymaps.lua)
+require("config.lazy")            -- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
+require("config.colors")          -- (lua/config/colors.lua) style colors consistent with vscode, loaded after plugins
+require("config.lsp")             -- (lua/config/lsp.lua) mason/lsp configs [post load]
+require("config.ts")              -- (lua/config/ts.lua) treesitter_configs [post load]
+require("config.last-keymaps")    -- (lua/config/last-keymaps.lua) final keymaps [post load]
 
 
 -- this is the end of neovim init.lua

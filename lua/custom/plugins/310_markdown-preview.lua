@@ -94,7 +94,8 @@ return {
       vim.g.mkdp_echo_preview_url = 1
       vim.g.mkdp_page_title = '「${name}」'
       -- here is where I should put the key mapping <leader>mp associating it with the command :MarkdownPreview
-      vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreview<CR>", { desc = "Open Markdown Preview" })
+      -- actually this is not needed because the keymapping <leader>mp is defined in last-keymaps.lua
+      -- vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreview<CR>", { desc = "Open Markdown Preview" })
     end,
   },
 
