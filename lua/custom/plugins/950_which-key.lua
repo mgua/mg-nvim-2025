@@ -41,7 +41,7 @@ return {
       },
       spec = {
         { "<leader>h", group = "Git hunks (gitsigns)" },
-        { "<leader>m", group = "MergeDiff/Markdown" },
+        { "<leader>m", group = "MergeDiff/Markdown" },  -- nvimdiff(git mergetool)/markdown-preview
         { "<leader>g", group = "LazyGit/LSP-goto/Comment" },
       },
   },

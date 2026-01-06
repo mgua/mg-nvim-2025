@@ -13,7 +13,7 @@ return {
   -- then run
   --    yarn install
   -- After this, from neovim, open a markdown (.md) file and give command
-  -- :Markdown-Preview had it working (CAUTION: a .md file NEEDS to be loaded)
+  -- :MarkdownPreview had it working (CAUTION: a .md file NEEDS to be loaded)
   --
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
@@ -93,6 +93,8 @@ return {
       vim.g.mkdp_browser = ''  -- Use default browser
       vim.g.mkdp_echo_preview_url = 1
       vim.g.mkdp_page_title = '「${name}」'
+      -- here is where I should put the key mapping <leader>mp associating it with the command :MarkdownPreview
+      vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreview<CR>", { desc = "Open Markdown Preview" })
     end,
   },
 
