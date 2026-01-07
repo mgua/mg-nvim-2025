@@ -58,16 +58,36 @@ return require('lazy').setup({
 
 
 
-  {
+{
     "ibhagwan/fzf-lua",
-    -- lightning fast search for files
-    -- https://github.com/ibhagwan/fzf-lua
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "echasnovski/mini.icons"
     },
-    opts = {}
+    config = function()
+      require('fzf-lua').setup({
+        fzf_bin = 'fzf',
+        fzf_opts = {
+          ['--layout'] = 'reverse',
+          ['--info'] = 'inline',
+          ['--header-lines'] = '0',       -- Don't treat any lines as header
+          ['--no-header'] = '',           -- No header text
+          ['--cycle'] = '',               -- Allow cycling through list
+          ['--bind'] = 'ctrl-n:down,ctrl-p:up,ctrl-j:down,ctrl-k:up,tab:toggle+down',
+        },
+        buffers = {
+          ignore_current_buffer = false,
+          sort_lastused = true,
+          fzf_opts = {
+            ['--header-lines'] = '0',     -- Also set specifically for buffers
+          },
+        },
+      })
+      vim.keymap.set('n', '<leader>b', require('fzf-lua').buffers, { desc = 'Buffers' })
+    end,
   },
+
+
 
 
   { -- Set lualine as statusline
