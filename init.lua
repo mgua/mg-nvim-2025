@@ -64,6 +64,17 @@ vim.opt.foldmethod = 'syntax'     -- Set the global default fold method
 -- (This is often preferred so code isn't hidden when you open a file)
 vim.opt.foldlevel = 99
 
+ -- from checkhealth suggestion, to remove warnings
+-- opts.rocks.hererocks = false
+-- opts.rocks.enabled = false
+-- these settings are to be placed in lazy.lua
+-- when checkhealth says opts.rocks.enabled = false, it means:
+--      require('lazy').setup(
+--        { --[[ plugins list ]] },
+--        { rocks = { enabled = false } }  -- this is "opts"
+--      )--
+
+
 -- python venv dedicated to neovim: venv_neovim, in user home folder
 -- on win create with py -3.12-m venv venv_neovim and install pynvim and neovim
 if vim.fn.has('win32') == 1 then

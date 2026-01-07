@@ -17,7 +17,7 @@
 --
 vim.notify('ts.lua additional setup...', vim.log.levels.INFO)
 
-myparsers = { "html","css","c","lua","python","vim","vimdoc","powershell","bash","markdown","markdown_inline","json","yaml"}
+myparsers = { "html","css","c","lua","python","vim","vimdoc","powershell","bash","markdown","markdown_inline","json","yaml","awk","perl"}
 vim.api.nvim_create_autocmd('FileType', {
     pattern = myparsers,
     callback = function()

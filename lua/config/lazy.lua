@@ -31,12 +31,9 @@
 
 
 
-return require('lazy').setup({
-  -- UI Enhancements
-  { 'nvim-tree/nvim-web-devicons', lazy = false,  },
-    --  { 'folke/lazy.nvim', version = false },
-    --  { 'LazyVim/LazyVim', version = false },
+pluginlist = {    -- here the arguments are pluginlist, opts
 
+  { 'nvim-tree/nvim-web-devicons', lazy = false,  },
 
   { -- adds a small square next to hex color codes
     'brenoprata10/nvim-highlight-colors',
@@ -56,9 +53,6 @@ return require('lazy').setup({
 
   { 'echasnovski/mini.icons', version = false },  -- mini icons see https://github.com/echasnovski/mini.icons
 
-
-
-
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -71,7 +65,6 @@ return require('lazy').setup({
       },
     },
   },
-
 
   {  -- Theme
     'folke/tokyonight.nvim',
@@ -90,9 +83,21 @@ return require('lazy').setup({
     end,
   },
 
-  -- and now proceed to import all the custom/plugins/*.lua plugins (in lazy format)
-  { import = 'custom.plugins' },
 
-})
+  { import = 'custom.plugins' },  -- IMPORTANT: Import all plugins from lua/custom/plugins/*.lua
+
+
+}                   -- this closes the plugin list, which is the first argument to lazy.setup
+
+
+options = {         -- and this is the second argument to lazy.setup
+  rocks = {         -- these settings follow recommendations from :checkhealth about lua package manager
+    enabled = false,
+    hererocks = false, 
+    }, 
+  }
+
+return require('lazy').setup( pluginlist , options )
+
 
 

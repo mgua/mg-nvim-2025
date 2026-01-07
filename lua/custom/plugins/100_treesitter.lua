@@ -49,7 +49,7 @@ return {
             compilers = {         -- 2. Explicitly define the compiler preference order
                 "gcc",  -- Tries your MSYS2 GCC first
                 -- "clang",
-                -- "cl",   -- We intentionally leave "cl" (MSVC) as last choice
+                "cl",   -- We intentionally leave "cl" (MSVC) as last choice
             },
         },
     },
