@@ -8,7 +8,6 @@
 --    you can launch treesitter in the current buffer with
 --                :lua vim.treesitter.start()
 
-return {
     -- treesitter https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file
     -- windows prerequirements: winget install Microsoft.VisualStudio.2022.BuildTools OR winget install zig.zig
     -- winget install  OpenJS.NodeJS.LTS
@@ -23,17 +22,50 @@ return {
     -- here we try to make the new version working, but configurations apparently have to be adapted
     --
     --
+    -- see other treesitter related code in config/ts.lua
+
+
+return {
     'nvim-treesitter/nvim-treesitter',
-    lazy = false,    -- treesitter plugin does not support lazy-loading
-    build = ':TSUpdate',  -- build is what should happen after installation
-    --
-    --  QUESTO STRONXZO NON FUNZIONA
-    --
-    config = function() -- the config function is a good place where to put code that should be run every launch
+    branch = 'main',
+    lazy = false,
+    build = ':TSUpdate',
+
+    opts = {
+        highlight = {
+            enable = true, -- Enable syntax highlighting
+        },
+        indent = {
+            enable = true,  -- Enable treesitter-based indentation
+        },
+
+        install = {
+            ensure_installed = {  -- 1. List the parsers you want installed/updated
+                "html", "css", "c", "lua", "python", "vim",
+                "vimdoc", "powershell", "bash", "markdown",
+                "markdown_inline", "json", "yaml"
+            },
+
+            compilers = {         -- 2. Explicitly define the compiler preference order
+                "gcc",  -- Tries your MSYS2 GCC first
+                -- "clang",
+                -- "cl",   -- We intentionally leave "cl" (MSVC) as last choice
+            },
+        },
+    },
+
+    config = function(_, opts)
         vim.notify('loading treesitter...', vim.log.levels.INFO)
-        myparsers = { "html","css","c","lua","python","vim","vimdoc","powershell","bash","markdown","markdown_inline","json","yaml"}
-        require('nvim-treesitter').install(myparsers)
-        -- see treesitter related code in config/ts.lua
+
+        -- Call the setup function with the options defined above
+        -- Old nvim-treesitter branch was relying on a configs.lua setup file
+        -- which is not needed anymore now
+        -- there is a config.lua in the folder  (not configs.lua)
+        --    C:\Users\mgua\AppData\Local\nvim-data\lazy\nvim-treesitter\lua\nvim-treesitter
+        -- documentation says that you should invoke
+        --    require'nvim-treesitter'.setup()
+
+        require('nvim-treesitter').setup(opts)
     end,
 }
 
