@@ -9,11 +9,17 @@
 --                :lua vim.treesitter.start()
 
     -- treesitter https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file
-    -- windows prerequirements: winget install Microsoft.VisualStudio.2022.BuildTools OR winget install zig.zig
-    -- winget install  OpenJS.NodeJS.LTS
-    -- npm install -g tree-sitter-cli
-    -- linux prerequirements: apt install build-essentials
-    -- git tar curl node.js
+    --
+    -- windows prerequirements:
+    --    -  winget install Microsoft.VisualStudio.2022.BuildTools
+    --  OR
+    --    -  winget install zig.zig
+    --  OR
+    --    -  winget install gcc
+    -- - winget install  OpenJS.NodeJS.LTS
+    -- - npm install -g tree-sitter-cli
+    --
+    -- linux prerequirements: apt install build-essentials git tar curl node.js
     --
     -- see :help nvim-treesitter.txt
     -- CAUTION: on github, the treesitter repo has the "old" master branch which is not (jan 2026) legacy. new
@@ -23,7 +29,13 @@
     --
     --
     -- see other treesitter related code in config/ts.lua
-
+    --
+    -- some aspects here may be relevant (post by YourBroFred)
+    --  https://www.reddit.com/r/neovim/comments/1l3z4j4/help_with_new_treesitter_setup_in_neovim_default/?chainedPosts=t3_1bj5a4j
+    -- see checkhealth nvim-treesitter
+    --
+    --  in the following post folke says zig can not be used anymore
+    --  https://www.reddit.com/r/neovim/comments/1pen2ot/comment/nsdxna4/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 
 return {
     'nvim-treesitter/nvim-treesitter',
@@ -47,9 +59,14 @@ return {
             },
 
             compilers = {         -- 2. Explicitly define the compiler preference order
-                "gcc",  -- Tries your MSYS2 GCC first
+                -- this setting is probably not used by current treesitter
+                -- because the error message always complains about cl being unavailable, whatever we write here
+                -- see also https://docs.rs/cc/latest/cc/#compile-time-requirements
+                "zig",  -- Tries the new zig first (winget install zig.zig)
+                "gcc",  -- Then MSYS2 GCC (where.exe gcc)
+                "C:/ProgramData/mingw64/mingw64/bin/gcc.exe",  -- gcc with full path
                 -- "clang",
-                "cl",   -- We intentionally leave "cl" (MSVC) as last choice
+                -- "cl",   -- We intentionally leave "cl" (MSVC) as last choice
             },
         },
     },

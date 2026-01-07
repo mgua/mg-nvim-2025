@@ -12,7 +12,7 @@
    winget install Git.Git
    ```
 
-3. Install C compiler (required for Treesitter):
+3a. Install C compiler (required for Treesitter):
    - Download MSYS2 from https://www.msys2.org/
    - Run the installer (keep default path `C:\msys64`)
    - Open "MSYS2 MSYS" from Start Menu and run these commands in sequence:
@@ -36,6 +36,46 @@
    
    If using microsoft visual studio, the folder containing cl.exe should be in the path 
    "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64"
+
+3b. Install MS compiler and dev tools
+    new version of treesitter requires ms compile tools on windows
+    this unfortunately is quite a large toolkit that requires approx 20Gbytes
+    from this url you can download the Microsoft Visual Studio 2022 community edition installer
+        https://visualstudio.microsoft.com/visual-cpp-build-tools/?utm_source
+    from that i choose the console tools cl, 
+```
+~#@❯ cat .\.vsconfig
+{
+  "version": "1.0",
+  "components": [
+    "Microsoft.VisualStudio.Component.CoreEditor",
+    "Microsoft.VisualStudio.Workload.CoreEditor",
+    "Microsoft.Net.Component.4.8.SDK",
+    "Microsoft.Net.Component.4.7.2.TargetingPack",
+    "Microsoft.VisualStudio.Component.Roslyn.Compiler",
+    "Microsoft.Component.MSBuild",
+    "Microsoft.VisualStudio.Component.TextTemplating",
+    "Microsoft.VisualStudio.Component.VC.CoreIde",
+    "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+    "Microsoft.VisualStudio.Component.Windows11SDK.26100",
+    "Microsoft.VisualStudio.Component.VC.ATL",
+    "Microsoft.VisualStudio.Component.VC.ATLMFC",
+    "Microsoft.VisualStudio.Component.VC.Redist.14.Latest",
+    "Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core",
+    "Microsoft.VisualStudio.ComponentGroup.WebToolsExtensions.CMake",
+    "Microsoft.VisualStudio.Component.VC.CMake.Project",
+    "Microsoft.VisualStudio.Component.Vcpkg",
+    "Microsoft.VisualStudio.Component.VC.CLI.Support",
+    "Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset",
+    "Microsoft.VisualStudio.Component.VC.Llvm.Clang",
+    "Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang",
+    "Microsoft.VisualStudio.Component.Windows11SDK.22621",
+    "Microsoft.VisualStudio.ComponentGroup.VC.Tools.142.x86.x64",
+    "Microsoft.VisualStudio.Workload.NativeDesktop"
+  ],
+  "extensions": []
+}
+```
 
 4. Install LazyGit:
    ```powershell
