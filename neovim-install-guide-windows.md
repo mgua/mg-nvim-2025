@@ -12,7 +12,7 @@
    winget install Git.Git
    ```
 
-3a. Install C compiler (required for Treesitter):
+3a. Install C compiler (required for Treesitter): [new treesitter wants MS compiler on win: see 3b.]
    - Download MSYS2 from https://www.msys2.org/
    - Run the installer (keep default path `C:\msys64`)
    - Open "MSYS2 MSYS" from Start Menu and run these commands in sequence:
@@ -34,15 +34,27 @@
      1. Open a new terminal
      2. Run: `gcc --version`
    
-   If using microsoft visual studio, the folder containing cl.exe should be in the path 
-   "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64"
 
-3b. Install MS compiler and dev tools
-    new version of treesitter requires ms compile tools on windows
+3b. Install MS compiler and dev tools:
+    New version of treesitter requires ms compile tools on windows.
     this unfortunately is quite a large toolkit that requires approx 20Gbytes
     from this url you can download the Microsoft Visual Studio 2022 community edition installer
-        https://visualstudio.microsoft.com/visual-cpp-build-tools/?utm_source
-    from that i choose the console tools cl, 
+        [https://visualstudio.microsoft.com/visual-cpp-build-tools/?utm_source]
+        [https://visualstudio.microsoft.com/insiders/]
+    The Microsoft Windows Code Signing PCA 2024.crt certificate could be needed to perform the download 
+    [https://www.microsoft.com/pkiops/certs/Microsoft%20Windows%20Code%20Signing%20PCA%202024.crt]
+
+    [https://visualstudio.microsoft.com/downloads/#title-build-tools-for-visual-studio-2022]
+
+    In the setup wizard choose the console tools cl, msvc++ 142, windows sdk. A minimal setup should be approx 9Gb.
+    When using microsoft visual studio, the folder containing cl.exe should be in the path 
+        ["C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64"]
+    (there is a .bat file in the compiler distribution, taking care of path definition)
+    There should be a smaller file from MS, try to search for
+    the installer for "Build Tools for Visual Studio 2022", community edition [vs_buildtools.exe]
+
+    check also: [https://visualstudio.microsoft.com/downloads/#title-build-tools-for-visual-studio-2022]
+
 ```
 ~#@❯ cat .\.vsconfig
 {
