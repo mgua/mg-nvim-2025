@@ -44,7 +44,7 @@ return {
                 },
                 sorting_strategy = 'ascending',
                 prompt_prefix = '   ',
-                selection_caret = '  ',
+                selection_caret = '> ',     -- added to identify the currently selected option mgua 11.01.2026
                 path_display = { 'truncate' },
                 file_ignore_patterns = {
                     'node_modules',
@@ -80,6 +80,9 @@ return {
                         i = { ['<C-d>'] = actions.delete_buffer },
                         n = { ['dd'] = actions.delete_buffer },
                     },
+                },
+                colorscheme = {   -- theme preview <leader>ft
+                    enable_preview = true,
                 },
             },
         })
@@ -117,6 +120,7 @@ return {
         -- Vim internals
         safe_map('n', '<leader>fh', builtin.help_tags, { desc = 'Help tags' })
         safe_map('n', '<leader>fk', builtin.keymaps, { desc = 'Keymaps' })
+        safe_map('n', '<leader>ft', builtin.colorscheme, { desc = 'Find Colorscheme' })
         safe_map('n', '<leader>fc', builtin.commands, { desc = 'Commands' })
         safe_map('n', '<leader>fC', builtin.command_history, { desc = 'Command history' })
         safe_map('n', '<leader>fm', builtin.marks, { desc = 'Marks' })
@@ -140,3 +144,5 @@ return {
 
     end,
 }
+
+
