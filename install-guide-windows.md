@@ -208,12 +208,11 @@ c:\users\<user>\Appdata\Local\nvim with the contents from github
    git clone https://github.com/mgua/mg-nvim-2025.git .
    ```
 
-1. Create directory structure: (not needed if you git cloned)
+Create directory structure & copy config files: (not needed if you git cloned)
    ```powershell
    New-Item -Path $env:LOCALAPPDATA\nvim\lua\config -ItemType Directory -Force
    ```
-
-2. Copy configuration files: (not needed if you git cloned)
+  Copy configuration files: 
    ```powershell
    # Assuming files are in current directory
    Copy-Item init.lua $env:LOCALAPPDATA\nvim\
@@ -268,6 +267,7 @@ use :Telescope find_files to validate working
    - Consider using "One Half Dark" or "Tokyo Night"
 5. Under "Additional Settings":
    - Enable "Use Unicode UTF-8 for worldwide language support"
+
 
 ## First Launch Setup
 
@@ -363,114 +363,15 @@ After installation, verify these paths exist:
 
 ## key mappings
 
-nvim starts in **normal mode**
+This neovim setup has hundreds of keymapping configurations. 
+Some of these configurations are native in neovim
+Others are in init.lua (like the leader key definition)
+Others are in the plugin setup files, and are plugin specific
+and others are in two keymap config files, to be run at the beginning
+and at the end of the startup process
 
-HJKL control cursor movement in normal mode and visual mode
-i from normal mode goes to **insert mode** 
-v from normal mode goes to **visual mode** (this is the char selection mode)
-V from normal mode goes to **v-line visual mode** (this is the line selection mode)
+In general, the commands map or nmap, imap, vmap show the mappings 
+available in the different editor modes
+See also the user-guide.md file
 
-<ALT>+mouse click goes to **visual block mode** (column select mode) 
-(traditionally this was associated to CTRL-V, conflicting with clipboard paste)
-
-u from normal mode performs UNDO
-<CTRL>-R from normal mode performs REDO
-
-<ESC> goes back to **normal mode**
-: from normal mode goes into **command mode**
-
-:w writes current edit buffer
-:q exit
-:wq! save and exit immediately
-
-in normal mode, yy yanks (copies) the current line to the default clipboard
-in normal mode, p pops (pastes) the default clipboard contents
-
-:/pattern searches for patter. n for next, N for previous. Occurrence count in bottom right
-:87 goes to line 87
-G87 from normal mode goes to line 87
-:1 go to first line
-<CTRL>-O goes back to the previous position in jump list
-:$ go to last line
-:h helptopic opens neovim help.
-When having relative numbers, you can see line distance from current line.
-from normal mode 5yy copies the next 5 lines
-from normal mode 5dd deletes the next 5 lines
-from normal mode dd deletes current line
-from normal mode mk sets marker k (bookmark) at current position. markers can be a..z
-from normal mode 'k goes to marker k (you may see markers list) 
-
-
-cursor movement in normal mode:
-^ beginning of line
-$ end of line
-G to to last line
-gg go to first line
-
-<CTRL>-hjkl (movement keys)
-
-A command combination to copy all the file content:
-<ESC>ggvGy	)goto normal mode, goto 1st line, enter visual mode (select), go to last line, and yank
-
-some dedicated keymaps are plugin specific, as an example <leader>h has some suboptions for hex plugin
-
-
-While in help, undelined links can be opened with mouse double left click or with <CTRL>-]
-to go back use <CTRL>-T or <CTRL>-O
-
-when in multiwindow, use CTRL-ww to cycle across window, from normal mode
-
-
-<leader> is defined as SPACEBAR
-<leader>t toggle file navigator (Nvtreetoggle)
-:
-in normal mode:
-nyy OR n<leader>y OR n<leader>c copies subsequent n lines to clipboard
-(also works from remote sessions over ssh within windows terminal)
-
-in insert mode:
-shift-INS or CTRL-V: paste from clipboard 
-
-<ESC>wq! close with save
-
-
-### window operations
-
-CTRL-w T (move current window in a dedicated TAB page)
-CTRL-W gt / CTRL-W gT (go to previous/next tab page)
-CTRL-W s split current window horizontally
-CTRL-W v split current window vertically
-CTRL-W q closes current window
-
-(TO BE COMPLETED)
-
-
-## GIT integration
-
-It is recommended to have a .gitcofig file in the user home folder, with the important git settings.
-
-These settings can be written via git config commands, or you can directly edit the file contents.
-Here is my **~/.gitconfig** with some edits
-
-```
-[user]
-	email = username@domain.tld
-	name = john smith
-[filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-[core]
-	sshCommand = ssh -i c:/Users/<JSMITH>/.ssh/id_rsa_JSMITH
-	editor = nvim
-[merge]
-	tool = nvimdiff
-[mergetool "nvimdiff"]
-	layout = (LOCAL,BASE,REMOTE)/MERGED
-[credential "https://huggingface.co"]
-	provider = generic
-[init]
-	defaultBranch = main
-```
 

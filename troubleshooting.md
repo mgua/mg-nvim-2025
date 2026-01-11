@@ -153,3 +153,5 @@
    - `:version` - Show Neovim version and build info
    - `:messages` - Show message history
    - `:scriptnames` - List all loaded scripts
+
+

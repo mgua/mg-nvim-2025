@@ -66,7 +66,7 @@ sudo dnf install neovim git nodejs npm python3 python3-pip xclip ripgrep fd-find
 
 ### Installation Steps
 
-1. Create directory structure:
+1. Create neovim config directory:
    ```bash
    mkdir -p ~/.config/nvim/lua/config
    ```
@@ -74,11 +74,10 @@ sudo dnf install neovim git nodejs npm python3 python3-pip xclip ripgrep fd-find
 2. Copy configuration files:
    ```bash
    # Assuming files are in current directory
-   cp init.lua ~/.config/nvim/
-   cp lazy.lua ~/.config/nvim/lua/config/
-   cp keymaps.lua ~/.config/nvim/lua/config/
-   cp languages.lua ~/.config/nvim/lua/config/
+   cd  ~/.config/nvim/
+   git clone https://github.com/mgua/mg-nvim-2025.git .
    ```
+
 
 ## Terminal Configuration
 
@@ -120,6 +119,7 @@ font:
     style: Bold Italic
   size: 12
 ```
+
 
 ## First Launch Setup
 
@@ -223,7 +223,7 @@ ls -la ~/.local/share/nvim/mason
    sudo dnf install fd-find
    ```
 
-3. Add to your shell configuration (`~/.bashrc` or `~/.zshrc`):
+3. OPTIONAL: Add to your shell configuration (`~/.bashrc` or `~/.zshrc`):
    ```bash
    # Set Neovim as default editor
    export EDITOR=nvim
@@ -233,3 +233,4 @@ ls -la ~/.local/share/nvim/mason
    alias vim=nvim
    alias vi=nvim
    ```
+

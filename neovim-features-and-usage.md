@@ -1,4 +1,125 @@
-# Neovim Modern Setup - Part 2: Features and Usage
+# Neovim Modern Setup - Features and Usage
+
+## Quick vim/neovim introduction
+
+nvim is a modal editor. it has several operation modes, 
+
+Each mode has a different behaviour. 
+Active mode is shown in a colored marker in the lower left of the active window
+NORMAL / INSERT / COMMAND / VISUAL / VISUAL-LINE / VISUAL-BLOCK
+
+nvim starts in **normal mode**
+
+HJKL (and cursor keys) control cursor movement in normal mode and visual mode
+i from normal mode goes to **insert mode** 
+v from normal mode goes to **visual mode** (this is the char selection mode)
+V from normal mode goes to **v-line visual mode** (this is the line selection mode)
+
+<ALT>+mouse click goes to **visual block mode** (column select mode) 
+(traditionally this was associated to CTRL-V, conflicting with clipboard paste)
+
+u from normal mode performs UNDO
+<CTRL>-R from normal mode performs REDO
+
+<ESC> goes back to **normal mode**
+: from normal mode goes into **command mode**
+
+:w writes current edit buffer
+:q exit
+:wq! save and exit immediately
+
+in normal mode, yy yanks (copies) the current line to the default clipboard
+in normal mode, p pops (pastes) the default clipboard contents
+
+:/pattern searches for patter. n for next, N for previous. Occurrence count in bottom right
+:87 goes to line 87
+G87 from normal mode goes to line 87
+:1 go to first line
+<CTRL>-O goes back to the previous position in jump list
+:$ go to last line
+:h helptopic opens neovim help.
+When having relative numbers, you can see line distance from current line.
+from normal mode 5yy copies the next 5 lines
+from normal mode 5dd deletes the next 5 lines
+from normal mode dd deletes current line
+from normal mode mk sets marker k (bookmark) at current position. markers can be a..z
+from normal mode 'k goes to marker k (you may see markers list) 
+
+
+cursor movement in normal mode:
+^ beginning of line
+$ end of line
+G to to last line
+gg go to first line
+
+<CTRL>-hjkl (movement keys)
+
+A command combination to copy all the file content:
+<ESC>ggvGy	)goto normal mode, goto 1st line, enter visual mode (select), go to last line, and yank
+
+some dedicated keymaps are plugin specific, as an example <leader>h has some suboptions for hex plugin
+
+
+While in help, undelined links can be opened with mouse double left click or with <CTRL>-]
+to go back use <CTRL>-T or <CTRL>-O
+
+when in multiwindow, use CTRL-ww to cycle across window, from normal mode
+
+
+<leader> is defined as SPACEBAR
+<leader>t toggle file navigator (Nvtreetoggle)
+:
+in normal mode:
+nyy OR n<leader>y OR n<leader>c copies subsequent n lines to clipboard
+(also works from remote sessions over ssh within windows terminal)
+
+in insert mode:
+shift-INS or CTRL-V: paste from clipboard 
+
+<ESC>wq! close with save
+
+
+### window operations
+
+CTRL-w T (move current window in a dedicated TAB page)
+CTRL-W gt / CTRL-W gT (go to previous/next tab page)
+CTRL-W s split current window horizontally
+CTRL-W v split current window vertically
+CTRL-W q closes current window
+
+(TO BE COMPLETED)
+
+
+## GIT integration
+
+It is recommended to have a .gitcofig file in the user home folder, with the important git settings.
+
+These settings can be written via git config commands, or you can directly edit the file contents.
+Here is my **~/.gitconfig** with some edits
+
+```
+[user]
+	email = username@domain.tld
+	name = john smith
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[core]
+	sshCommand = ssh -i c:/Users/<JSMITH>/.ssh/id_rsa_JSMITH
+	editor = nvim
+[merge]
+	tool = nvimdiff
+[mergetool "nvimdiff"]
+	layout = (LOCAL,BASE,REMOTE)/MERGED
+[credential "https://huggingface.co"]
+	provider = generic
+[init]
+	defaultBranch = main
+```
+
+
 
 ## Key Features and Mappings
 
