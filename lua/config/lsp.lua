@@ -54,8 +54,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         opts.desc = "Next Diagnostic"
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 
-        opts.desc = "Format Code"
-        vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
+        opts.desc = "Format Code" -- changed from f to lf for conflicts with telescope 
+        vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, opts)
 
     end,
 })

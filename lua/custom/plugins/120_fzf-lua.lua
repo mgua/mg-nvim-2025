@@ -4,12 +4,13 @@
 --
 -- Place in: lua/custom/plugins/120_fzf-lua.lua
 --
+-- KEYMAPS: <leader>b for buffers (fzf-lua)
+--          <leader>f* uses Telescope (see 070_telescope.lua)
+--
 -- Prerequisites (Windows):
 --   winget install junegunn.fzf
---   winget install sharkdp.fd           (optional, faster file finding)
---   winget install BurntSushi.ripgrep.MSVC  (optional, faster grep)
---
--- After installing, REMOVE the fzf-lua block from lazy.lua to avoid duplicates!
+--   winget install sharkdp.fd              (optional, faster file finding)
+--   winget install BurntSushi.ripgrep.MSVC (optional, faster grep)
 
 return {
   "ibhagwan/fzf-lua",
@@ -154,68 +155,25 @@ return {
     })
 
     -- ========================================================================
-    -- KEYMAPS
+    -- KEYMAPS - Only buffer navigation
+    -- All <leader>f* keymaps are handled by Telescope (070_telescope.lua)
     -- ========================================================================
     local map = vim.keymap.set
 
-    -- Helper to safely map only if function exists
-    local function safe_map(mode, lhs, rhs, opts)
-      if rhs ~= nil then
-        map(mode, lhs, rhs, opts)
-      end
-    end
+    -- Buffer picker (fzf-lua's strength - very fast buffer switching)
+    map('n', '<leader>b', fzf.buffers, { desc = 'Buffers (fzf)' })
+    map('n', '<leader>B', '<cmd>ls<CR>:buffer<Space>', { desc = 'Buffer list (simple)' })
 
-    -- Buffer/File Navigation
-    safe_map('n', '<leader>b',  fzf.buffers,   { desc = 'Buffers' })
-    safe_map('n', '<leader>B',  '<cmd>ls<CR>:buffer<Space>', { desc = 'Buffer list (simple)' })
-    safe_map('n', '<leader>ff', fzf.files,     { desc = 'Find files' })
-    safe_map('n', '<leader>fr', fzf.oldfiles,  { desc = 'Recent files' })
+    -- ========================================================================
+    -- OPTIONAL: Uncomment if you want fzf-lua for specific tasks
+    -- (these use different prefixes to avoid telescope conflicts)
+    -- ========================================================================
+    
+    -- Example: <leader>z* for fzf-lua specific features
+    -- map('n', '<leader>zf', fzf.files,     { desc = 'fzf: Find files' })
+    -- map('n', '<leader>zg', fzf.live_grep, { desc = 'fzf: Live grep' })
+    -- map('n', '<leader>zr', fzf.resume,    { desc = 'fzf: Resume' })
 
-    -- Search/Grep
-    safe_map('n', '<leader>fg', fzf.live_grep,   { desc = 'Live grep' })
-    safe_map('n', '<leader>fw', fzf.grep_cword,  { desc = 'Grep word under cursor' })
-    safe_map('n', '<leader>fW', fzf.grep_cWORD,  { desc = 'Grep WORD under cursor' })
-    safe_map('v', '<leader>fw', fzf.grep_visual, { desc = 'Grep visual selection' })
-    safe_map('n', '<leader>f/', fzf.grep_curbuf, { desc = 'Grep current buffer' })
-    safe_map('n', '<leader>fG', fzf.live_grep_resume, { desc = 'Live grep (resume)' })
-
-    -- Git
-    safe_map('n', '<leader>gf', fzf.git_files,    { desc = 'Git files' })
-    safe_map('n', '<leader>gc', fzf.git_commits,  { desc = 'Git commits' })
-    safe_map('n', '<leader>gC', fzf.git_bcommits, { desc = 'Git commits (buffer)' })
-    safe_map('n', '<leader>gb', fzf.git_branches, { desc = 'Git branches' })
-    safe_map('n', '<leader>gS', fzf.git_status,   { desc = 'Git status' })
-    safe_map('n', '<leader>gt', fzf.git_stash,    { desc = 'Git stash' })
-
-    -- LSP
-    safe_map('n', '<leader>fs', fzf.lsp_document_symbols,  { desc = 'Document symbols' })
-    safe_map('n', '<leader>fS', fzf.lsp_workspace_symbols, { desc = 'Workspace symbols' })
-    safe_map('n', '<leader>fd', fzf.diagnostics_document,  { desc = 'Diagnostics (buffer)' })
-    safe_map('n', '<leader>fD', fzf.diagnostics_workspace, { desc = 'Diagnostics (workspace)' })
-    safe_map('n', '<leader>fi', fzf.lsp_implementations,   { desc = 'Implementations' })
-    safe_map('n', '<leader>fR', fzf.lsp_references,        { desc = 'References' })
-
-    -- Help & Vim
-    safe_map('n', '<leader>fh', fzf.help_tags,       { desc = 'Help tags' })
-    safe_map('n', '<leader>fk', fzf.keymaps,         { desc = 'Keymaps' })
-    safe_map('n', '<leader>fc', fzf.commands,        { desc = 'Commands' })
-    safe_map('n', '<leader>fC', fzf.command_history, { desc = 'Command history' })
-    safe_map('n', '<leader>fm', fzf.marks,           { desc = 'Marks' })
-    safe_map('n', '<leader>fj', fzf.jumps,           { desc = 'Jump list' })
-    safe_map('n', '<leader>fq', fzf.quickfix,        { desc = 'Quickfix list' })
-    safe_map('n', '<leader>fl', fzf.loclist,         { desc = 'Location list' })
-    safe_map('n', '<leader>f"', fzf.registers,       { desc = 'Registers' })
-    safe_map('n', '<leader>fa', fzf.autocmds,        { desc = 'Autocommands' })
-    safe_map('n', '<leader>ft', fzf.filetypes,       { desc = 'Filetypes' })
-    safe_map('n', '<leader>fo', fzf.vim_options,     { desc = 'Vim options' })
-
-    -- Special
-    safe_map('n', '<leader><leader>', fzf.resume,         { desc = 'Resume last picker' })
-    safe_map('n', '<leader>f:', fzf.search_history,       { desc = 'Search history' })
-    safe_map('n', '<leader>f.', fzf.builtin,              { desc = 'All pickers' })
-    safe_map('n', '<leader>fL', fzf.lines,                { desc = 'Lines (all buffers)' })
-    safe_map('n', '<leader>fb', fzf.blines,               { desc = 'Lines (buffer)' })
-
-    vim.notify('fzf-lua loaded', vim.log.levels.INFO)
+    vim.notify('  fzf-lua loaded (buffers only)', vim.log.levels.INFO)
   end,
 }

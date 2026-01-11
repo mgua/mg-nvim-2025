@@ -1,40 +1,142 @@
--- this is from https://github.com/nvim-telescope/telescope.nvim
+-- 070_telescope.lua
+-- Fuzzy finder for files, text, LSP symbols, git, and more
+-- https://github.com/nvim-telescope/telescope.nvim
+--
+-- Place in: lua/custom/plugins/070_telescope.lua
+--
+-- Keymaps: <leader>f* for find operations
+--          <leader>g* for git operations
+--
+-- Note: <leader>b uses fzf-lua (see first-keymaps.lua)
+--
+-- Dependencies:
+--   - ripgrep (rg) for live_grep: https://github.com/BurntSushi/ripgrep
+--   - fd for faster file finding (optional): https://github.com/sharkdp/fd
+--
+--   to explore:
+--   :Telescope find-files
 
 return {
-     -- telescope is a finder, that searches text across folders and files
-    'nvim-telescope/telescope.nvim', tag = 'v0.2.0',
-     dependencies = { 'nvim-lua/plenary.nvim' },
-     config = function()
-         vim.notify('loading telescope...', vim.log.levels.INFO)
-         require('telescope').setup({
+    'nvim-telescope/telescope.nvim',
+    -- branch = '0.1.x',    -- this has errors on nvim 0.11
+    branch = 'master',      -- this allows more recent update 0.2.1 as jan 2026
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+    },
+
+    config = function()
+        vim.notify('  loading telescope...', vim.log.levels.INFO)
+
+        local telescope = require('telescope')
+        local actions = require('telescope.actions')
+        local builtin = require('telescope.builtin')
+
+        telescope.setup({
             defaults = {
-                -- Default configuration for telescope goes here:
-                -- config_key = value,
+                layout_strategy = 'horizontal',
+                layout_config = {
+                    horizontal = {
+                        prompt_position = 'top',
+                        preview_width = 0.55,
+                    },
+                    width = 0.87,
+                    height = 0.80,
+                },
+                sorting_strategy = 'ascending',
+                prompt_prefix = '   ',
+                selection_caret = '  ',
+                path_display = { 'truncate' },
+                file_ignore_patterns = {
+                    'node_modules',
+                    '.git/',
+                    '__pycache__',
+                },
                 mappings = {
                     i = {
-                    -- map actions.which_key to <C-h> (default: <C-/>)
-                    -- actions.which_key shows the mappings for your picker,
-                    -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-                    ["<C-h>"] = "which_key"
+                        ['<C-j>'] = actions.move_selection_next,
+                        ['<C-k>'] = actions.move_selection_previous,
+                        ['<C-c>'] = actions.close,
+                        ['<Esc>'] = actions.close,
+                        ['<CR>'] = actions.select_default,
+                        ['<C-x>'] = actions.select_horizontal,
+                        ['<C-v>'] = actions.select_vertical,
+                        ['<C-t>'] = actions.select_tab,
+                        ['<C-h>'] = 'which_key',
+                    },
+                    n = {
+                        ['q'] = actions.close,
+                        ['<Esc>'] = actions.close,
                     },
                 },
             },
             pickers = {
-                -- Default configuration for builtin pickers goes here:
-                -- picker_name = {
-                --   picker_config_key = value,
-                --   ...
-                -- }
-            -- Now the picker_config_key will be applied every time you call this
-            -- builtin picker
-            },
-            extensions = {
-                -- Your extension configuration goes here:
-                -- extension_name = {
-                --   extension_config_key = value,
-                -- }
-                -- please take a look at the readme of the extension you want to configure
+                find_files = {
+                    hidden = false,
+                    follow = true,
+                },
+                buffers = {
+                    sort_lastused = true,
+                    mappings = {
+                        i = { ['<C-d>'] = actions.delete_buffer },
+                        n = { ['dd'] = actions.delete_buffer },
+                    },
+                },
             },
         })
+
+        -- ====================================================================
+        -- KEYMAPS - with safety checks
+        -- ====================================================================
+        local map = vim.keymap.set
+
+        -- Helper: only map if the builtin function exists
+        local function safe_map(mode, lhs, rhs, opts)
+            if rhs ~= nil then
+                map(mode, lhs, rhs, opts)
+            else
+                vim.notify('Telescope: skipping ' .. lhs .. ' (function not available)', vim.log.levels.WARN)
+            end
+        end
+
+        -- Files
+        safe_map('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
+        safe_map('n', '<leader>fr', builtin.oldfiles, { desc = 'Recent files' })
+
+        -- Grep/Search
+        safe_map('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep' })
+        safe_map('n', '<leader>fw', builtin.grep_string, { desc = 'Grep word under cursor' })
+        safe_map('n', '<leader>f/', builtin.current_buffer_fuzzy_find, { desc = 'Fuzzy find in buffer' })
+
+        -- LSP
+        safe_map('n', '<leader>fs', builtin.lsp_document_symbols, { desc = 'Document symbols' })
+        safe_map('n', '<leader>fS', builtin.lsp_dynamic_workspace_symbols, { desc = 'Workspace symbols' })
+        safe_map('n', '<leader>fd', builtin.diagnostics, { desc = 'Diagnostics' })
+        safe_map('n', '<leader>fi', builtin.lsp_implementations, { desc = 'Implementations' })
+        safe_map('n', '<leader>fR', builtin.lsp_references, { desc = 'References' })
+
+        -- Vim internals
+        safe_map('n', '<leader>fh', builtin.help_tags, { desc = 'Help tags' })
+        safe_map('n', '<leader>fk', builtin.keymaps, { desc = 'Keymaps' })
+        safe_map('n', '<leader>fc', builtin.commands, { desc = 'Commands' })
+        safe_map('n', '<leader>fC', builtin.command_history, { desc = 'Command history' })
+        safe_map('n', '<leader>fm', builtin.marks, { desc = 'Marks' })
+        safe_map('n', '<leader>fj', builtin.jumplist, { desc = 'Jump list' })
+        safe_map('n', '<leader>fq', builtin.quickfix, { desc = 'Quickfix list' })
+        safe_map('n', '<leader>fl', builtin.loclist, { desc = 'Location list' })
+        safe_map('n', '<leader>f"', builtin.registers, { desc = 'Registers' })
+
+        -- Meta
+        safe_map('n', '<leader>f.', builtin.builtin, { desc = 'All Telescope pickers' })
+        safe_map('n', '<leader>fb', builtin.buffers, { desc = 'Buffers (Telescope)' })
+        safe_map('n', '<leader><leader>', builtin.resume, { desc = 'Resume last picker' })
+
+        -- Git
+        safe_map('n', '<leader>gf', builtin.git_files, { desc = 'Git files' })
+        safe_map('n', '<leader>gc', builtin.git_commits, { desc = 'Git commits' })
+        safe_map('n', '<leader>gC', builtin.git_bcommits, { desc = 'Git commits (buffer)' })
+        safe_map('n', '<leader>gb', builtin.git_branches, { desc = 'Git branches' })
+        safe_map('n', '<leader>gS', builtin.git_status, { desc = 'Git status' })
+        safe_map('n', '<leader>gt', builtin.git_stash, { desc = 'Git stash' })
+
     end,
 }
