@@ -372,6 +372,7 @@ and at the end of the startup process
 
 In general, the commands map or nmap, imap, vmap show the mappings 
 available in the different editor modes
-See also the user-guide.md file
+See also neovim-features-and-usage.md file
+
 
 
