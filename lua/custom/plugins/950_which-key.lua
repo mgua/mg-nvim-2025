@@ -47,7 +47,7 @@ return {
       { "<leader>fF", desc = "Find ALL files" },
       { "<leader>fr", desc = "Recent files" },
       { "<leader>fg", desc = "Live grep" },
-      { "<leader>fG", desc = "Live grep (resume)" },
+      { "<leader>fG", desc = "Grep from buffer dir" },
       { "<leader>fw", desc = "Grep word" },
       { "<leader>fW", desc = "Grep WORD" },
       { "<leader>f/", desc = "Grep buffer" },

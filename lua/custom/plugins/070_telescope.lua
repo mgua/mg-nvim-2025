@@ -110,6 +110,13 @@ return {
         safe_map('n', '<leader>fw', builtin.grep_string, { desc = 'Grep word under cursor' })
         safe_map('n', '<leader>f/', builtin.current_buffer_fuzzy_find, { desc = 'Fuzzy find in buffer' })
 
+        safe_map('n', '<leader>fG',  -- Grep from current buffer's directory tree
+            function()
+              local dir = vim.fn.expand('%:p:h')  -- current buffer's parent directory
+              require('telescope.builtin').live_grep({ search_dirs = { dir } })
+            end, { desc = 'Grep from buffer dir' }
+        )
+
         -- LSP
         safe_map('n', '<leader>fs', builtin.lsp_document_symbols, { desc = 'Document symbols' })
         safe_map('n', '<leader>fS', builtin.lsp_dynamic_workspace_symbols, { desc = 'Workspace symbols' })

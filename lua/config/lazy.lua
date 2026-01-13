@@ -53,6 +53,25 @@ pluginlist = {    -- here the arguments are pluginlist, opts
 
   { 'echasnovski/mini.icons', version = false },  -- mini icons see https://github.com/echasnovski/mini.icons
 
+
+  -- {  -- Theme commented out because it takes a while to load ana i am not currently using it
+  --   'folke/tokyonight.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd[[colorscheme tokyonight]]
+  --   end,
+  -- },
+
+  { -- Theme inspired by Atom
+    'navarasu/onedark.nvim',
+    priority = 100,
+    config = function()
+      vim.cmd.colorscheme 'onedark'
+    end,
+  },
+
+
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -66,23 +85,6 @@ pluginlist = {    -- here the arguments are pluginlist, opts
     },
   },
 
-  {  -- Theme
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd[[colorscheme tokyonight]]
-    end,
-  },
-
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 100,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
-  },
-
 
   { import = 'custom.plugins' },  -- IMPORTANT: Import all plugins from lua/custom/plugins/*.lua
 
@@ -93,8 +95,8 @@ pluginlist = {    -- here the arguments are pluginlist, opts
 options = {         -- and this is the second argument to lazy.setup
   rocks = {         -- these settings follow recommendations from :checkhealth about lua package manager
     enabled = false,
-    hererocks = false, 
-    }, 
+    hererocks = false,
+    },
   }
 
 return require('lazy').setup( pluginlist , options )
