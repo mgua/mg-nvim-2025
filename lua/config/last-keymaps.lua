@@ -58,7 +58,7 @@ map('n', '<leader>t', ':NvimTreeToggle<CR>', { noremap = true, silent = true, de
 map('n', '<leader>e', ':NvimTreeFocus<CR>', { noremap = true, silent = true, desc = 'NvimTreeFocus' })
 
 -- LazyGit keymap
-map('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true, desc = 'LazyGit' })
+map('n', '<leader>gg', ':LazyGitCurrentFile<CR>', { noremap = true, silent = true, desc = 'LazyGit (currentFile)' })
 
 -- Markdown Preview keymaps
 map('n', '<leader>mp', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true, desc = 'MarkdownPreviewToggle' })
