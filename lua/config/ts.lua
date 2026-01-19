@@ -17,15 +17,17 @@
 --
 vim.notify('ts.lua additional setup...', vim.log.levels.INFO)
 
+
 -- myparsers = { "html","css","c","lua","python","vim","vimdoc","powershell","bash","markdown","markdown_inline","json","yaml","awk","perl"}
 myparsers = { "html","css","python","powershell","bash","markdown","markdown_inline","json","yaml","awk","perl"}
 -- removed c lua vim vimdoc because these are included in core nvim 0.11
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = myparsers,
+    pattern = myparsers,      -- all the myparsers filetype will be managed with external ( non-core-embedded) treesitter
     callback = function()
         vim.treesitter.start()                                              -- syntax highlighting by ts
         vim.wo.foldmethod = 'expr'                                          -- fold, ts based with expr and not 'syntax' (not ts based)
-        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'                 -- 
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'                 --
+        vim.wo.foldlevel = 99                                               -- unfolded when file is open
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"   -- indentation, provided by nvim-treesitter (in visual mode?)
     end,
 })

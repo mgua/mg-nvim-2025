@@ -63,11 +63,11 @@ vim.env.LC_ALL = 'en_US.UTF-8'    -- needed on linux
 -- vim.opt.encoding = "UTF-8"        -- default Encoding  (not needed default, commented on jan 19 2026)
 
 -- vim.opt.foldmethod = 'syntax'     -- Set the global default fold method (for this treesitter is not needed)
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldmethod = "expr"      -- see ts.lua
+-- Default fold settings for files WITHOUT treesitter for treesitter option
+vim.opt.foldmethod = "indent"
 -- Optional: Set the default fold level to 99 to ensure all folds are initially open
 -- (This is often preferred so code isn't hidden when you open a file)
---
 vim.opt.foldlevel = 99
 
  -- from checkhealth suggestion, to remove warnings
