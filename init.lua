@@ -12,12 +12,15 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- this is based in %LOCALAPPDATA%/nvim-data/ or ~/.local/share/nvim/
 
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then -- was "if not vim.loop.fs_stat(lazypath) then" before jan 19 2026
   vim.fn.system({
     "git","clone","--filter=blob:none","https://github.com/folke/lazy.nvim.git","--branch=stable", lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- enable deprecation warning for config checkup
+vim.g.deprecation_warnings = true
 
 -- Basic settings
 
@@ -29,7 +32,7 @@ vim.g.maplocalleader = " "  -- Set leader key to space in every buf
 vim.opt.termguicolors = true
 if vim.env.TMUX then
   vim.opt.clipboard = 'unnamedplus'  -- Use system clipboard in tmux
-  vim.opt.term = "xterm-256color"    -- Better color support in tmux
+  -- vim.opt.term = "xterm-256color"    -- Better color support in tmux: commented out on jan 19 2026 because of error
   vim.opt.timeoutlen = 1000
   vim.opt.ttimeoutlen = 0
 end
@@ -57,11 +60,14 @@ vim.opt.mouse = 'a' -- Mouse support
 
 vim.env.LANG = 'en_US.UTF-8'
 vim.env.LC_ALL = 'en_US.UTF-8'    -- needed on linux
-vim.opt.encoding = "UTF-8"        -- default Encoding
+-- vim.opt.encoding = "UTF-8"        -- default Encoding  (not needed default, commented on jan 19 2026)
 
-vim.opt.foldmethod = 'syntax'     -- Set the global default fold method
+-- vim.opt.foldmethod = 'syntax'     -- Set the global default fold method (for this treesitter is not needed)
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 -- Optional: Set the default fold level to 99 to ensure all folds are initially open
 -- (This is often preferred so code isn't hidden when you open a file)
+--
 vim.opt.foldlevel = 99
 
  -- from checkhealth suggestion, to remove warnings
