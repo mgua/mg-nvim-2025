@@ -53,9 +53,11 @@ return {
 
         install = {
             ensure_installed = {  -- 1. List the parsers you want installed/updated
-                "html", "css", "c", "lua", "python", "vim",
-                "vimdoc", "powershell", "bash", "markdown",
-                "markdown_inline", "json", "yaml"
+                -- commented c, lua, vim, vimdoc, query jan 19 2026
+                -- (gemini suggestion because these are preinstalled in core nvim 0.11)
+                -- run :TSUninstall c lua vim vimdoc query to revert to preinstalled versions
+                "html", "css", "python", "powershell", "bash",
+                "markdown", "markdown_inline", "json", "yaml"
             },
 
             compilers = {         -- 2. Explicitly define the compiler preference order
