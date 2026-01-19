@@ -19,7 +19,7 @@
 -- Edit this list to add/remove language server support
 -- Server names must match Mason registry: https://mason-registry.dev/registry/list
 --
--- for other post setup configs see lua/configs/lsp.lua (invoked by init.lua)
+-- for other post setup configs see lua/config/lsp.lua (invoked by init.lua)
 --
 
 local lsp_servers = {
@@ -30,10 +30,10 @@ local lsp_servers = {
     "bashls",               -- Bash LSP
     "powershell_es",        -- PowerShell Editor Services
 
-    -- Lua
     "lua_ls",               -- Lua LSP (for Neovim config editing)
 
-    -- SQL
+    "intelephense",         -- PHP LSP (required node.js)
+
     "sqls",                 -- SQL LSP (configure via .sqls.yml in project root)
 
     -- Web (uncomment if needed)
@@ -91,10 +91,116 @@ local function setup_lsp_keymaps()
 end
 
 
+-- =============================================================================
+-- SERVER-SPECIFIC CONFIGURATIONS (used by mason-lspconfig handlers)
+-- =============================================================================
+local server_configs = {
+
+    lua_ls = {      -- FUNDAMENTAL this key (lua_ls) has to match the lsp_servers entry
+        settings = {
+            Lua = {
+                runtime = { version = 'LuaJIT' },
+                diagnostics = { globals = { 'vim' } },   -- Lua LSP: recognize vim global, neovim runtime
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true),
+                    checkThirdParty = false,
+                },
+                telemetry = { enable = false },
+            },
+        },
+    },
+
+
+    -- Python LSP
+    basedpyright = {
+        settings = {
+            basedpyright = {
+                -- Use standard type checking (options: off, basic, standard, strict, all)
+                typeCheckingMode = "standard",
+
+                -- Analysis settings
+                analysis = {
+                    -- Auto-detect imports from installed packages
+                    autoImportCompletions = true,
+
+                    -- Diagnostic mode: workspace analyzes all files, openFilesOnly just open ones
+                    diagnosticMode = "openFilesOnly",
+
+                    -- Use library stubs for type info
+                    useLibraryCodeForTypes = true,
+
+                    -- Inlay hints (function params, variable types)
+                    inlayHints = {
+                        callArgumentNames = "partial",  -- off, partial, all
+                        functionReturnTypes = true,
+                        pytestParameters = true,
+                        variableTypes = true,
+                    },
+                },
+            },
+            python = {
+                -- Python version for analysis (adjust to your target)
+                pythonVersion = "3.12",
+                -- *********************************************************
+                -- mgua: 19jan2026: here we need to integrate with our automatic venv detector
+                -- see config/venv_selector.lua
+                -- Virtual environment (auto-detected, but can specify)
+                -- venvPath = ".",
+                -- venv = ".venv", or "venv_<projectname>"
+                -- *********************************************************
+            },
+        },
+    },
+
+
+
+    -- PHP LSP
+    -- To validate: :e some_file.php
+    -- :LspInfo
+    intelephense = {
+        settings = {
+            intelephense = {
+                -- PHP version for compatibility checks
+                environment = {
+                    phpVersion = "8.2",
+                },
+                -- Additional stubs for framework/extension support
+                stubs = {
+                    "apache", "bcmath", "bz2", "Core", "curl", "date",
+                    "dom", "fileinfo", "filter", "gd", "hash", "iconv",
+                    "intl", "json", "libxml", "mbstring", "mysqli",
+                    "openssl", "pcntl", "pcre", "PDO", "pdo_mysql",
+                    "Phar", "posix", "readline", "Reflection", "regex",
+                    "session", "SimpleXML", "sodium", "SPL", "standard",
+                    "superglobals", "tokenizer", "xml", "xmlreader",
+                    "xmlwriter", "zip", "zlib",
+                    -- Uncomment if needed:
+                    -- "wordpress", "redis", "memcached", "mongodb",
+                },
+                -- File handling
+                files = {
+                    maxSize = 5000000,  -- 5MB, increase for large files
+                },
+                -- Formatting (or use external like php-cs-fixer)
+                format = {
+                    enable = true,
+                },
+            },
+        },
+    },
+
+
+    -- Add other server-specific configs here
+    -- basedpyright = { settings = {...} },
+}
+
+
+
 
 -- =============================================================================
 -- PLUGIN SPECIFICATION
 -- =============================================================================
+
 return {
 
     {   -- nvim-lspconfig: core LSP client configuration
@@ -132,7 +238,14 @@ return {
             require('mason').setup()
             require('mason-lspconfig').setup({
                 ensure_installed = lsp_servers,
-                automatic_enable = true,  -- auto-setup installed LSP servers
+                automatic_enable = false,  -- we do not perform auto-setup: we use handlers
+                handlers = {
+                    -- Default handler: called for each installed server
+                    function(server_name)
+                        local config = server_configs[server_name] or {}
+                        require('lspconfig')[server_name].setup(config)
+                    end,
+                },
             })
 
             setup_lsp_keymaps()           -- Setup keymaps
@@ -142,8 +255,6 @@ return {
     },
 
 }
-
-
 
 
 
