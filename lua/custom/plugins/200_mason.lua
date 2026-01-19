@@ -1,45 +1,150 @@
--- this is the mason & related tools lazy config
--- this is where mason and related plugins are loaded, via lazy plugin manager lazy.lua
+-- 200_mason.lua
+-- Mason plugin loader and ALL LSP server configuration
+-- https://github.com/mgua/mg-nvim-2025
+--
+-- Linux: ~/.config/nvim/lua/custom/plugins/200_mason.lua
+-- Windows: %LOCALAPPDATA%\nvim\lua\custom\plugins\200_mason.lua
+--
+-- Mason manages LSP servers, formatters, linters, and DAP adapters
+-- https://github.com/mason-org/mason.nvim
+--
+-- To see installed servers:  :Mason
+-- To install manually:       :MasonInstall <server>
+-- To check LSP status:       :LspInfo
+-- To check attached LSP:     :lua print(vim.inspect(vim.lsp.get_clients()))
+--
+-- =============================================================================
+-- LSP SERVER DEFINITIONS (SINGLE SOURCE OF TRUTH)
+-- =============================================================================
+-- Edit this list to add/remove language server support
+-- Server names must match Mason registry: https://mason-registry.dev/registry/list
+--
 -- for other post setup configs see lua/configs/lsp.lua (invoked by init.lua)
+--
+
+local lsp_servers = {
+    -- Python
+    "basedpyright",         -- Python LSP (stricter pyright fork)
+
+    -- Shell scripting
+    "bashls",               -- Bash LSP
+    "powershell_es",        -- PowerShell Editor Services
+
+    -- Lua
+    "lua_ls",               -- Lua LSP (for Neovim config editing)
+
+    -- SQL
+    "sqls",                 -- SQL LSP (configure via .sqls.yml in project root)
+
+    -- Web (uncomment if needed)
+    "html",              -- HTML LSP
+    "cssls",             -- CSS LSP
+    -- "jsonls",            -- JSON LSP
+    -- "yamlls",            -- YAML LSP
+}
 
 
+local function setup_lsp_keymaps()
+    vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+            local opts = { noremap = true, silent = true, buffer = ev.buf }
+
+            -- Navigation
+            opts.desc = "Go to Declaration"
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+
+            opts.desc = "Go to Definition"
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+
+            opts.desc = "Go to Implementation"
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+
+            opts.desc = "Find References"
+            vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+            -- Documentation
+            opts.desc = "Hover Documentation"
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+
+            -- Refactoring
+            opts.desc = "Rename Symbol"
+            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+
+            opts.desc = "Code Action"
+            vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+
+            -- Diagnostics
+            opts.desc = "Previous Diagnostic"
+            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+
+            opts.desc = "Next Diagnostic"
+            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+
+            -- Formatting
+            opts.desc = "Format Code"
+            vim.keymap.set('n', '<leader>lf', function()
+                vim.lsp.buf.format { async = true }
+            end, opts)
+        end,
+    })
+end
+
+
+
+-- =============================================================================
+-- PLUGIN SPECIFICATION
+-- =============================================================================
 return {
 
-  { -- core component to allow nvim to use LSP servers
-    -- mason can not work without this
-    'neovim/nvim-lspconfig',
-  },
+    {   -- nvim-lspconfig: core LSP client configuration
+        -- core component to allow nvim to use LSP servers
+        -- mason can not work without this
+        'neovim/nvim-lspconfig',
+    },
 
-
-  { -- mason https://github.com/mason-org/mason.nvim
-    -- requires git, curl/wget , unzip, gzip, tar
-    'mason-org/mason.nvim',
-    build = ':MasonUpdate', -- build/updates extension catalog for :MasonInstall
-    opts = {
-        ui = {
-            icons = {
-                package_installed   = "✓",
-                package_pending     = "➜",
-                package_uninstalled = "✗"
+    { -- mason: package manager for LSP servers, formatters, linters
+      -- https://github.com/mason-org/mason.nvim
+      -- requires git, curl/wget, unzip, gzip, tar
+        'mason-org/mason.nvim',
+        build = ':MasonUpdate',
+        opts = {
+            ui = {
+                icons = {
+                    package_installed   = "✓",
+                    package_pending     = "➜",
+                    package_uninstalled = "✗"
+                }
             }
-        }
+        },
     },
-    config = function()
-        vim.notify('loading mason...', vim.log.levels.INFO)
-        require('mason').setup()
-    end
-  },
 
+    { -- mason-lspconfig: bridge between mason and lspconfig
+        'mason-org/mason-lspconfig.nvim',
+        opts = {},
+        dependencies = {
+            { "mason-org/mason.nvim", opts = {} },
+            'neovim/nvim-lspconfig',
+        },
+        config = function()
+            vim.notify('configuring mason-lspconfig...', vim.log.levels.INFO)
 
-  { -- mason-org/mason-lspconfig.mvim
-    "mason-org/mason-lspconfig.nvim",
-    opts = {},
-    dependencies = {
-        { "mason-org/mason.nvim", opts = {} },
-        "neovim/nvim-lspconfig",
+            require('mason').setup()
+            require('mason-lspconfig').setup({
+                ensure_installed = lsp_servers,
+                automatic_enable = true,  -- auto-setup installed LSP servers
+            })
+
+            setup_lsp_keymaps()           -- Setup keymaps
+
+            vim.notify('LSP servers: ' .. table.concat(lsp_servers, ', '), vim.log.levels.DEBUG)
+        end,
     },
-  },
 
 }
+
+
+
+
 
 
