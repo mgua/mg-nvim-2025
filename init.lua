@@ -62,13 +62,16 @@ vim.env.LANG = 'en_US.UTF-8'
 vim.env.LC_ALL = 'en_US.UTF-8'    -- needed on linux
 -- vim.opt.encoding = "UTF-8"        -- default Encoding  (not needed default, commented on jan 19 2026)
 
--- vim.opt.foldmethod = 'syntax'     -- Set the global default fold method (for this treesitter is not needed)
--- vim.opt.foldmethod = "expr"      -- see ts.lua
--- Default fold settings for files WITHOUT treesitter for treesitter option
-vim.opt.foldmethod = "indent"
--- Optional: Set the default fold level to 99 to ensure all folds are initially open
--- (This is often preferred so code isn't hidden when you open a file)
-vim.opt.foldlevel = 99
+-- =============================================================================
+-- Basic Syntax, Folding and Indentation (fallback for non-treesitter filetypes)
+-- These are overridden by treesitter for supported filetypes (see 100_treesitter.lua)
+-- =============================================================================
+vim.opt.syntax = "on"           -- Basic regex-based syntax highlighting
+vim.opt.foldmethod = "indent"   -- Fold based on indentation
+vim.opt.foldlevel = 99          -- Start with all folds open
+vim.opt.autoindent = true       -- Copy indent from current line to new line
+vim.opt.smartindent = true      -- Smart autoindenting for C-like languages
+
 
  -- from checkhealth suggestion, to remove warnings
 -- opts.rocks.hererocks = false
@@ -115,7 +118,6 @@ require("config.first-keymaps")   -- Key mappings (lua/config/first-keymaps.lua)
 require("config.lazy")            -- Plugins (lua/config/lazy.lua) including lua/custom/plugins/*.lua [in lazy format]
 require("config.colors")          -- (lua/config/colors.lua) style colors consistent with vscode, loaded after plugins
 require("config.lsp")             -- (lua/config/lsp.lua) mason/lsp configs [post load]
-require("config.ts")              -- (lua/config/ts.lua) treesitter_configs [post load]
 require("config.last-keymaps")    -- (lua/config/last-keymaps.lua) final keymaps [post load]
 
 
