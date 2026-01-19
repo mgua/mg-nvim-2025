@@ -12,6 +12,13 @@
 --    you can launch treesitter in the current buffer with
 --                :lua vim.treesitter.start()
 --
+--    when opening a .lua file
+--    :lua print(vim.wo.foldmethod) -- should output expr (treesitter) and not indent (fallback)
+--
+--    when opening a file for which we do not have a loaded treesitter parser
+--    :lua print(vim.wo.foldmethod) -- should output indent (fallback)
+--
+--
 -- treesitter https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file
 --
 -- windows prerequirements:
@@ -31,8 +38,6 @@
 -- is specific for the now legacy version
 -- here we try to make the new version working, but configurations apparently have to be adapted
 --
---
--- see other treesitter related code in config/ts.lua
 --
 -- some aspects here may be relevant (post by YourBroFred)
 --  https://www.reddit.com/r/neovim/comments/1l3z4j4/help_with_new_treesitter_setup_in_neovim_default/?chainedPosts=t3_1bj5a4j
