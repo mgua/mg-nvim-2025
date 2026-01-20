@@ -3,7 +3,7 @@
 ## Prerequisites Installation
 
 ### Ubuntu/Debian
-1. Install Neovim:
+1. Install Neovim (we need at minimum v 0.11):
    ```bash
    # Add repository for latest version
    sudo add-apt-repository ppa:neovim-ppa/unstable
@@ -13,7 +13,7 @@
 
 2. Install dependencies:
    ```bash
-   sudo apt install git nodejs npm python3 python3-pip xclip ripgrep fd-find
+   sudo apt install git nodejs npm python3 python3-pip xclip ripgrep fd-find fzf tmux
    ```
 
 3. Install LazyGit:
@@ -26,12 +26,12 @@
 
 ### Arch Linux
 ```bash
-sudo pacman -S neovim git nodejs npm python python-pip xclip lazygit ripgrep fd
+sudo pacman -S neovim git nodejs npm python python-pip xclip lazygit ripgrep fd fzf tmux
 ```
 
 ### Fedora
 ```bash
-sudo dnf install neovim git nodejs npm python3 python3-pip xclip ripgrep fd-find
+sudo dnf install neovim git nodejs npm python3 python3-pip xclip ripgrep fd-find fzf tmux
 # Install LazyGit using the same method as Ubuntu
 ```
 
@@ -56,19 +56,66 @@ sudo dnf install neovim git nodejs npm python3 python3-pip xclip ripgrep fd-find
 ### File Structure
 ```
 ~/.config/nvim/
+.
 ├── init.lua
-└── lua/
-    └── config/
-        ├── lazy.lua
-        ├── keymaps.lua
-        └── languages.lua
+├── install-guide-linux.md
+├── install-guide-windows.md
+├── lazy-lock.json
+├── lua
+│   ├── config
+│   │   ├── colors.lua
+│   │   ├── easy-actions.lua
+│   │   ├── first-keymaps.lua
+│   │   ├── last-keymaps.lua
+│   │   ├── lazy.lua
+│   │   ├── lsp.lua
+│   │   ├── venv-selector.lua
+│   │   └── venv-selector_pmg.lua
+│   └── custom
+│       └── plugins
+│           ├── 000_init.lua
+│           ├── 010_nvim-osc52.lua
+│           ├── 030_nvim-web-devicons.lua
+│           ├── 040_nvim-tree.lua
+│           ├── 050_gitsigns.lua
+│           ├── 060_comment.lua
+│           ├── 070_telescope.lua
+│           ├── 080_lazygit.lua
+│           ├── 100_treesitter.lua
+│           ├── 120_fzf-lua.lua
+│           ├── 200_mason.lua
+│           ├── 310_markdown-preview.lua
+│           ├── 350_hex.lua
+│           ├── 900_startify.lua
+│           ├── 940_flash.lua
+│           ├── 950_which-key.lua
+│           ├── alpha._lua
+│           └── telescope-symbols.txt
+├── neovim-features-and-usage.md
+├── package-lock.json
+├── readme.md
+├── templates
+│   ├── pyproject.toml_template
+│   ├── pyrightconfig.json_template
+│   └── tmux.conf_template.md
+└── troubleshooting.md
+
 ```
 
 ### Installation Steps
 
+0. Save/rename previous nvim config directory ~/.config/nvim 
+   and remove plugin install folder
+
+   ```bash
+   mv ~/.config/nvim ~/.config/nvim-bak
+   rm -f ~/.local/share/nvim
+    
+   ```
+
 1. Create neovim config directory:
    ```bash
-   mkdir -p ~/.config/nvim/lua/config
+   mkdir -p ~/.config/nvim
    ```
 
 2. Copy configuration files:
@@ -77,6 +124,8 @@ sudo dnf install neovim git nodejs npm python3 python3-pip xclip ripgrep fd-find
    cd  ~/.config/nvim/
    git clone https://github.com/mgua/mg-nvim-2025.git .
    ```
+   At first nvim launch the binary plugins folder will be rebuilt, downloading what is needed
+
 
 
 ## Terminal Configuration
@@ -133,18 +182,19 @@ font:
    - All configured plugins
    - LSP servers via Mason
 
-3. Install LSP servers:
-   ```
-   :MasonInstall pyright lua-language-server json-lsp yaml-language-server
+3. Install LSP servers (via command line or -better done- in file lua/custom/plugins/200_mason.lua):
+   ```bash
+   :MasonInstall basepyright lua-language-server json-lsp yaml-language-server
    ```
 
-4. Install Treesitter parsers:
-   ```
+4. Install Treesitter parsers: (via command line or -better done- in file lua/custom/plugins/100_treesitter.lua):
+
+   ```bash
    :TSInstall python lua json yaml markdown
    ```
 
 5. Verify installation:
-   ```
+   ```bash
    :checkhealth
    :Mason
    :Lazy
@@ -198,6 +248,15 @@ ls -la ~/.local/share/nvim/mason
    ```
 
 ## Optional but Recommended
+
+0. Install and configure tmux
+   ```bash
+   sudo apt install tmux
+   mv ~/tmux.conf ~/tmux.conf.bak
+   cp ~/.config/nvim/templates/.tmux.conf_template ~/.tmux.conf
+   ```
+   (once you launch tmux for the first time, it will take some time to download plugins.)
+
 
 1. Install ripgrep for better grep:
    ```bash

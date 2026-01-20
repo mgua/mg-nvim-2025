@@ -2,6 +2,8 @@
 # see https://github.com/mgua/mg-nvim-2025
 # mgua@tomware.it jan 2026
 #
+# this installes some plugins to tmux via tpm (tmux plugin manager)
+#
 
 set -g set-clipboard on
 set -g mouse on
