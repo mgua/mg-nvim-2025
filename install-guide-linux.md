@@ -5,7 +5,12 @@
 ### Ubuntu/Debian
 1. Install Neovim (we need at minimum v 0.11):
    ```bash
-   # Add repository for latest version
+   
+   sudo snap install nvim (for latest stable) 
+   
+   or, for the more daring... :-) 
+   
+   # Add repository for latest nightly version
    sudo add-apt-repository ppa:neovim-ppa/unstable
    sudo apt update
    sudo apt install neovim
