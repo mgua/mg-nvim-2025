@@ -46,6 +46,12 @@
 --  in the following post folke says zig can not be used anymore
 --  https://www.reddit.com/r/neovim/comments/1pen2ot/comment/nsdxna4/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 --
+-- it can be that TSInstall python fails with some error like
+-- "Could not rename temp: EPERM: operation not permitted"
+-- in this case it is possible there are unwante residues in the temp folder
+--   Remove-Item -Recurse -Force "$env:TEMP\nvim\tree-sitter-python*" -ErrorAction SilentlyContinue
+--   Remove-Item -Recurse -Force "$env:TEMP\nvim\tree-sitter-python-tmp" -ErrorAction SilentlyContinue
+
 --
 -- =============================================================================
 -- PARSER DEFINITIONS (SINGLE SOURCE OF TRUTH)
