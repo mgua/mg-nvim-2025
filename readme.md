@@ -55,4 +55,38 @@ potentially with graph language interpreter/preview support
 
 
 
+## treesitter issues when editing files on network shares from Windows
+
+treesitter functionality may have issues when editing files on non c: drives
+The solution we designed is to keep a well designed link set in a dedicated folder, 
+on each user home folder or on the main c:/ drive
+
+this folder is a very nice, functional and portable way to manage 
+files and project folders across the network or mounted drives, whatever the
+protocol (cifs, iscsi, nfs)
+this approach works cross systems
+
+
+```powershell
+# Create mount point structure on C: (require admin rights)
+mkdir C:\mnt
+
+# Symlink your network shares
+mklink /D C:\mnt\share1 \\server\share1
+mklink /D C:\mnt\share2 \\fileserver\projects
+mklink /D C:\mnt\nas \\192.168.1.100\data
+
+# Now edit files via C:\mnt\* paths in Neovim
+```
+
+or, within user homes we create a ~/mnt folder
+
+```powershell
+mkdir "$env:USERPROFILE/mnt
+mklink /J "$env:USERPROFILE/mnt/lod_d d:/
+mklink /J "$env:USERPROFILE/mnt/my_project e:/some/path/myprj/
+
+mklink /D "$env:USERPROFILE/mnt/net_prj_x //file.server.com/path1/path2/x/
+```
+
 
