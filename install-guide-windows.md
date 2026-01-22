@@ -148,6 +148,11 @@
 	```powershell
 	npm install -g neovim
 	```
+	install basedpyright LSP at system level, because of mason installer fragility for this component
+    (see 200_mason.lua config file and related comments)
+	```powershell
+	npm install -g basedpyright
+	```
 	
 
 6. Install Python, py launcher and pip:

@@ -84,12 +84,34 @@ return {
       { "<leader>gS", desc = "Git status" },
       { "<leader>gt", desc = "Git stash" },
 
+      -- LSP group (keymaps defined in 200_mason.lua)
+      { "<leader>l",  group = "LSP" },
+      { "<leader>lf", desc = "Format code" },
+      { "<leader>li", desc = "LSP info (:checkhealth lsp)" },
+      { "<leader>lr", desc = "Restart LSP" },
+
+      -- Code actions / Refactoring
+      { "<leader>c",  group = "Code/Copy" },
+      { "<leader>ca", desc = "Code action" },
+
+      { "<leader>r",  group = "Rename/Refactor" },
+      { "<leader>rn", desc = "Rename symbol" },
+
       -- Other leader groups
-      { "<leader>c",  group = "Copy/Clipboard" },
       { "<leader>h",  group = "Git hunks (gitsigns)" },
       { "<leader>m",  group = "Merge/Markdown" },
-      { "<leader>r",  group = "Rename/Refactor" },
+      { "<leader>mp", desc = "Markdown preview" },
+      { "<leader>ml", desc = "Merge: get LOCAL" },
+      { "<leader>mb", desc = "Merge: get BASE" },
+      { "<leader>mr", desc = "Merge: get REMOTE" },
+      { "<leader>md", desc = "Merge: diff update" },
+
       { "<leader>s",  group = "Startify sessions" },
+      { "<leader>ss", desc = "Session save" },
+      { "<leader>sl", desc = "Session load" },
+      { "<leader>sd", desc = "Session delete" },
+      { "<leader>sc", desc = "Session close" },
+
       { "<leader>t",  desc = "NvimTree toggle" },
       { "<leader>e",  desc = "NvimTree focus" },
       { "<leader>w",  desc = "Cycle windows" },
@@ -112,12 +134,16 @@ return {
       { "]l", desc = "Next loclist" },
       { "[l", desc = "Previous loclist" },
 
-      -- ====== g prefix ======
-      { "g",  group = "Goto/Actions" },
-      { "gd", desc = "Go to definition" },
-      { "gD", desc = "Go to declaration" },
-      { "gr", desc = "Go to references" },
-      { "gi", desc = "Go to implementation" },
+      -- ====== g prefix (LSP navigation) ======
+      { "g",  group = "Goto/LSP" },
+      { "gd", desc = "Definition" },
+      { "gD", desc = "Declaration" },
+      { "gr", desc = "References" },
+      { "gi", desc = "Implementation" },
+      { "gT", desc = "Type definition" },
+
+      -- ====== K - Hover ======
+      -- K is the standard key for hover documentation (no group needed)
 
       -- ====== z prefix ======
       { "z",  group = "Folds/Spelling/View" },
@@ -133,6 +159,26 @@ return {
       "<leader>k",
       function() require("which-key").show({ global = true }) end,
       desc = "All Keymaps",
+    },
+    -- Quick LSP info
+    {
+      "<leader>li",
+      "<cmd>checkhealth lsp<CR>",
+      desc = "LSP health check",
+    },
+    -- Restart all LSP clients (Neovim 0.11+)
+    {
+      "<leader>lr",
+      function()
+        for _, client in ipairs(vim.lsp.get_clients()) do
+          vim.lsp.stop_client(client.id)
+        end
+        vim.defer_fn(function()
+          vim.cmd("edit")
+        end, 100)
+        vim.notify("LSP clients restarted", vim.log.levels.INFO)
+      end,
+      desc = "Restart LSP",
     },
   },
 }

@@ -1,17 +1,14 @@
--- mgua: here are my additional keymaps
--- this file is to be loaded last after all the plugins heve been processed
+-- last-keymaps.lua
+-- Linux: ~/.config/nvim/lua/config/last-keymaps.lua
+-- Windows: %LOCALAPPDATA%\nvim\lua\config\last-keymaps.lua
 --
--- .o. / .wo. ecc are the "scopes"
--- .o. is the general settings
--- .wo. are the windows scoped options
--- .bo. are the buffer scope
--- see https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
+-- this is invoked by init.lua, after the plugins have been loaded
 --
--- important: some keymappings are defined inside the plugin configs,
--- like in the 350_hex.lua plugin where
+-- to debug the keymap "g?" execute ":nmap g?" or ":verbose nmap g?"
 --
--- to see key mappings active in insert/normal/visual mode: :imap :nmap or :map  :vmap
-
+-- leader key is defined in init.lua
+--
+-- NOTE: LSP keymaps are defined in 200_mason.lua (single source of truth)
 
 local map = vim.keymap.set
 
@@ -47,11 +44,6 @@ else	-- non windows
   map('v', '<leader>c', '"+y', { desc = 'Copy selection to clipboard' })
 end
 
--- old version:
--- map('n', '<leader>c', require('osc52').copy_operator, {expr = true})
--- map('n', '<leader>cc', '<leader>c_', {remap = true})
--- map('v', '<leader>c', require('osc52').copy_visual)
-
 -- File explorer keymaps
 map('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = 'NvimTreeToggle' })
 map('n', '<leader>t', ':NvimTreeToggle<CR>', { noremap = true, silent = true, desc = 'NvimTreeToggle' })
@@ -69,14 +61,8 @@ map('n', '<leader>sl', ':SLoad<CR>', { noremap = true, silent = true, desc = 'St
 map('n', '<leader>sd', ':SDelete<CR>', { noremap = true, silent = true, desc = 'Startify Delete' })
 map('n', '<leader>sc', ':SClose<CR>', { noremap = true, silent = true, desc = 'Startify Close' })
 
--- LSP related keymaps
-map('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP goto Definition' })
-map('n', 'gr', vim.lsp.buf.references, { desc = 'LSP goto References' })
-map('n', 'K', vim.lsp.buf.hover, { desc = 'LSP hover Documentation' })
-
--- map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
-map('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP ReName' })
-
+-- NOTE: LSP keymaps (gd, gr, K, <leader>rn, <leader>ca, etc.) are in 200_mason.lua
+-- Do not duplicate them here
 
 -- Mergetool conflict navigation and resolution
 map('n', '<leader>ml', '<cmd>diffget LOCAL<cr>', { desc = 'Get from LOCAL (left)' })
