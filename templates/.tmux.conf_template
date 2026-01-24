@@ -1,35 +1,79 @@
-# .tmux.conf template
+# .tmux.conf template - portable version
 # see https://github.com/mgua/mg-nvim-2025
 # mgua@tomware.it jan 2026
 #
-# this installes some plugins to tmux via tpm (tmux plugin manager)
+# Portable configuration with fallbacks for older tmux versions
 #
 
-set -g set-clipboard on
-set -g mouse on
-# reload config with CTRL-b r
+# ------------------------------------------------------------------------------
+# Version detection helper
+# Usage: if-shell "tmux_version_ge 3.0" "new-feature" "fallback"
+# ------------------------------------------------------------------------------
+run-shell 'tmux setenv -g TMUX_VERSION $(tmux -V | sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")'
+
+# ------------------------------------------------------------------------------
+# Core settings (broadly compatible)
+# ------------------------------------------------------------------------------
+
+# Clipboard support (tmux 1.5+, but set-clipboard values changed in 2.6)
+if-shell 'tmux -V | grep -qE "^tmux (1\.[5-9]|2\.[0-5])"' \
+    'set -g set-clipboard on' \
+    'set -g set-clipboard on'
+
+# Mouse support - syntax changed in tmux 2.1
+if-shell '[ "$(echo "$(tmux -V | cut -d" " -f2 | cut -d"." -f1)" -ge 2 2>/dev/null)" = "0" ] 2>/dev/null || [ "$(tmux -V | cut -d" " -f2 | cut -d"." -f1)" -ge 2 ]' \
+    'set -g mouse on' \
+    'set -g mode-mouse on; set -g mouse-resize-pane on; set -g mouse-select-pane on; set -g mouse-select-window on'
+
+# ------------------------------------------------------------------------------
+# Key bindings
+# ------------------------------------------------------------------------------
+
+# Reload config with CTRL-b r
 bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 
+# ------------------------------------------------------------------------------
+# TPM (Tmux Plugin Manager) - conditional loading
+# Only attempt if git is available and we're not on a minimal/old system
+# ------------------------------------------------------------------------------
 
-# the following is related to tpm installation, and powerkit installation
-# to install press CTRL-B and uppercare I
-set -g @plugin 'fabioluciano/tmux-powerkit'
-set -g @powerkit_plugins "datetime,battery,cpu,memory,hostname,git"
+# Check prerequisites before attempting plugin setup
+if-shell '[ -x "$(command -v git)" ]' \
+    'run-shell "mkdir -p ~/.tmux/plugins 2>/dev/null"'
 
-# Choose a theme (catppuccin/mocha is the default)
-#    set -g @powerkit_theme "catppuccin"
-#    set -g @powerkit_theme_variant "mocha"
-set -g @powerkit_theme "onedark"
+# Auto-install TPM if git available and TPM not present
+if-shell '[ -x "$(command -v git)" ] && [ ! -d ~/.tmux/plugins/tpm ]' \
+    'run-shell "git clone --depth 1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm 2>/dev/null || true"'
 
-# tpm (tmux plugin manager) installation
-# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-if "test ! -d ~/.tmux/plugins/tpm" \
-   "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
+# Plugin declarations (only processed if TPM loads successfully)
+# To install plugins: press CTRL-B then uppercase I
+if-shell '[ -d ~/.tmux/plugins/tpm ]' {
+    set -g @plugin 'tmux-plugins/tpm'
+    set -g @plugin 'fabioluciano/tmux-powerkit'
+    set -g @powerkit_plugins "datetime,battery,cpu,memory,hostname,git"
+    set -g @powerkit_theme "onedark"
+}
 
-# run tpm
-run '~/.tmux/plugins/tpm/tpm'
+# Run TPM if it exists (silently fail if not)
+if-shell '[ -f ~/.tmux/plugins/tpm/tpm ]' \
+    'run-shell "~/.tmux/plugins/tpm/tpm"' \
+    'display-message "TPM not installed. Run: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"'
 
-# suggested on ubuntu:
-#     snap install nvim --classic
-#     apt install libfuse2
-#
+# ------------------------------------------------------------------------------
+# Fallback status bar (when powerkit/TPM unavailable)
+# ------------------------------------------------------------------------------
+if-shell '[ ! -d ~/.tmux/plugins/tpm ]' {
+    set -g status-style 'bg=colour235 fg=colour136'
+    set -g status-left '[#S] '
+    set -g status-right ' #H | %Y-%m-%d %H:%M '
+    set -g status-left-length 20
+    set -g status-right-length 50
+}
+
+# ------------------------------------------------------------------------------
+# Notes:
+#   - Install TPM: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#   - Install plugins: CTRL-B I (uppercase)
+#   - Ubuntu nvim: snap install nvim --classic && apt install libfuse2
+# ------------------------------------------------------------------------------
+
