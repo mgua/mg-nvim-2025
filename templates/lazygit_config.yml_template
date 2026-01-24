@@ -1,0 +1,44 @@
+# mgua's lazygit config
+# ~/.config/lazygit/config.yml
+#
+git:
+  skipHookPrefix: WIP
+  autoFetch: true
+
+keybinding:
+  universal:
+    pushFiles: 'P'
+
+customCommands:
+  - key: "<f9>"           # F9 pushes to all remotes (alternative since c-pgup not supported)
+    context: "localBranches"
+    description: "Push to all remotes"
+    command: >
+      {{if eq .OS "windows"}}
+        powershell -Command "git remote | ForEach-Object { git push $_ {{.SelectedLocalBranch.Name}} }"
+      {{else}}
+        git remote | xargs -I {} git push {} {{.SelectedLocalBranch.Name}}
+      {{end}}
+    loadingText: "Pushing to all remotes..."
+
+  - key: "<f10>"          # F10 pulls from all remotes
+    context: "localBranches"
+    description: "Pull from all remotes"
+    command: >
+      {{if eq .OS "windows"}}
+        powershell -Command "git remote | ForEach-Object { git pull $_ {{.SelectedLocalBranch.Name}} }"
+      {{else}}
+        git remote | xargs -I {} git pull {} {{.SelectedLocalBranch.Name}}
+      {{end}}
+    loadingText: "Pulling from all remotes..."
+
+gui:
+  showRandomTip: true
+  nerdFontsVersion: "3"
+  showPushOptions: true
+
+os:
+  editCommand: ''
+  editCommandTemplate: '{{editor}} {{filename}}'
+
+
