@@ -30,6 +30,7 @@
         # only the ssh.exe in C:\Windows\System32\OpenSSH\ssh.exe can talk with the agent
         # use the / in path instead of \. doublequotes to manage spaces in paths
         sshCommand = "C:/Windows/System32/OpenSSH/ssh.exe"
+        # sshCommand = "/usr/bin/ssh"
         editor = nvim
     
     [merge]
@@ -134,6 +135,7 @@
 5. Install Node.js (for LSP):
 	```powershell
 	winget install OpenJS.NodeJS.LTS
+    npm update -g npm
 	```
 	after this installation, node package manager npm should be in the path.
 	install yarn with 

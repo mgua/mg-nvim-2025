@@ -298,3 +298,11 @@ ls -la ~/.local/share/nvim/mason
    alias vi=nvim
    ```
 
+4. nodejs and useful components for neovim (lsp related)
+    ```
+    apt install nodejs
+    npm update -g npm
+    npm install -g yarn neovim tree-sitter-cli basedpyright
+    ```
+
+
