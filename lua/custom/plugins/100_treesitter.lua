@@ -12,6 +12,14 @@
 --    you can launch treesitter in the current buffer with
 --                :lua vim.treesitter.start()
 --
+-- how do i check which parsers are available?
+-- the command TSInstallInfo is not available anymore in the new treesitter version
+--
+-- you can execute:
+--    :checkhealth nvim-treesitter
+-- to install parsers:
+--    :TSInstall html css python powershell bash json yaml awk perl markdown markdown_inline
+--
 --    when opening a .lua file
 --    :lua print(vim.wo.foldmethod) -- should output expr (treesitter) and not indent (fallback)
 --
@@ -47,7 +55,7 @@
 --  https://www.reddit.com/r/neovim/comments/1pen2ot/comment/nsdxna4/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 --
 -- it can be that TSInstall python fails with some error like
--- "Could not rename temp: EPERM: operation not permitted"
+-- Could not rename temp: EPERM: operation not permitted"
 -- in this case it is possible there are unwante residues in the temp folder
 --   Remove-Item -Recurse -Force "$env:TEMP\nvim\tree-sitter-python*" -ErrorAction SilentlyContinue
 --   Remove-Item -Recurse -Force "$env:TEMP\nvim\tree-sitter-python-tmp" -ErrorAction SilentlyContinue
@@ -66,6 +74,8 @@ local nvim_core_parsers = {
 -- Require nvim-treesitter plugin (will be installed via ensure_installed)
 -- add here the parsers you want to manage. filetypes not listed here will have
 -- syntax, folding and indent processed via default rules, as specified in init.lua
+-- :TSInstall html css python powershell bash json yaml awk perl markdown markdown_inline
+
 local plugin_parsers = {
     "html", "css", "python", "powershell", "bash", "json", "yaml", "awk", "perl",
     "markdown", "markdown_inline"
