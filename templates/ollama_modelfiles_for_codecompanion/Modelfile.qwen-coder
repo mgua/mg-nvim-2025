@@ -1,0 +1,65 @@
+# Modelfile for Qwen2.5 Coder 7B (Q4 Quantization)
+# TomWare AI Coding Infrastructure
+#
+# Base model: qwen2.5-coder:7b (Q4_K_M quantization ~4.5GB)
+# Target: 8GB+ NVIDIA GPU
+# Use case: Code completion, refactoring, explanation
+
+FROM qwen2.5-coder:7b
+
+# GPU Configuration
+# 999 = auto-detect, load maximum layers possible
+# For 8GB GPU with Q4 model, all 28 layers should fit
+PARAMETER num_gpu 999
+
+# Context Window
+# 16384 tokens (~12K words) - good for most code files
+# Requires ~2GB additional VRAM for KV cache
+# Reduce to 8192 if you experience OOM errors
+PARAMETER num_ctx 16384
+
+# Batch size for prompt processing
+# Higher = faster prompt ingestion, more VRAM
+PARAMETER num_batch 512
+
+# Generation parameters optimized for code
+# Low temperature for deterministic, accurate code
+PARAMETER temperature 0.2
+
+# Nucleus sampling - slightly restrictive for code accuracy
+PARAMETER top_p 0.9
+
+# Limit vocabulary to top 40 tokens
+PARAMETER top_k 40
+
+# Discourage repetition (important for code)
+PARAMETER repeat_penalty 1.1
+PARAMETER repeat_last_n 64
+
+# Stop sequences - prevent runaway generation
+PARAMETER stop "<|endoftext|>"
+PARAMETER stop "<|fim_prefix|>"
+PARAMETER stop "<|fim_middle|>"
+PARAMETER stop "<|fim_suffix|>"
+PARAMETER stop "<|repo_name|>"
+PARAMETER stop "```\n\n"
+PARAMETER stop "\n\n\n"
+
+# System prompt for coding assistance
+SYSTEM """You are an expert coding assistant with deep knowledge of software development best practices.
+
+Your core principles:
+- Write clean, readable, well-documented code
+- Follow language-specific conventions and idioms
+- Prioritize correctness over cleverness
+- Keep solutions simple unless complexity is justified
+- Include error handling where appropriate
+
+When responding:
+- If asked to write code, provide working, complete solutions
+- If asked to modify code, show only the relevant changes with context
+- If asked to explain, be concise and focus on the key concepts
+- If you see a bug or improvement opportunity, mention it
+- Use comments sparingly, only where logic is non-obvious
+
+You support all major programming languages including Python, JavaScript/TypeScript, Go, Rust, C/C++, Java, C#, Bash, PowerShell, Lua, SQL, and more."""

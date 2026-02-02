@@ -38,6 +38,22 @@ return {
     },
     spec = {
       -- ====== Leader Groups ======
+
+      -- AI Assistant group (codecompanion)
+      { "<leader>a",  group = "AI Assistant" },
+      { "<leader>aa", desc = "AI: Toggle Chat" },
+      { "<leader>an", desc = "AI: New Chat" },
+      { "<leader>ac", desc = "AI: Actions Menu" },
+      { "<leader>aq", desc = "AI: Quick Question" },
+      { "<leader>as", desc = "AI: Switch Model" },
+      { "<leader>ai", desc = "AI: Inline Assist (visual)" },
+      { "<leader>ae", desc = "AI: Explain Code (visual)" },
+      { "<leader>ar", desc = "AI: Review Code (visual)" },
+      { "<leader>af", desc = "AI: Fix Code (visual)" },
+      { "<leader>at", desc = "AI: Generate Tests (visual)" },
+      { "<leader>ad", desc = "AI: Add Docs (visual)" },
+
+      -- Buffers group
       { "<leader>b",  desc = "Buffers (fzf)" },
       { "<leader>B",  desc = "Buffer list (simple)" },
 
