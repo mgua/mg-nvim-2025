@@ -33,66 +33,39 @@ return {
       -- =======================================================================
       strategies = {
         chat = {
-          adapter = "qwen_coder",  -- Primary model for chat
+          adapter = "ollama",  -- Use the ollama adapter
+          roles = {
+            llm = "Assistant",
+            user = "User",
+          },
         },
         inline = {
-          adapter = "qwen_coder",  -- For inline code assistance
+          adapter = "ollama",
         },
         agent = {
-          adapter = "qwen_coder",  -- For agentic tasks
+          adapter = "ollama",
         },
       },
 
       -- =======================================================================
-      -- ADAPTERS: Connection settings for Ollama models
+      -- ADAPTERS: Connection settings for Ollama
       -- =======================================================================
       adapters = {
-        -- Primary coding model: Qwen2.5-Coder 7B
-        qwen_coder = function()
-          return require("codecompanion.adapters").extend("ollama", {
-            name = "qwen_coder",
-            schema = {
-              model = {
-                default = "qwen-coder",
-              },
-              num_ctx = {
-                default = 16384,
-              },
-              temperature = {
-                default = 0.2,
-              },
-            },
-          })
-        end,
-
-        -- Alternative model: RNJ-1 8B
-        rnj_coder = function()
-          return require("codecompanion.adapters").extend("ollama", {
-            name = "rnj_coder",
-            schema = {
-              model = {
-                default = "rnj-coder",
-              },
-              num_ctx = {
-                default = 16384,
-              },
-              temperature = {
-                default = 0.2,
-              },
-            },
-          })
-        end,
-
-        -- Direct Ollama adapter (for ad-hoc model selection)
         ollama = function()
           return require("codecompanion.adapters").extend("ollama", {
             env = {
               url = "http://127.0.0.1:11434",
             },
             schema = {
+              model = {
+                default = "qwen-coder",  -- Your custom model name
+              },
               num_ctx = {
                 default = 16384,
               },
+            },
+            parameters = {
+              sync = true,
             },
           })
         end,
@@ -110,7 +83,7 @@ return {
             relative = "editor",
           },
           intro_message = "Local AI ready (qwen-coder). Type /help for commands.",
-          show_settings = false,  -- Don't show settings on open
+          show_settings = false,
           show_token_count = true,
         },
         inline = {
@@ -120,7 +93,7 @@ return {
           },
         },
         action_palette = {
-          provider = "telescope",  -- Use telescope for action picker
+          provider = "telescope",
         },
       },
 
@@ -145,7 +118,6 @@ return {
       -- PROMPT LIBRARY: Reusable prompts for common tasks
       -- =======================================================================
       prompt_library = {
-        -- Code explanation
         ["Explain Code"] = {
           strategy = "chat",
           description = "Explain the selected code",
@@ -158,7 +130,6 @@ return {
           },
         },
 
-        -- Code review
         ["Review Code"] = {
           strategy = "chat",
           description = "Review code for bugs and improvements",
@@ -171,7 +142,6 @@ return {
           },
         },
 
-        -- Generate tests
         ["Generate Tests"] = {
           strategy = "chat",
           description = "Generate unit tests for selected code",
@@ -184,7 +154,6 @@ return {
           },
         },
 
-        -- Fix code
         ["Fix Code"] = {
           strategy = "inline",
           description = "Fix issues in selected code",
@@ -197,7 +166,6 @@ return {
           },
         },
 
-        -- Refactor
         ["Refactor"] = {
           strategy = "inline",
           description = "Refactor selected code",
@@ -210,7 +178,6 @@ return {
           },
         },
 
-        -- Add docstring/comments
         ["Add Documentation"] = {
           strategy = "inline",
           description = "Add documentation to code",
@@ -222,30 +189,14 @@ return {
             },
           },
         },
-
-        -- Quick question
-        ["Quick Question"] = {
-          strategy = "chat",
-          description = "Ask a quick coding question",
-          prompts = {
-            {
-              role = "user",
-              content = function()
-                local input = vim.fn.input("Question: ")
-                if input == "" then return nil end
-                return input
-              end,
-            },
-          },
-        },
       },
 
       -- =======================================================================
       -- OPTS: Miscellaneous options
       -- =======================================================================
       opts = {
-        log_level = "ERROR",  -- DEBUG, TRACE, INFO, WARN, ERROR
-        send_code = true,     -- Allow sending code to the model
+        log_level = "ERROR",
+        send_code = true,
         use_default_actions = true,
         use_default_prompts = true,
       },
@@ -254,10 +205,6 @@ return {
     -- =========================================================================
     -- KEYMAPS - Using <leader>a prefix for AI
     -- =========================================================================
-    -- Avoids conflicts with:
-    --   <leader>c  = Copy (last-keymaps.lua)
-    --   <leader>ca = LSP Code Action (200_mason.lua)
-    -- =========================================================================
     local map = vim.keymap.set
 
     -- Chat operations
@@ -265,7 +212,7 @@ return {
     map("n", "<leader>an", "<cmd>CodeCompanionChat<cr>", { desc = "AI: New Chat" })
     map("n", "<leader>ac", "<cmd>CodeCompanionActions<cr>", { desc = "AI: Actions Menu" })
 
-    -- Quick question (opens chat with input prompt)
+    -- Quick question
     map("n", "<leader>aq", function()
       local input = vim.fn.input("Ask AI: ")
       if input ~= "" then
@@ -273,15 +220,13 @@ return {
       end
     end, { desc = "AI: Quick Question" })
 
-    -- Visual mode: chat with selection
+    -- Visual mode
     map("v", "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "AI: Toggle Chat" })
     map("v", "<leader>ac", "<cmd>CodeCompanionActions<cr>", { desc = "AI: Actions Menu" })
     map("v", "gA", "<cmd>CodeCompanionChat Add<cr>", { desc = "AI: Add to Chat" })
-
-    -- Inline assistance (visual mode)
     map("v", "<leader>ai", "<cmd>CodeCompanion<cr>", { desc = "AI: Inline Assist" })
 
-    -- Quick prompts with selection (visual mode)
+    -- Quick prompts with selection
     map("v", "<leader>ae", function()
       require("codecompanion").prompt("Explain Code")
     end, { desc = "AI: Explain Code" })
@@ -302,16 +247,23 @@ return {
       require("codecompanion").prompt("Add Documentation")
     end, { desc = "AI: Add Docs" })
 
-    -- Switch adapter on the fly
+    -- Switch model on the fly
     map("n", "<leader>as", function()
-      local adapters = { "qwen_coder", "rnj_coder" }
-      vim.ui.select(adapters, { prompt = "Select AI Model:" }, function(choice)
+      local models = { "qwen-coder", "rnj-coder" }
+      vim.ui.select(models, { prompt = "Select AI Model:" }, function(choice)
         if choice then
-          -- Update the chat strategy adapter
+          -- Reconfigure with new model
           require("codecompanion").setup({
-            strategies = {
-              chat = { adapter = choice },
-              inline = { adapter = choice },
+            adapters = {
+              ollama = function()
+                return require("codecompanion.adapters").extend("ollama", {
+                  env = { url = "http://127.0.0.1:11434" },
+                  schema = {
+                    model = { default = choice },
+                    num_ctx = { default = 16384 },
+                  },
+                })
+              end,
             },
           })
           vim.notify("Switched to " .. choice, vim.log.levels.INFO)
