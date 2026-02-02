@@ -357,6 +357,10 @@ use :Telescope find_files to validate working
 	:lua vim.treesitter.start()
 	```
 	Once treesitter is started, pressing :TS<TAB> should allow you to see a richer option list
+    The following command performs extensive checks on treesitter setup:
+    ```
+    :checkhealth nvim-treesitter
+    ```
 
 5. Verify installation:
 	```
