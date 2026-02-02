@@ -53,6 +53,7 @@ potentially with graph language interpreter/preview support
 
 - which-key, to show key mapping configuration and help
 
+- codecompanion, integrated with local ollama server, for AI assisted coding
 
 
 ## treesitter issues when editing files on network shares from Windows
@@ -65,6 +66,9 @@ this folder is a very nice, functional and portable way to manage
 files and project folders across the network or mounted drives, whatever the
 protocol (cifs, iscsi, nfs)
 this approach works cross systems
+on windows/powershell, these features are implemented via extensions 
+included in psprofile. See [https://github.com/mgua/psprofile.git] 
+
 
 
 ```powershell
