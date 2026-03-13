@@ -2,6 +2,7 @@
 -- Linux:   ~/.config/nvim/init.lua
 -- Windows: %LOCALAPPDATA%\nvim\init.lua
 -- mgua@tomware.it 2025-2026 — lite variant of mg-nvim-2025
+-- Project Neurocode: Coding Assisted with on-prem inferences & Private AI
 -- Requires neovim >= 0.11 — uses native LSP, native OSC52 clipboard
 --
 -- This is a self-contained single-file config. No lua/ directory needed.

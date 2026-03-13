@@ -54,7 +54,7 @@ return {
         ollama = function()
           return require("codecompanion.adapters").extend("ollama", {
             env = {
-              url = "http://127.0.0.1:11434",
+              url = "http://172.30.14.82:11434",
             },
             schema = {
               model = {
