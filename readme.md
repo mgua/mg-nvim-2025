@@ -3,6 +3,8 @@
 A modern multiplatform structured configuration for neovim 
 Requires at least neovim 0.11. 
 
+<img width="2329" height="1066" alt="image" src="https://github.com/user-attachments/assets/c17a40cf-915f-415f-bdb9-30adb4e71577" />
+
 
 ## installation
 
