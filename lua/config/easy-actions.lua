@@ -44,6 +44,9 @@ map("s", "y", '<C-g>"+y', { desc = "Yank selection" })
 -- Leader in select mode: switch to visual so which-key shows copy options (c/C, y, etc.)
 map("s", "<Space>", "<C-g><Space>", { desc = "Leader (which-key)" })
 
+-- Save with Ctrl+S
+map({ "n", "i", "v", "s" }, "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
+
 -- ============================================================================
 -- Right-click popup menu - DISABLED, using Neovim 0.11 built-in menu
 -- Reference: TJ DeVries https://www.youtube.com/watch?v=_U54QKdFQno
