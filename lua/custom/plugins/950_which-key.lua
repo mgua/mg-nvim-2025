@@ -29,7 +29,7 @@ return {
       g = true,
     },
     triggers = {
-      { "<leader>", mode = { "n", "v" } },
+      { "<leader>", mode = { "n", "v", "s" } },
       { "[", mode = { "n", "v" } },
       { "]", mode = { "n", "v" } },
       { "g", mode = { "n", "v" } },
@@ -163,11 +163,11 @@ return {
 
       -- ====== CUA Clipboard (easy-actions) ======
       { "<C-a>", desc = "Select all", mode = { "n", "i" } },
-      { "<C-c>", desc = "Copy", mode = "v" },
+      { "<C-c>", desc = "Copy", mode = { "v", "s" } },
       { "<C-v>", desc = "Paste", mode = "i" },
-      { "<C-x>", desc = "Cut", mode = "v" },
-      { "<C-Insert>", desc = "Copy (classic)", mode = "v" },
-      { "<S-Insert>", desc = "Paste (classic)", mode = { "n", "i", "v", "c" } },
+      { "<C-x>", desc = "Cut", mode = { "v", "s" } },
+      { "<C-Insert>", desc = "Copy (classic)", mode = { "v", "s" } },
+      { "<S-Insert>", desc = "Paste (classic)", mode = { "n", "i", "v", "c", "s" } },
 
       -- ====== z prefix ======
       { "z",  group = "Folds/Spelling/View" },
