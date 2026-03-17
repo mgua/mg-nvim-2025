@@ -58,8 +58,22 @@ vim.opt.smartindent = true
 vim.env.LANG = "en_US.UTF-8"
 vim.env.LC_ALL = "en_US.UTF-8"
 
--- Clipboard — native OSC52 in nvim 0.10+ works across SSH/tmux
-vim.opt.clipboard = "unnamedplus"
+
+-- CLIPBOARD very important settings
+if vim.env.TMUX then
+  -- Clipboard — native OSC52 in nvim 0.10+ if I put this line it works across tmux
+  vim.opt.clipboard = "unnamedplus"
+  --  set clipboard+=unnamedplus
+  vim.api.nvim_echo({{ "TMUX: vim.opt.clipboard = 'unnamedplus'", "None" }}, false, {})
+else
+  -- outside tmux it works!!
+  vim.g.clipboard = "osc52"
+  vim.opt.clipboard = "unnamedplus"
+  vim.api.nvim_echo({{ "NO_TMUX: vim.g.clipboard = 'osc52' AND vim.opt.clipboard = 'unnamedplus'", "None" }}, false, {})
+end
+
+
+
 
 -- Listchars (visible whitespace)
 vim.opt.list = true
@@ -164,6 +178,7 @@ require("lazy").setup({
       indent = { enable = true },
       install = {
         ensure_installed = {
+          "lua", "vim", "vimdoc", "query",
           "html", "css", "python", "powershell", "bash",
           "json", "yaml", "markdown", "markdown_inline",
         },
@@ -180,10 +195,12 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("FileType", {
         pattern = ts_filetypes,
         callback = function()
-          vim.treesitter.start()
-          vim.wo.foldmethod = "expr"
-          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-          vim.wo.foldlevel = 99
+          local ok = pcall(vim.treesitter.start)
+          if ok then
+            vim.wo.foldmethod = "expr"
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+            vim.wo.foldlevel = 99
+          end
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })
@@ -427,3 +444,4 @@ map("n", "<leader>mr", "<cmd>diffget REMOTE<cr>", { desc = "Get from REMOTE" })
 -- =============================================================================
 -- end of init-lite.lua
 -- =============================================================================
+

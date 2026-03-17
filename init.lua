@@ -28,16 +28,32 @@ vim.g.mapleader = " "       -- Set leader key to space
 vim.g.maplocalleader = " "  -- Set leader key to space in every buf
 
 
--- Tmux settings
+
+
 vim.opt.termguicolors = true
+vim.opt.timeoutlen = 1000           -- Affects folke/which-key and numToStr/Comment.nvim
+-- CLIPBOARD very important settings
+-- Clipboard — native OSC52 in nvim 0.10+ if I put this line it works across tmux
+vim.opt.clipboard = "unnamedplus"
 if vim.env.TMUX then
-  vim.opt.clipboard = 'unnamedplus'  -- Use system clipboard in tmux
-  -- vim.opt.term = "xterm-256color"    -- Better color support in tmux: commented out on jan 19 2026 because of error
-  vim.opt.timeoutlen = 1000
-  vim.opt.ttimeoutlen = 0
+  vim.opt.ttimeoutlen = 0			-- makes transition out of insert mode istantaneous
+else
+  vim.g.clipboard = "osc52"
 end
 
-vim.opt.timeoutlen = 1000           -- Affects folke/which-key and numToStr/Comment.nvim
+
+-- windows/linux options
+if vim.fn.has('win32') == 1 then
+  -- windows only configs
+  -- python venv dedicated to neovim: venv_neovim, in user home folder
+  -- on win create with py -3.12-m venv venv_neovim and install pynvim and neovim	
+  vim.g.python3_host_prog = vim.env.USERPROFILE .. '/venv_neovim/Scripts/python.exe'
+else
+  -- linux only configs
+  vim.g.python3_host_prog = vim.env.HOME .. '/venv_neovim/bin/python'	
+end
+
+
 
 -- General settings
 -- these are equivalent to vim.cmd syntax (vim style) as:
@@ -53,13 +69,13 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
 vim.opt.scrolloff = 4
-vim.opt.wrap = false -- equivalent to set nowrap
+vim.opt.wrap = false 				-- equivalent to set nowrap
 
-vim.opt.mouse = 'a' -- Mouse support
+vim.opt.mouse = 'a' 				-- Mouse support
 
 vim.env.LANG = 'en_US.UTF-8'
-vim.env.LC_ALL = 'en_US.UTF-8'    -- needed on linux
--- vim.opt.encoding = "UTF-8"        -- default Encoding  (not needed default, commented on jan 19 2026)
+vim.env.LC_ALL = 'en_US.UTF-8'    	-- needed on linux
+-- vim.opt.encoding = "UTF-8"     	-- default Encoding  (not needed default, commented on jan 19 2026)
 
 -- =============================================================================
 -- Basic Syntax, Folding and Indentation (fallback for non-treesitter filetypes)
@@ -72,7 +88,7 @@ vim.opt.autoindent = true       -- Copy indent from current line to new line
 vim.opt.smartindent = true      -- Smart autoindenting for C-like languages
 
 
- -- from checkhealth suggestion, to remove warnings
+-- from checkhealth suggestion, to remove warnings
 -- opts.rocks.hererocks = false
 -- opts.rocks.enabled = false
 -- these settings are to be placed in lazy.lua
@@ -83,33 +99,17 @@ vim.opt.smartindent = true      -- Smart autoindenting for C-like languages
 --      )--
 
 
--- python venv dedicated to neovim: venv_neovim, in user home folder
--- on win create with py -3.12-m venv venv_neovim and install pynvim and neovim
-if vim.fn.has('win32') == 1 then
-  vim.g.python3_host_prog = vim.env.USERPROFILE .. '/venv_neovim/Scripts/python.exe'
-else
-  vim.g.python3_host_prog = vim.env.HOME .. '/venv_neovim/bin/python'
-end
-
 -- List mode and listchars. for windows we assume that nerdfonts are available
--- and correctly setup. Best experience for windows is within Microsoft Windows Terminal
+-- and correctly setup. Best experience for windows is within Microsoft Windows Terminal (with nerd fonts)
 vim.opt.list = true
 vim.opt.listchars = {
-    eol = "⏎",      -- Unicode for 'end of line'
-    tab = "»─",     -- Unicode for 'tab' (arrow and dash) alternative: » (Right-Pointing Double Angle Quotation Mark U+00BB)
-    trail = "·",    -- Unicode for 'trailing space'
-    nbsp = "⎵",     -- Unicode for 'non-breaking space'
-    space = "·"     -- Unicode for 'space'
+    eol = "⏎",      -- Unicode for 'end of line' 			'\\u23ce' (end of line: CRLF or LF)
+    tab = "»─",     -- Unicode for 'tab' (arrow and dash: 	'\\u25b8\\u2500') alternative: » (Right-Pointing Double Angle Quotation Mark U+00BB)
+    trail = "·",    -- Unicode for 'trailing space' 		'\\u00b7' (identical to space with small dot)
+    nbsp = "⎵",     -- Unicode for 'non-breaking space' 	'\\u23b5' (underlined non breaking space)
+    space = "·"     -- Unicode for 'space'					'\\u00b7' (space with small dot)
 }
--- vim.opt.listchars = {eol = '\\u23ce', tab = '\\u25b8\\u2500', trail = '\\u00b7', space = '\\u00b7', nbsp = '\\u23b5'}
 
--- Automatically send anything yanked to the default register (") to the system clipboard register (+).
--- this is draft and may require improvements/cross platform adjustments
-if vim.fn.has('win32') == 1 then
-  vim.opt.clipboard = 'unnamedplus'
-else
-  vim.opt.clipboard = 'unnamedplus'
-end
 
 require("config.easy-actions")    -- (lua/config/easy-actions.lua) user friendly selections and mouse
 require("config.venv-selector")   -- (lua/config/venv-selector.lua) selects correct python venv
