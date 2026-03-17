@@ -9,10 +9,6 @@
 
 local M = {}
 
--- Enable traditional shift+cursor selection
-vim.opt.keymodel = 'startsel,stopsel'
-vim.opt.selectmode = 'key,mouse'
-
 -- Enable mouse support
 vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'popup_setpos'
@@ -20,31 +16,19 @@ vim.opt.mousemodel = 'popup_setpos'
 -- Clipboard integration (use system clipboard)
 vim.opt.clipboard = 'unnamedplus'
 
--- Convenient keymaps for selection/clipboard
--- CTRL+A select all (insert and normal mode)
-vim.keymap.set({'n', 'i'}, '<C-a>', '<Esc>ggVG', { desc = 'Select all' })
+local map = vim.keymap.set
 
--- CTRL+C copy in visual mode
-vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy to clipboard' })
-
--- CTRL+V paste (insert mode) - careful: conflicts with visual block in normal
-vim.keymap.set('i', '<C-v>', '<C-r>+', { desc = 'Paste from clipboard' })
-
--- CTRL+X cut in visual mode
-vim.keymap.set('v', '<C-x>', '"+d', { desc = 'Cut to clipboard' })
-
--- Classic CUA/X11 clipboard shortcuts
--- CTRL+Insert copy (visual mode)
-vim.keymap.set('v', '<C-Insert>', '"+y', { desc = 'Copy to clipboard (classic)' })
-
--- SHIFT+Insert paste (normal, insert, visual, command modes)
-vim.keymap.set('n', '<S-Insert>', '"+gP', { desc = 'Paste from clipboard (classic)' })
-vim.keymap.set('i', '<S-Insert>', '<C-r>+', { desc = 'Paste from clipboard (classic)' })
-vim.keymap.set('v', '<S-Insert>', '"+gP', { desc = 'Paste from clipboard (classic)' })
-vim.keymap.set('c', '<S-Insert>', '<C-r>+', { desc = 'Paste from clipboard (classic)' })
-
--- SHIFT+Delete cut (visual mode) - bonus classic shortcut
-vim.keymap.set('v', '<S-Delete>', '"+d', { desc = 'Cut to clipboard (classic)' })
+-- CUA-style clipboard keymaps
+map({ "n", "i" }, "<C-a>", "<Esc>ggVG", { desc = "Select all" })
+map("v", "<C-c>", '"+y', { desc = "Copy" })
+map("i", "<C-v>", "<C-r>+", { desc = "Paste" })
+map("v", "<C-x>", '"+d', { desc = "Cut" })
+map("v", "<C-Insert>", '"+y', { desc = "Copy (classic)" })
+map({ "n", "i", "v", "c" }, "<S-Insert>", function()
+  local mode = vim.fn.mode()
+  if mode == "i" or mode == "c" then return "<C-r>+" end
+  return '"+gP'
+end, { expr = true, desc = "Paste (classic)" })
 
 -- ============================================================================
 -- Right-click popup menu - DISABLED, using Neovim 0.11 built-in menu

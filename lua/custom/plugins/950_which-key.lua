@@ -161,6 +161,14 @@ return {
       -- ====== K - Hover ======
       -- K is the standard key for hover documentation (no group needed)
 
+      -- ====== CUA Clipboard (easy-actions) ======
+      { "<C-a>", desc = "Select all", mode = { "n", "i" } },
+      { "<C-c>", desc = "Copy", mode = "v" },
+      { "<C-v>", desc = "Paste", mode = "i" },
+      { "<C-x>", desc = "Cut", mode = "v" },
+      { "<C-Insert>", desc = "Copy (classic)", mode = "v" },
+      { "<S-Insert>", desc = "Paste (classic)", mode = { "n", "i", "v", "c" } },
+
       -- ====== z prefix ======
       { "z",  group = "Folds/Spelling/View" },
     },
