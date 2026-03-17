@@ -25,8 +25,9 @@ This neovim setup integrates the following components:
 - multiplatform clipboard support, across chained sessions: 
 You can copy/paste across different chained session on different os.
 A OSC52 compliant terminal emulator program is required: Windows Terminal works.
+(similar configs for good old vim are documented in sample.vimrc)
 
-- tmux integration, with clipboard support. (requires specific tmux setup)
+- tmux integration, with clipboard support. (requires specific tmux setup: see sample.tmux.conf)
 
 - nvim-tree, file manager and file navigation, with symbols
 
