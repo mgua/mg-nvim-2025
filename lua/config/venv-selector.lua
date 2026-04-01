@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
             for _, client in ipairs(clients) do
                 client.config.settings.python = client.config.settings.python or {}
                 client.config.settings.python.pythonPath = python_path
-                client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+                client:notify("workspace/didChangeConfiguration", { settings = client.config.settings })
             end
 
             -- Restart LSP to pick up new venv (Neovim 0.11+ method)

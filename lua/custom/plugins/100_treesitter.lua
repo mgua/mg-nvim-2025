@@ -91,7 +91,12 @@ local all_ts_filetypes = vim.list_extend(vim.list_extend({}, nvim_core_parsers),
 local function apply_treesitter_settings()
     -- SYNTAX: Treesitter-based highlighting (more accurate than regex)
     -- Note: For bundled parsers this is automatic, but calling it is harmless
-    vim.treesitter.start()
+    local ok, err = pcall(vim.treesitter.start)
+    if not ok then
+        -- Parser not installed yet (run :TSInstall <lang> or wait for ensure_installed)
+        vim.notify('Treesitter parser unavailable: ' .. err, vim.log.levels.DEBUG)
+        return
+    end
 
     -- FOLDING: Treesitter-based (understands code structure)
     vim.wo.foldmethod = 'expr'
