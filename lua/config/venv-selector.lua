@@ -19,10 +19,10 @@ local function get_python_path(venv_path)
 end
 
 local function restart_basedpyright()
-    -- Neovim 0.11+: stop client, it will auto-restart via vim.lsp.enable()
+    -- Neovim 0.12+: stop client, it will auto-restart via vim.lsp.enable()
     local clients = vim.lsp.get_clients({ name = "basedpyright" })
     for _, client in ipairs(clients) do
-        vim.lsp.stop_client(client.id)
+        client:stop()
     end
     -- Trigger re-attach by re-entering buffer
     vim.defer_fn(function()
@@ -72,10 +72,10 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
         -- Find all venv_* folders in parent directory
         local venvs = {}
-        local handle = vim.loop.fs_scandir(parent_dir)
+        local handle = vim.uv.fs_scandir(parent_dir)
         if handle then
             while true do
-                local name, type = vim.loop.fs_scandir_next(handle)
+                local name, type = vim.uv.fs_scandir_next(handle)
                 if not name then break end
                 if type == "directory" and name:match("^venv_") then
                     table.insert(venvs, parent_dir .. path_sep .. name)

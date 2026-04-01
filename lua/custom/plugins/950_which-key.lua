@@ -190,12 +190,12 @@ return {
       "<cmd>checkhealth lsp<CR>",
       desc = "LSP health check",
     },
-    -- Restart all LSP clients (Neovim 0.11+)
+    -- Restart all LSP clients (Neovim 0.12+)
     {
       "<leader>lr",
       function()
         for _, client in ipairs(vim.lsp.get_clients()) do
-          vim.lsp.stop_client(client.id)
+          client:stop()
         end
         vim.defer_fn(function()
           vim.cmd("edit")

@@ -33,12 +33,17 @@ vim.g.maplocalleader = " "  -- Set leader key to space in every buf
 vim.opt.termguicolors = true
 vim.opt.timeoutlen = 1000           -- Affects folke/which-key and numToStr/Comment.nvim
 -- CLIPBOARD very important settings
--- Clipboard — native OSC52 in nvim 0.10+ if I put this line it works across tmux
 vim.opt.clipboard = "unnamedplus"
 if vim.env.TMUX then
-  vim.opt.ttimeoutlen = 0			-- makes transition out of insert mode istantaneous
-else
+  -- tmux: fast escape, clipboard forwarding handled by tmux itself
+  vim.opt.ttimeoutlen = 0
+elseif vim.env.SSH_CLIENT or vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
+  -- remote (SSH) session: use OSC52 to write to local terminal clipboard
+  -- note: OSC52 read has a terminal roundtrip delay; that is an acceptable
+  -- trade-off in a remote session where the system clipboard is unavailable
   vim.g.clipboard = "osc52"
+-- else: local session — use system clipboard provider (xclip/xsel/wl-clipboard)
+-- no vim.g.clipboard override; native provider is fast with no terminal roundtrip
 end
 
 

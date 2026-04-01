@@ -119,10 +119,10 @@ local function setup_lsp_keymaps()
 
             -- ===== Diagnostics =====
             opts.desc = "Previous Diagnostic"
-            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+            vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, opts)
 
             opts.desc = "Next Diagnostic"
-            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+            vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }) end, opts)
 
             opts.desc = "Line Diagnostics (float)"
             vim.keymap.set('n', '<leader>ld', vim.diagnostic.open_float, opts)

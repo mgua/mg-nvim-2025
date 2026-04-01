@@ -66,9 +66,10 @@
 -- =============================================================================
 -- Edit these lists to add/remove language support
 
--- Bundled in nvim 0.11 core (parser included, no installation needed)
+-- Bundled in nvim 0.12 core (parser included, no installation needed)
+-- 0.12 adds: markdown, markdown_inline (treesitter highlighting for md enabled by default)
 local nvim_core_parsers = {
-    "c", "lua", "vim", "vimdoc", "query"
+    "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline"
 }
 
 -- Require nvim-treesitter plugin (will be installed via ensure_installed)
@@ -77,8 +78,7 @@ local nvim_core_parsers = {
 -- :TSInstall html css python powershell bash json yaml awk perl markdown markdown_inline
 
 local plugin_parsers = {
-    "html", "css", "python", "powershell", "bash", "json", "yaml", "awk", "perl",
-    "markdown", "markdown_inline"
+    "html", "css", "python", "powershell", "bash", "json", "yaml", "awk", "perl"
 }
 
 -- Combined list (both get same treesitter treatment)
