@@ -167,7 +167,7 @@ return {
       { "<C-v>", desc = "Paste", mode = "i" },
       { "<C-x>", desc = "Cut", mode = { "v", "s" } },
       { "<C-Insert>", desc = "Copy (classic)", mode = { "v", "s" } },
-      { "<S-Insert>", desc = "Paste (classic)", mode = { "n", "i", "v", "c", "s" } },
+      -- <S-Insert> is intentionally not mapped in nvim — terminal handles it
 
       -- ====== z prefix ======
       { "z",  group = "Folds/Spelling/View" },

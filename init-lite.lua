@@ -60,16 +60,32 @@ vim.env.LC_ALL = "en_US.UTF-8"
 
 
 -- CLIPBOARD very important settings
+vim.opt.clipboard = "unnamedplus"
 if vim.env.TMUX then
-  -- Clipboard — native OSC52 in nvim 0.10+ if I put this line it works across tmux
-  vim.opt.clipboard = "unnamedplus"
-  --  set clipboard+=unnamedplus
+  -- tmux: clipboard forwarding handled by tmux itself
   vim.api.nvim_echo({{ "TMUX: vim.opt.clipboard = 'unnamedplus'", "None" }}, false, {})
-else
-  -- outside tmux it works!!
-  vim.g.clipboard = "osc52"
-  vim.opt.clipboard = "unnamedplus"
-  vim.api.nvim_echo({{ "NO_TMUX: vim.g.clipboard = 'osc52' AND vim.opt.clipboard = 'unnamedplus'", "None" }}, false, {})
+elseif vim.env.SSH_CLIENT or vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
+  -- remote (SSH) session: OSC52 for copy only. Paste is served from the
+  -- internal register to avoid the OSC52 read timeout (~10 s) when terminals
+  -- refuse the read query (most do, by default, for security).
+  -- To paste the OS clipboard, use the terminal's Shift+Insert / Ctrl+Shift+V.
+  local osc52 = require("vim.ui.clipboard.osc52")
+  vim.g.clipboard = {
+    name = "osc52-copy-only",
+    copy = {
+      ["+"] = osc52.copy("+"),
+      ["*"] = osc52.copy("*"),
+    },
+    paste = {
+      ["+"] = function()
+        return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+      end,
+      ["*"] = function()
+        return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+      end,
+    },
+  }
+  vim.api.nvim_echo({{ "SSH: OSC52 copy-only clipboard provider active", "None" }}, false, {})
 end
 
 
@@ -125,16 +141,13 @@ map("n", "<leader>e", "<cmd>Explore<CR>", { desc = "File explorer" })
 map("n", "<leader>t", "<cmd>Lexplore 30<CR>", { desc = "File tree (netrw)" })
 
 -- Easy actions (CUA-style clipboard)
+-- NOTE: <S-Insert> is intentionally NOT mapped — let the terminal app
+-- handle it (paste OS clipboard via bracketed paste, no OSC52 roundtrip).
 map({ "n", "i" }, "<C-a>", "<Esc>ggVG", { desc = "Select all" })
 map("v", "<C-c>", '"+y', { desc = "Copy" })
 map("i", "<C-v>", "<C-r>+", { desc = "Paste" })
 map("v", "<C-x>", '"+d', { desc = "Cut" })
 map("v", "<C-Insert>", '"+y', { desc = "Copy (classic)" })
-map({ "n", "i", "v", "c" }, "<S-Insert>", function()
-  local mode = vim.fn.mode()
-  if mode == "i" or mode == "c" then return "<C-r>+" end
-  return '"+gP'
-end, { expr = true, desc = "Paste (classic)" })
 
 -- Yank highlight
 vim.api.nvim_create_autocmd("TextYankPost", {

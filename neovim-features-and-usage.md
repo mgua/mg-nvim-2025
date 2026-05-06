@@ -74,7 +74,12 @@ nyy OR n<leader>y OR n<leader>c copies subsequent n lines to clipboard
 (also works from remote sessions over ssh within windows terminal)
 
 in insert mode:
-shift-INS or CTRL-V: paste from clipboard 
+CTRL-V: paste from nvim's internal register (last yanked text), instant.
+shift-INS: paste from the OS clipboard. Handled by the terminal app
+(Windows Terminal, iTerm2, GNOME Terminal, Konsole, kitty, xterm bind it
+by default), not by nvim — content arrives via bracketed paste with no
+OSC52 terminal-read roundtrip.
+
 
 <ESC>wq! close with save
 
@@ -246,9 +251,13 @@ Tips:
 - `<leader>rn` - Rename symbol
 
 ### Clipboard Operations
-- `<leader>y` - Copy to system clipboard
-- `<leader>p` - Paste from system clipboard
-- OSC52 enabled for remote clipboard support
+- `<leader>y` - Copy to system clipboard (OSC52 over SSH)
+- `<leader>p` - Paste from internal register
+- `Shift+Insert` - Paste OS clipboard (handled by the terminal app, not nvim)
+- `Ctrl+Shift+V` - Same as Shift+Insert in most terminals
+- OSC52 is used for **copy** in remote sessions; **paste** is served from
+  nvim's internal register to avoid the terminal-read timeout. To paste
+  the OS clipboard into nvim over SSH, use the terminal's paste shortcut.
 
 ## Troubleshooting
 
@@ -258,9 +267,12 @@ Tips:
    - Restart your terminal
 
 2. If clipboard isn't working in remote sessions:
-   - Confirm your terminal supports OSC52
-   - Check that the remote server can connect to your local machine
-   - Verify OSC52 settings in your terminal
+   - Confirm your terminal supports OSC52 (for copy from nvim → local OS)
+   - To paste OS clipboard *into* nvim, use the terminal's own paste
+     shortcut (`Shift+Insert` / `Ctrl+Shift+V`), not an in-nvim keymap
+   - macOS Terminal.app does not bind `Shift+Insert` by default — bind it
+     manually or use `Cmd+V`
+   - See `troubleshooting.md` for the full explanation
 
 3. If LSP isn't working:
    - Run `:Mason` and check if servers are installed

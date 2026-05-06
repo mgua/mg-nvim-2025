@@ -22,10 +22,19 @@ Linux installation also support tmux integration
 
 This neovim setup integrates the following components:
 
-- multiplatform clipboard support, across chained sessions: 
-You can copy/paste across different chained session on different os.
-A OSC52 compliant terminal emulator program is required: Windows Terminal works.
+- multiplatform clipboard support, across chained sessions:
+You can copy/paste across different chained sessions on different OSes.
+An OSC52-compliant terminal emulator is required: Windows Terminal works.
 (similar configs for good old vim are documented in sample.vimrc)
+  - **Yank inside nvim** (`yy`, `<leader>y`, `<C-c>`) → copies to the local OS
+    clipboard via OSC52, even over SSH.
+  - **Paste inside nvim** (`p`, `<C-v>`) → pulls from the internal register;
+    instant, no terminal roundtrip.
+  - **Paste OS clipboard *into* nvim** → use the terminal's own paste shortcut
+    (`Shift+Insert` or `Ctrl+Shift+V`); the content arrives via bracketed
+    paste, instant. nvim does not query the terminal for clipboard reads
+    because most terminals refuse OSC52 read for security and the query
+    would otherwise hang every paste for ~10 s.
 
 - tmux integration, with clipboard support. (requires specific tmux setup: see sample.tmux.conf)
 

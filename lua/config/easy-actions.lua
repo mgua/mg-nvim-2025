@@ -23,23 +23,22 @@ vim.opt.clipboard = 'unnamedplus'
 local map = vim.keymap.set
 
 -- CUA-style clipboard keymaps (visual mode)
+-- NOTE: <S-Insert> is intentionally NOT mapped in nvim. We let the local
+-- terminal app intercept Shift+Insert and paste the OS clipboard via its
+-- native paste binding (Windows Terminal, iTerm2, GNOME Terminal, Konsole,
+-- kitty, xterm all bind it by default). The content arrives in nvim as a
+-- bracketed paste — instant, with no OSC52 terminal-read roundtrip.
 map({ "n", "i" }, "<C-a>", "<Esc>ggVG", { desc = "Select all" })
 map("v", "<C-c>", '"+y', { desc = "Copy" })
 map("i", "<C-v>", "<C-r>+", { desc = "Paste" })
 map("v", "<C-x>", '"+d', { desc = "Cut" })
 map("v", "<C-Insert>", '"+y', { desc = "Copy (classic)" })
-map({ "n", "i", "v", "c" }, "<S-Insert>", function()
-  local mode = vim.fn.mode()
-  if mode == "i" or mode == "c" then return "<C-r>+" end
-  return '"+gP'
-end, { expr = true, desc = "Paste (classic)" })
 
 -- Select mode mappings (shift+cursor enters select mode due to selectmode setting)
 -- These switch to visual mode so clipboard and leader keymaps work on the selection
 map("s", "<C-c>", '<C-g>"+y', { desc = "Copy" })
 map("s", "<C-x>", '<C-g>"+d', { desc = "Cut" })
 map("s", "<C-Insert>", '<C-g>"+y', { desc = "Copy (classic)" })
-map("s", "<S-Insert>", '<C-g>"+gP', { desc = "Paste (classic)" })
 map("s", "y", '<C-g>"+y', { desc = "Yank selection" })
 -- Leader in select mode: switch to visual so which-key shows copy options (c/C, y, etc.)
 map("s", "<Space>", "<C-g><Space>", { desc = "Leader (which-key)" })

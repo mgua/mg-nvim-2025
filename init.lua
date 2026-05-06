@@ -38,10 +38,28 @@ if vim.env.TMUX then
   -- tmux: fast escape, clipboard forwarding handled by tmux itself
   vim.opt.ttimeoutlen = 0
 elseif vim.env.SSH_CLIENT or vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
-  -- remote (SSH) session: use OSC52 to write to local terminal clipboard
-  -- note: OSC52 read has a terminal roundtrip delay; that is an acceptable
-  -- trade-off in a remote session where the system clipboard is unavailable
-  vim.g.clipboard = "osc52"
+  -- remote (SSH) session: OSC52 for copy (write to local terminal clipboard).
+  -- Paste is served from nvim's internal register — no terminal read query —
+  -- because OSC52 read is disabled by default in most terminals and would
+  -- otherwise hang every paste for the full read timeout (~10 s).
+  -- To paste the OS clipboard contents into nvim, use the terminal's own
+  -- paste shortcut (Shift+Insert / Ctrl+Shift+V); it arrives via bracketed paste.
+  local osc52 = require("vim.ui.clipboard.osc52")
+  vim.g.clipboard = {
+    name = "osc52-copy-only",
+    copy = {
+      ["+"] = osc52.copy("+"),
+      ["*"] = osc52.copy("*"),
+    },
+    paste = {
+      ["+"] = function()
+        return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+      end,
+      ["*"] = function()
+        return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+      end,
+    },
+  }
 -- else: local session — use system clipboard provider (xclip/xsel/wl-clipboard)
 -- no vim.g.clipboard override; native provider is fast with no terminal roundtrip
 end

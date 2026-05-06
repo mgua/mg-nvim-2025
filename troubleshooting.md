@@ -30,6 +30,21 @@
    - Install xclip/xsel on Linux: `sudo apt install xclip`
    - Verify PATH includes clipboard utilities
 
+3. Pasting from OS clipboard *into* nvim over SSH:
+   - Use the **terminal app's** paste shortcut, not an in-nvim keymap.
+     `Shift+Insert` and `Ctrl+Shift+V` both work in Windows Terminal,
+     iTerm2, GNOME Terminal, Konsole, kitty, and xterm by default.
+   - The clipboard contents arrive as a bracketed paste — instant, no
+     OSC52 read roundtrip.
+   - Why: nvim's OSC52 paste sends a read query to the terminal and
+     waits for a response. Most terminals disable OSC52 read by default
+     for security, so the query times out (~10 s) on every paste. This
+     config therefore wires OSC52 for *copy only* and serves in-nvim
+     pastes (`p`, `<C-v>`, `"+p`) from the internal register.
+   - macOS Terminal.app does not bind `Shift+Insert` by default — bind
+     it manually under Preferences → Profiles → Keyboard, or use
+     `Cmd+V` (which Terminal.app already binds to paste).
+
 ### LSP Related Issues
 1. If LSP isn't working:
    - Run `:Mason` and check if servers are installed
