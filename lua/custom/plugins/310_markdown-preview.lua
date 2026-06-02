@@ -55,12 +55,18 @@ return {
       local install_cmd = has_yarn and "yarn install" or "npm install"
       local cmd
 
+      -- Reset app/yarn.lock after install: yarn rewrites it, leaving the plugin's
+      -- working tree dirty and blocking the next :Lazy sync.
       if vim.fn.has('win32') == 1 then
-        -- Windows: use cd /d to handle drive changes, wrap path in quotes
-        cmd = string.format('cd /d "%s" && %s', app_dir, install_cmd)
+        cmd = string.format(
+          'cd /d "%s" && %s && git -C "%s" checkout -- app/yarn.lock',
+          app_dir, install_cmd, plugin_dir
+        )
       else
-        -- Linux/macOS
-        cmd = string.format('cd "%s" && %s', app_dir, install_cmd)
+        cmd = string.format(
+          'cd "%s" && %s && git -C "%s" checkout -- app/yarn.lock 2>/dev/null || true',
+          app_dir, install_cmd, plugin_dir
+        )
       end
 
       vim.notify(
