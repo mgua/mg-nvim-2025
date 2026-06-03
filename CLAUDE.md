@@ -18,7 +18,8 @@ templates/                  # Project config templates (pyrightconfig, pyproject
 
 ## Load Order (init.lua)
 
-1. `easy-actions.lua` — mouse, clipboard (OSC52 on Linux, native on Windows), Ctrl+C/V/X
+0. `clipboard.lua` — clipboard strategy (windows/tmux/osc52/local), startup verification, `:ClipboardStatus` diagnostic (required from init.lua before the config modules below)
+1. `easy-actions.lua` — mouse, CUA selection, Ctrl+C/V/X keymaps
 2. `venv-selector.lua` — Python venv auto-detection
 3. `first-keymaps.lua` — buffer/tab/window navigation
 4. `lazy.lua` — loads all plugins from `lua/custom/plugins/*.lua`
