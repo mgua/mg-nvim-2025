@@ -282,7 +282,8 @@ Tips:
 4. If Treesitter gives C compiler errors:
    - Verify GCC installation: `gcc --version`
    - Check if `C:\msys64\mingw64\bin` is in your PATH (Windows)
-   - Try reinstalling gcc via MSYS2 if needed
+   - Try reinstalling gcc via MSYS2 if needed (keep it up2date with pacman -Syu)
+
 
 5. If Startify sessions aren't saving:
    - Check if session directory exists
