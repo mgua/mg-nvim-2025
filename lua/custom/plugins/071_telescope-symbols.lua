@@ -1,5 +1,5 @@
 -- 071_telescope-symbols.lua
--- Unicode/emoji/math/latex symbol sources for telescope's built-in `symbols` picker
+-- Unicode/emoji/math/latex/julia symbol sources for telescope's built-in `symbols` picker
 -- https://github.com/nvim-telescope/telescope-symbols.nvim
 --
 -- Place in: lua/custom/plugins/071_telescope-symbols.lua
@@ -19,7 +19,7 @@ return {
 
     config = function()
         vim.keymap.set('n', '<leader>fe', function()
-            require('telescope.builtin').symbols({ sources = { 'emoji', 'gitmoji', 'math', 'latex' } })
+            require('telescope.builtin').symbols({ sources = { 'emoji', 'gitmoji', 'math', 'latex', 'julia' } })
         end, { desc = 'Insert emoji / symbol' })
     end,
 }
