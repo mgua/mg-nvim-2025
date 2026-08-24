@@ -136,6 +136,8 @@ return {
         safe_map('n', '<leader>fl', builtin.loclist, { desc = 'Location list' })
         safe_map('n', '<leader>f"', builtin.registers, { desc = 'Registers' })
 
+        -- Symbols / emoji: <leader>fe lives in 071_telescope-symbols.lua
+
         -- Meta
         safe_map('n', '<leader>f.', builtin.builtin, { desc = 'All Telescope pickers' })
         safe_map('n', '<leader>fb', builtin.buffers, { desc = 'Buffers (Telescope)' })
