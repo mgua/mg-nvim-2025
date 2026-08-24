@@ -22,10 +22,6 @@ return {
     branch = 'master',      -- this allows more recent update 0.2.1 as jan 2026
     dependencies = {
         'nvim-lua/plenary.nvim',
-        -- unicode/emoji/math/latex symbol sources for the built-in `symbols` picker
-        -- (:Telescope symbols). These are REAL unicode, so they render in any
-        -- markdown viewer - unlike Nerd Font glyphs (Private Use Area, need the font).
-        'nvim-telescope/telescope-symbols.nvim',
     },
 
     config = function()
@@ -140,12 +136,7 @@ return {
         safe_map('n', '<leader>fl', builtin.loclist, { desc = 'Location list' })
         safe_map('n', '<leader>f"', builtin.registers, { desc = 'Registers' })
 
-        -- Symbols / emoji  (real unicode -> renders in any markdown viewer)
-        -- needs telescope-symbols.nvim (added as a dependency above).
-        -- <leader>fe opens a :digraphs-like picker; <CR> inserts at the cursor.
-        safe_map('n', '<leader>fe', function()
-            builtin.symbols({ sources = { 'emoji', 'gitmoji', 'math', 'latex' } })
-        end, { desc = 'Insert emoji / symbol' })
+        -- Symbols / emoji: <leader>fe lives in 071_telescope-symbols.lua
 
         -- Meta
         safe_map('n', '<leader>f.', builtin.builtin, { desc = 'All Telescope pickers' })
