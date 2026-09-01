@@ -40,8 +40,20 @@ map("s", "<C-c>", '<C-g>"+y', { desc = "Copy" })
 map("s", "<C-x>", '<C-g>"+d', { desc = "Cut" })
 map("s", "<C-Insert>", '<C-g>"+y', { desc = "Copy (classic)" })
 map("s", "y", '<C-g>"+y', { desc = "Yank selection" })
--- Leader in select mode: switch to visual so which-key shows copy options (c/C, y, etc.)
-map("s", "<Space>", "<C-g><Space>", { desc = "Leader (which-key)" })
+-- Leader in select mode: intentionally NOT mapped.
+--
+-- A bridge like  map("s", "<Space>", "<C-g><Space>")  looks reasonable but is
+-- actively harmful, for two reasons:
+--   1. A <Space> emitted from a mapping's RHS cannot combine with the NEXT key
+--      the user types, so "<leader>" + "/" never resolves as one sequence -- the
+--      <Space> just runs as a plain motion and the "/" opens a search.
+--   2. which-key skips installing its own trigger when the key is already mapped
+--      (see triggers.lua M.add -> M.is_mapped). Occupying "s <Space>" therefore
+--      stopped which-key from ever showing the leader popup in select mode, which
+--      left select mode relying on timeoutlen -- so any human-length pause after
+--      the leader key silently broke the mapping.
+-- Nothing is lost by dropping it: mappings declared with mode "v" (as in
+-- last-keymaps.lua) already apply to select mode as well as visual mode.
 
 -- Save with Ctrl+S
 map({ "n", "i", "v", "s" }, "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })

@@ -90,6 +90,14 @@ return {
       { "<leader>fL", desc = "Lines (all buffers)" },
       { "<leader>fb", desc = "Lines (buffer)" },
 
+      -- Comments (Comment.nvim, see 060_comment.lua)
+      -- <leader>gc / <leader>gb are VISUAL-only here; in normal mode the same
+      -- keys stay the Git group's "commits" / "branches" pickers.
+      { "<leader>/",  desc = "Toggle comment", mode = { "n", "v" } },
+      { "<leader>g",  group = "Comment", mode = "v" },
+      { "<leader>gc", desc = "Toggle line comment", mode = "v" },
+      { "<leader>gb", desc = "Toggle block comment", mode = "v" },
+
       -- Git group
       { "<leader>g",  group = "Git" },
       { "<leader>gg", desc = "LazyGit" },
